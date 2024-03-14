@@ -12,6 +12,7 @@
 		B143BB0B2B9EE49A008B2F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */; };
 		B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BB122B9EE509008B2F4D /* RegisterViewController.swift */; };
 		B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BB142B9F365D008B2F4D /* RegisterViewModel.swift */; };
+		B143BB182BA35DA8008B2F4D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BB172BA35DA8008B2F4D /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		B143BB0C2B9EE49A008B2F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B143BB122B9EE509008B2F4D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B143BB142B9F365D008B2F4D /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		B143BB172BA35DA8008B2F4D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,31 @@
 		B143BAFD2B9EE497008B2F4D /* WiseSplit */ = {
 			isa = PBXGroup;
 			children = (
+				B143BB192BA35DAD008B2F4D /* Model */,
+				B143BB162BA35D90008B2F4D /* Register */,
 				B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */,
-				B143BB122B9EE509008B2F4D /* RegisterViewController.swift */,
-				B143BB142B9F365D008B2F4D /* RegisterViewModel.swift */,
 				B143BB072B9EE49A008B2F4D /* Assets.xcassets */,
 				B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */,
 				B143BB0C2B9EE49A008B2F4D /* Info.plist */,
 			);
 			path = WiseSplit;
+			sourceTree = "<group>";
+		};
+		B143BB162BA35D90008B2F4D /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				B143BB122B9EE509008B2F4D /* RegisterViewController.swift */,
+				B143BB142B9F365D008B2F4D /* RegisterViewModel.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		B143BB192BA35DAD008B2F4D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B143BB172BA35DA8008B2F4D /* User.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B143BB182BA35DA8008B2F4D /* User.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
 				B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */,

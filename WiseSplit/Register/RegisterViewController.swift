@@ -9,17 +9,20 @@ import Foundation
 import UIKit
 
 class RegisterViewController: UIViewController {
+    var registerVM: RegisterViewModel?
+    
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
     var nicknameTF = UITextField()
     var phoneTF = UITextField()
     var passwordTF = UITextField()
-    var passwordConfirmTF = UITextField()
+    var confirmPasswordTF = UITextField()
     var buttonRegister = UIButton()
     var errorLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerVM = RegisterViewModel()
         setAll()
     }
     
@@ -59,18 +62,19 @@ class RegisterViewController: UIViewController {
         passwordTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordTF)
         
-        passwordConfirmTF.placeholder = "Confirm Password"
-        passwordConfirmTF.borderStyle = .roundedRect
-        passwordConfirmTF.layer.borderColor = UIColor.blue.cgColor
-        passwordConfirmTF.layer.borderWidth = 1.0
-        passwordConfirmTF.layer.cornerRadius = 8
-        passwordConfirmTF.isSecureTextEntry = true
-        passwordConfirmTF.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(passwordConfirmTF)
+        confirmPasswordTF.placeholder = "Confirm Password"
+        confirmPasswordTF.borderStyle = .roundedRect
+        confirmPasswordTF.layer.borderColor = UIColor.blue.cgColor
+        confirmPasswordTF.layer.borderWidth = 1.0
+        confirmPasswordTF.layer.cornerRadius = 8
+        confirmPasswordTF.isSecureTextEntry = true
+        confirmPasswordTF.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(confirmPasswordTF)
         
         buttonRegister.setTitle("Register", for: .normal)
         buttonRegister.backgroundColor = .systemBlue
         buttonRegister.layer.cornerRadius = 8
+        buttonRegister.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         buttonRegister.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonRegister)
         
@@ -96,15 +100,28 @@ class RegisterViewController: UIViewController {
             passwordTF.widthAnchor.constraint(equalToConstant: 250),
             passwordTF.heightAnchor.constraint(equalToConstant: 44),
             
-            passwordConfirmTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordConfirmTF.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 14),
-            passwordConfirmTF.widthAnchor.constraint(equalToConstant: 250),
-            passwordConfirmTF.heightAnchor.constraint(equalToConstant: 44),
+            confirmPasswordTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            confirmPasswordTF.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 14),
+            confirmPasswordTF.widthAnchor.constraint(equalToConstant: 250),
+            confirmPasswordTF.heightAnchor.constraint(equalToConstant: 44),
             
             buttonRegister.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonRegister.topAnchor.constraint(equalTo: passwordConfirmTF.bottomAnchor, constant: 14),
+            buttonRegister.topAnchor.constraint(equalTo: confirmPasswordTF.bottomAnchor, constant: 14),
             buttonRegister.widthAnchor.constraint(equalToConstant: 250),
             buttonRegister.heightAnchor.constraint(equalToConstant: 44),
         ])
+    }
+    
+    @objc func registerButtonTapped() {
+        guard let nickname = nicknameTF.text, let phone = phoneTF.text, let password = passwordTF.text, let confirmPassword = confirmPasswordTF.text else {
+            return
+        }
+        var message = registerVM?.registerAccount(nickname: nickname, phoneNumber: phone, password: password, confirmPassword: confirmPassword)
+        
+        if message == 1 {
+            //sucess register
+        }else {
+            //gagal register
+        }
     }
 }
