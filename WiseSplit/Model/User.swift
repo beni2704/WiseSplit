@@ -6,10 +6,3 @@
 //
 
 import Foundation
-
-struct User {
-    var id: UUID
-    var nickname: String
-    var phoneNumber: String
-    var password: String
-}
