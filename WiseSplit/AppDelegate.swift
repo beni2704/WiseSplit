@@ -16,8 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .black
-        
-        let navigationController = UINavigationController(rootViewController: RegisterViewController())
+        let navigationController: UINavigationController?
+        if Auth.auth().currentUser != nil {
+            navigationController = UINavigationController(rootViewController: HomeViewController())
+        } else {
+            navigationController = UINavigationController(rootViewController: LoginViewController())
+        }
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         return true

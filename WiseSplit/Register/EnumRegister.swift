@@ -8,6 +8,7 @@
 import Foundation
 
 enum RegisterError: Error{
+    case invalidTextField
     case invalidEmail
     case passwordMismatch
 }
