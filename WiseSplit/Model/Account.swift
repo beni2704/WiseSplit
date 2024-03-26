@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Account {
+    let nickname: String
+    let email: String
+}

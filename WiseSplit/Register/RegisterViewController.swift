@@ -10,7 +10,6 @@ import UIKit
 
 class RegisterViewController: UIViewController {
     var registerVM: RegisterViewModel?
-    
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
     var nicknameTF = UITextField()
@@ -18,11 +17,12 @@ class RegisterViewController: UIViewController {
     var passwordTF = UITextField()
     var confirmPasswordTF = UITextField()
     var messageLabel = UILabel()
-    var buttonRegister = UIButton()
-    var errorLabel = UILabel()
+    var registerButton = UIButton()
+    var loginButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         registerVM = RegisterViewModel()
         setAll()
     }
@@ -72,16 +72,23 @@ class RegisterViewController: UIViewController {
         confirmPasswordTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(confirmPasswordTF)
         
-        buttonRegister.setTitle("Register", for: .normal)
-        buttonRegister.backgroundColor = .systemBlue
-        buttonRegister.layer.cornerRadius = 8
-        buttonRegister.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
-        buttonRegister.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(buttonRegister)
+        registerButton.setTitle("Register", for: .normal)
+        registerButton.backgroundColor = .systemBlue
+        registerButton.layer.cornerRadius = 8
+        registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(registerButton)
+        
+        loginButton.setTitle("Already have an account?", for: .normal)
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginButton)
         
         messageLabel.text = ""
+        messageLabel.textColor = .red
         messageLabel.font = .preferredFont(forTextStyle: .body)
-        messageLabel.textColor = .white
+        messageLabel.textAlignment = .center
+        messageLabel.numberOfLines = 0
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(messageLabel)
         
@@ -112,13 +119,18 @@ class RegisterViewController: UIViewController {
             confirmPasswordTF.widthAnchor.constraint(equalToConstant: 250),
             confirmPasswordTF.heightAnchor.constraint(equalToConstant: 44),
             
-            buttonRegister.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonRegister.topAnchor.constraint(equalTo: confirmPasswordTF.bottomAnchor, constant: 14),
-            buttonRegister.widthAnchor.constraint(equalToConstant: 250),
-            buttonRegister.heightAnchor.constraint(equalToConstant: 44),
+            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            registerButton.topAnchor.constraint(equalTo: confirmPasswordTF.bottomAnchor, constant: 14),
+            registerButton.widthAnchor.constraint(equalToConstant: 250),
+            registerButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 14),
             
             messageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            messageLabel.topAnchor.constraint(equalTo: buttonRegister.bottomAnchor, constant: 14)
+            messageLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 14),
+            messageLabel.widthAnchor.constraint(equalToConstant: 250),
+            
         ])
     }
     
@@ -145,23 +157,34 @@ class RegisterViewController: UIViewController {
             messageLabel.text = "Please confirm your password"
             return
         }
+        
         registerVM?.registerAccount(nickname: nickname, email: email, password: password, confirmPassword: confirmPassword) { result in
             switch result {
-                case .success(let user):
-                    print("User registered successfully: \(user)")
-                    self.messageLabel.text = "Success register"
-                case .failure(let error):
-                    if let registerError = error as? RegisterError {
-                        switch registerError {
-                            case .invalidEmail:
-                                self.messageLabel.text = "Invalid email format"
-                            case .passwordMismatch:
-                                self.messageLabel.text = "Password mismatch"
-                        }
-                    } else {
-                        self.messageLabel.text = "\(error.localizedDescription)"
+            case .success(let user):
+                print("User registered successfully: \(user)")
+                self.messageLabel.text = "Success register"
+                self.messageLabel.textColor = .green
+                //redirect
+            case .failure(let error):
+                if let registerError = error as? RegisterError {
+                    switch registerError {
+                    case.invalidTextField :
+                        self.messageLabel.text = "All fields must be filled"
+                    case .invalidEmail:
+                        self.messageLabel.text = "Invalid email format"
+                    case .passwordMismatch:
+                        self.messageLabel.text = "Password missmatch or at least must be 1 uppercase character "
                     }
+                } else {
+                    self.messageLabel.text = "\(error.localizedDescription)"
+                }
             }
+        }
+    }
+    
+    @objc func loginButtonTapped() {
+        if let navigationController = navigationController {
+            navigationController.pushViewController(LoginViewController(), animated: true)
         }
     }
 }

@@ -7,20 +7,26 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 class RegisterViewModel {
     func registerAccount(nickname: String, email: String, password: String, confirmPassword: String, completion: @escaping (Result<User, Error>) -> Void) {
+        if !validateEmptyField(nickname, email, password, confirmPassword) {
+            completion(.failure(RegisterError.invalidTextField))
+            return
+        }
         if !validateEmail(email) {
             completion(.failure(RegisterError.invalidEmail))
             return
         }
         
-        if password != confirmPassword {
+        if !validatePassword(password: password, confirmPassword: confirmPassword) {
             completion(.failure(RegisterError.passwordMismatch))
             return
         }
+        let account = Account(nickname: nickname, email: email)
         
-        registerUser(withEmail: email, password: password, completion: completion)
+        registerUser(withAccount: account, password: password, completion: completion)
     }
     
     
@@ -34,15 +40,49 @@ class RegisterViewModel {
     }
     
     func validatePassword(password: String, confirmPassword: String) -> Bool {
-        return password == confirmPassword
+        var validateUpper = false
+        if password.count < 6 {
+            return true
+        }
+        
+        for char in password {
+            if char.isUppercase && char.isLetter {
+                validateUpper = true
+                break
+            }
+        }
+        
+        if password != confirmPassword {
+            return true
+        }
+        
+        if validateUpper {
+            return true
+        }
+        
+        return false
     }
     
-    func registerUser(withEmail email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+    func registerUser(withAccount account: Account, password: String, completion: @escaping (Result<User, Error>) -> Void) {
+        Auth.auth().createUser(withEmail: account.email, password: password) { authResult, error in
             if let error = error {
                 completion(.failure(error))
             } else if let user = authResult?.user {
-                completion(.success(user))
+                let db = Firestore.firestore()
+                let userRef = db.collection("users").document(user.uid)
+                
+                let userData: [String: Any] = [
+                    "nickname": account.nickname,
+                    "email": account.email
+                ]
+                
+                userRef.setData(userData) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(user))
+                    }
+                }
             }
         }
     }
