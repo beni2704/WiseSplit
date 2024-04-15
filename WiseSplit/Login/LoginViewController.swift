@@ -8,25 +8,30 @@
 import Foundation
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     var loginVM: LoginViewModel?
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
-    var emailTF = UITextField()
-    var passwordTF = UITextField()
+    var emailTF = PaddedTextField()
+    var passwordTF = PaddedTextField()
     var messageLabel = UILabel()
     var loginButton = UIButton()
     var registerButton = UIButton()
+    var successMessage: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         loginVM = LoginViewModel()
         setAll()
+        
+        if let successMessage = successMessage {
+            showSuccessMessage(successMessage)
+        }
     }
     
     func setAll() {
-        titleLabel.text = "Wise Split"
+        titleLabel.text = "Wise Wallet"
         titleLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
@@ -37,18 +42,14 @@ class LoginViewController: UIViewController {
         view.addSubview(subTitleLabel)
         
         emailTF.placeholder = "Email"
-        emailTF.borderStyle = .roundedRect
-        emailTF.layer.borderColor = UIColor.blue.cgColor
-        emailTF.layer.borderWidth = 1.0
-        emailTF.layer.cornerRadius = 8
+        emailTF.borderStyle = .none
+        emailTF.backgroundColor = .grayBgFormCustom
         emailTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emailTF)
         
         passwordTF.placeholder = "Password"
-        passwordTF.borderStyle = .roundedRect
-        passwordTF.layer.borderColor = UIColor.blue.cgColor
-        passwordTF.layer.borderWidth = 1.0
-        passwordTF.layer.cornerRadius = 8
+        passwordTF.borderStyle = .none
+        passwordTF.backgroundColor = .grayBgFormCustom
         passwordTF.isSecureTextEntry = true
         passwordTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordTF)
@@ -61,6 +62,7 @@ class LoginViewController: UIViewController {
         view.addSubview(loginButton)
         
         registerButton.setTitle("Don't have an account yet?", for: .normal)
+        registerButton.setTitleColor(.black, for: .normal)
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         registerButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(registerButton)
@@ -112,30 +114,41 @@ class LoginViewController: UIViewController {
     
     @objc func loginButtonTapped() {
         guard let email = emailTF.text, let password = passwordTF.text else {
-            return
-        }
-        loginVM?.loginUser(email: email, password: password) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(_):
-                DispatchQueue.main.async {
-                    self.navigateToHome()
-                }
-            case .failure(_):
-                DispatchQueue.main.async {
-                    self.showErrorMessage()
+                return
+            }
+            loginVM?.checkEmailExists(email: email) { [weak self] exists in
+                guard let self = self else { return }
+                if exists {
+                    self.loginVM?.loginUser(email: email, password: password) { result in
+                        switch result {
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                self.navigateToHome()
+                            }
+                        case .failure(_):
+                            DispatchQueue.main.async {
+                                self.showErrorMessage("Email or password wrong")
+                            }
+                        }
+                    }
+                } else {
+                    self.showErrorMessage("Email is not registered.")
                 }
             }
-        }
     }
     
     private func navigateToHome() {
-        let homeVC = HomeViewController()
+        let homeVC = TabBarController()
         navigationController?.pushViewController(homeVC, animated: true)
     }
     
-    private func showErrorMessage() {
-        messageLabel.text = "Email or password wrong"
-        messageLabel.textColor = .red
+    private func showErrorMessage(_ message: String) {
+        messageLabel.text = message
+        messageLabel.textColor = .redCustom
+    }
+    
+    private func showSuccessMessage(_ message: String) {
+        messageLabel.text = message
+        messageLabel.textColor = .greenCustom
     }
 }

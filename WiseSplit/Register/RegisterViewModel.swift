@@ -24,7 +24,7 @@ class RegisterViewModel {
             completion(.failure(RegisterError.passwordMismatch))
             return
         }
-        let account = Account(nickname: nickname, email: email)
+        let account = Account(nickname: nickname, email: email, budget: 0)
         
         registerUser(withAccount: account, password: password, completion: completion)
     }
@@ -73,7 +73,7 @@ class RegisterViewModel {
                 
                 let userData: [String: Any] = [
                     "nickname": account.nickname,
-                    "email": account.email
+                    "email": account.email.lowercased()
                 ]
                 
                 userRef.setData(userData) { error in

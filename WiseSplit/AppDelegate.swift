@@ -15,13 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .black
+        window?.backgroundColor = .white
         let navigationController: UINavigationController?
         if Auth.auth().currentUser != nil {
-            navigationController = UINavigationController(rootViewController: HomeViewController())
+            navigationController = UINavigationController(rootViewController: TabBarController())
         } else {
             navigationController = UINavigationController(rootViewController: LoginViewController())
         }
+//        navigationController = UINavigationController(rootViewController: TabBarController())
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         return true

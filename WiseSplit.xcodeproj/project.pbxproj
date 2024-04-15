@@ -44,7 +44,19 @@
 		B143BB542BA4368D008B2F4D /* EnumRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BB532BA4368D008B2F4D /* EnumRegister.swift */; };
 		B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5942BAD5B8300EC6BF7 /* LoginViewController.swift */; };
 		B165D5972BAD5B8A00EC6BF7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5962BAD5B8A00EC6BF7 /* LoginViewModel.swift */; };
-		B165D59A2BB2B6C000EC6BF7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5992BB2B6BF00EC6BF7 /* HomeViewController.swift */; };
+		B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D59E2BBB9A6000EC6BF7 /* ProfileViewModel.swift */; };
+		B165D5A12BBB9FBF00EC6BF7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5A02BBB9FBF00EC6BF7 /* ProfileViewController.swift */; };
+		B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5A22BBBA0AA00EC6BF7 /* HomeViewController.swift */; };
+		B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5A52BC9A2A100EC6BF7 /* Color.swift */; };
+		B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5A82BC9AEBC00EC6BF7 /* TabBarController.swift */; };
+		B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5AB2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift */; };
+		B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5AF2BC9B76200EC6BF7 /* AddBudgetViewModel.swift */; };
+		B165D5B22BCA86E500EC6BF7 /* AddPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5B12BCA86E400EC6BF7 /* AddPaymentViewController.swift */; };
+		B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5B52BCA872300EC6BF7 /* PaddedTextField.swift */; };
+		B165D5B82BCA883600EC6BF7 /* AddPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5B72BCA883600EC6BF7 /* AddPaymentViewModel.swift */; };
+		B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5B92BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift */; };
+		B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */; };
+		B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5BD2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +72,19 @@
 		B143BB532BA4368D008B2F4D /* EnumRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumRegister.swift; sourceTree = "<group>"; };
 		B165D5942BAD5B8300EC6BF7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B165D5962BAD5B8A00EC6BF7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		B165D5992BB2B6BF00EC6BF7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B165D59E2BBB9A6000EC6BF7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		B165D5A02BBB9FBF00EC6BF7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		B165D5A22BBBA0AA00EC6BF7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B165D5A52BC9A2A100EC6BF7 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		B165D5A82BC9AEBC00EC6BF7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		B165D5AB2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetViewController.swift; sourceTree = "<group>"; };
+		B165D5AF2BC9B76200EC6BF7 /* AddBudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetViewModel.swift; sourceTree = "<group>"; };
+		B165D5B12BCA86E400EC6BF7 /* AddPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentViewController.swift; sourceTree = "<group>"; };
+		B165D5B52BCA872300EC6BF7 /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
+		B165D5B72BCA883600EC6BF7 /* AddPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentViewModel.swift; sourceTree = "<group>"; };
+		B165D5B92BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentUIPickerCategory.swift; sourceTree = "<group>"; };
+		B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		B165D5BD2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentDatePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,12 +144,17 @@
 		B143BAFD2B9EE497008B2F4D /* WiseSplit */ = {
 			isa = PBXGroup;
 			children = (
+				B165D5A42BC9A28A00EC6BF7 /* Asset */,
+				B165D5B42BCA870900EC6BF7 /* Component */,
 				B143BB192BA35DAD008B2F4D /* Model */,
 				B143BB162BA35D90008B2F4D /* Register */,
 				B165D5932BAD5B6D00EC6BF7 /* Login */,
+				B165D5A72BC9AE8F00EC6BF7 /* TabBar */,
 				B165D5982BB2B6B200EC6BF7 /* Home */,
+				B165D5AA2BC9AF5B00EC6BF7 /* AddBudget */,
+				B165D5B32BCA86E900EC6BF7 /* AddPayment */,
+				B165D59D2BBB9A3600EC6BF7 /* Profile */,
 				B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */,
-				B143BB072B9EE49A008B2F4D /* Assets.xcassets */,
 				B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */,
 				B143BB0C2B9EE49A008B2F4D /* Info.plist */,
 				B143BB1A2BA42CEC008B2F4D /* GoogleService-Info.plist */,
@@ -163,9 +192,64 @@
 		B165D5982BB2B6B200EC6BF7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				B165D5992BB2B6BF00EC6BF7 /* HomeViewController.swift */,
+				B165D5A22BBBA0AA00EC6BF7 /* HomeViewController.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		B165D59D2BBB9A3600EC6BF7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5A02BBB9FBF00EC6BF7 /* ProfileViewController.swift */,
+				B165D59E2BBB9A6000EC6BF7 /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		B165D5A42BC9A28A00EC6BF7 /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				B143BB072B9EE49A008B2F4D /* Assets.xcassets */,
+				B165D5A52BC9A2A100EC6BF7 /* Color.swift */,
+			);
+			path = Asset;
+			sourceTree = "<group>";
+		};
+		B165D5A72BC9AE8F00EC6BF7 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5A82BC9AEBC00EC6BF7 /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		B165D5AA2BC9AF5B00EC6BF7 /* AddBudget */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5AB2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift */,
+				B165D5AF2BC9B76200EC6BF7 /* AddBudgetViewModel.swift */,
+			);
+			path = AddBudget;
+			sourceTree = "<group>";
+		};
+		B165D5B32BCA86E900EC6BF7 /* AddPayment */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5B12BCA86E400EC6BF7 /* AddPaymentViewController.swift */,
+				B165D5B72BCA883600EC6BF7 /* AddPaymentViewModel.swift */,
+				B165D5B92BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift */,
+				B165D5BD2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift */,
+			);
+			path = AddPayment;
+			sourceTree = "<group>";
+		};
+		B165D5B42BCA870900EC6BF7 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5B52BCA872300EC6BF7 /* PaddedTextField.swift */,
+				B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,12 +357,24 @@
 			files = (
 				B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */,
 				B143BB182BA35DA8008B2F4D /* Account.swift in Sources */,
+				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
+				B165D5A12BBB9FBF00EC6BF7 /* ProfileViewController.swift in Sources */,
+				B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */,
+				B165D5B82BCA883600EC6BF7 /* AddPaymentViewModel.swift in Sources */,
 				B143BB542BA4368D008B2F4D /* EnumRegister.swift in Sources */,
-				B165D59A2BB2B6C000EC6BF7 /* HomeViewController.swift in Sources */,
+				B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */,
+				B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */,
+				B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */,
+				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
+				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
+				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
+				B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */,
+				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,
 				B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */,
 				B165D5972BAD5B8A00EC6BF7 /* LoginViewModel.swift in Sources */,
+				B165D5B22BCA86E500EC6BF7 /* AddPaymentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
