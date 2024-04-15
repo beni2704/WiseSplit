@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: BaseViewController {
     var registerVM: RegisterViewModel?
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
-    var nicknameTF = UITextField()
-    var emailTF = UITextField()
-    var passwordTF = UITextField()
-    var confirmPasswordTF = UITextField()
+    var nicknameTF = PaddedTextField()
+    var emailTF = PaddedTextField()
+    var passwordTF = PaddedTextField()
+    var confirmPasswordTF = PaddedTextField()
     var messageLabel = UILabel()
     var registerButton = UIButton()
     var loginButton = UIButton()
@@ -28,7 +28,7 @@ class RegisterViewController: UIViewController {
     }
     
     func setAll() {
-        titleLabel.text = "Wise Split"
+        titleLabel.text = "Wise Wallet"
         titleLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
@@ -39,35 +39,27 @@ class RegisterViewController: UIViewController {
         view.addSubview(subTitleLabel)
         
         nicknameTF.placeholder = "Nickname"
-        nicknameTF.borderStyle = .roundedRect
-        nicknameTF.layer.borderColor = UIColor.blue.cgColor
-        nicknameTF.layer.borderWidth = 1.0
-        nicknameTF.layer.cornerRadius = 8
+        nicknameTF.borderStyle = .none
+        nicknameTF.backgroundColor = .grayBgFormCustom
         nicknameTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nicknameTF)
         
         emailTF.placeholder = "Email"
-        emailTF.borderStyle = .roundedRect
-        emailTF.layer.borderColor = UIColor.blue.cgColor
-        emailTF.layer.borderWidth = 1.0
-        emailTF.layer.cornerRadius = 8
+        emailTF.borderStyle = .none
+        emailTF.backgroundColor = .grayBgFormCustom
         emailTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emailTF)
         
         passwordTF.placeholder = "Password"
-        passwordTF.borderStyle = .roundedRect
-        passwordTF.layer.borderColor = UIColor.blue.cgColor
-        passwordTF.layer.borderWidth = 1.0
-        passwordTF.layer.cornerRadius = 8
+        passwordTF.borderStyle = .none
+        passwordTF.backgroundColor = .grayBgFormCustom
         passwordTF.isSecureTextEntry = true
         passwordTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordTF)
         
         confirmPasswordTF.placeholder = "Confirm Password"
-        confirmPasswordTF.borderStyle = .roundedRect
-        confirmPasswordTF.layer.borderColor = UIColor.blue.cgColor
-        confirmPasswordTF.layer.borderWidth = 1.0
-        confirmPasswordTF.layer.cornerRadius = 8
+        confirmPasswordTF.borderStyle = .none
+        confirmPasswordTF.backgroundColor = .grayBgFormCustom
         confirmPasswordTF.isSecureTextEntry = true
         confirmPasswordTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(confirmPasswordTF)
@@ -80,12 +72,13 @@ class RegisterViewController: UIViewController {
         view.addSubview(registerButton)
         
         loginButton.setTitle("Already have an account?", for: .normal)
+        loginButton.setTitleColor(.black, for: .normal)
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
         
         messageLabel.text = ""
-        messageLabel.textColor = .red
+        messageLabel.textColor = .redCustom
         messageLabel.font = .preferredFont(forTextStyle: .body)
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
@@ -160,11 +153,13 @@ class RegisterViewController: UIViewController {
         
         registerVM?.registerAccount(nickname: nickname, email: email, password: password, confirmPassword: confirmPassword) { result in
             switch result {
-            case .success(let user):
-                print("User registered successfully: \(user)")
-                self.messageLabel.text = "Success register"
-                self.messageLabel.textColor = .green
-                //redirect
+            case .success(_):
+                let loginVC = LoginViewController()
+                loginVC.successMessage = "Registration successful. Please log in to your account."
+                
+                if let navigationController = self.navigationController {
+                    navigationController.pushViewController(loginVC, animated: true)
+                }
             case .failure(let error):
                 if let registerError = error as? RegisterError {
                     switch registerError {
