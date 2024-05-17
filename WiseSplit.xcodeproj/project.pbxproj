@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */; };
+		5D2AC93D2BF71C4500B033AE /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */; };
+		5DCE3CBB2BDD73CA0067F9FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */; };
+		5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */; };
+		5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */; };
+		5DCE3CC12BDD73F90067F9FD /* BillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC02BDD73F90067F9FD /* BillManager.swift */; };
+		5DCE3CC32BDD74090067F9FD /* SeparateBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */; };
+		5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */; };
+		5DCE3CC72BDE59AD0067F9FD /* GetImageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */; };
 		B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */; };
 		B143BB082B9EE49A008B2F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B143BB072B9EE49A008B2F4D /* Assets.xcassets */; };
 		B143BB0B2B9EE49A008B2F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */; };
@@ -60,6 +69,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
+		5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewController.swift; sourceTree = "<group>"; };
+		5DCE3CC02BDD73F90067F9FD /* BillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillManager.swift; sourceTree = "<group>"; };
+		5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparateBillViewController.swift; sourceTree = "<group>"; };
+		5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ImageReceiptModel.mlmodel; sourceTree = "<group>"; };
+		5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetImageControllerView.swift; sourceTree = "<group>"; };
 		B143BAFB2B9EE497008B2F4D /* WiseSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B143BB072B9EE49A008B2F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,6 +143,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5DCE3CB32BDD6F660067F9FD /* SplitBill */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */,
+				5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */,
+				5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */,
+				5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */,
+				5DCE3CC02BDD73F90067F9FD /* BillManager.swift */,
+				5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */,
+				5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */,
+				5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */,
+				5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */,
+			);
+			path = SplitBill;
+			sourceTree = "<group>";
+		};
 		B143BAF22B9EE497008B2F4D = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +178,7 @@
 		B143BAFD2B9EE497008B2F4D /* WiseSplit */ = {
 			isa = PBXGroup;
 			children = (
+				5DCE3CB32BDD6F660067F9FD /* SplitBill */,
 				B165D5A42BC9A28A00EC6BF7 /* Asset */,
 				B165D5B42BCA870900EC6BF7 /* Component */,
 				B143BB192BA35DAD008B2F4D /* Model */,
@@ -357,23 +392,32 @@
 			files = (
 				B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */,
 				B143BB182BA35DA8008B2F4D /* Account.swift in Sources */,
+				5D2AC93D2BF71C4500B033AE /* ResultViewController.swift in Sources */,
 				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
 				B165D5A12BBB9FBF00EC6BF7 /* ProfileViewController.swift in Sources */,
 				B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */,
 				B165D5B82BCA883600EC6BF7 /* AddPaymentViewModel.swift in Sources */,
+				5DCE3CC32BDD74090067F9FD /* SeparateBillViewController.swift in Sources */,
 				B143BB542BA4368D008B2F4D /* EnumRegister.swift in Sources */,
 				B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */,
 				B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */,
 				B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */,
+				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
+				5DCE3CC12BDD73F90067F9FD /* BillManager.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
+				5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
 				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
 				B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */,
+				5DCE3CC72BDE59AD0067F9FD /* GetImageControllerView.swift in Sources */,
 				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,
 				B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */,
+				5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */,
+				5DCE3CBB2BDD73CA0067F9FD /* ViewController.swift in Sources */,
 				B165D5972BAD5B8A00EC6BF7 /* LoginViewModel.swift in Sources */,
+				5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */,
 				B165D5B22BCA86E500EC6BF7 /* AddPaymentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +568,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -543,19 +588,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 54STNG9K7F;
+				DEVELOPMENT_TEAM = 32R3NF44SD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WiseSplit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.skripsi.WiseSplit;
+				PRODUCT_BUNDLE_IDENTIFIER = binus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
