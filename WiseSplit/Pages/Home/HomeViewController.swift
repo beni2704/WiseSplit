@@ -73,7 +73,7 @@ class HomeViewController: UIViewController {
         spendingTitle.textColor = UIColor.darkGrayCustom
         spendingTitle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(spendingTitle)
-
+        
         spendingButton.setTitle("See all", for: .normal)
         spendingButton.setTitleColor(UIColor.blueButtonCustom, for: .normal)
         spendingButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
@@ -104,7 +104,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func seeAllButtonTapped() {
-        
+        let historyPaymentVC = HistoryPaymentViewController()
+        navigationController?.pushViewController(historyPaymentVC, animated: true)
     }
-
 }

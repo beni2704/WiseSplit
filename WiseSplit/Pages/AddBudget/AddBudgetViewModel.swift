@@ -42,6 +42,7 @@ class AddBudgetViewModel {
                 let transactionRef = userRef.collection("transactions").document()
                 
                 let dataTrans: [String: Any] = [
+                    "category": "Income",
                     "amount": amount,
                     "date": Timestamp(date: Date.now)
                 ]

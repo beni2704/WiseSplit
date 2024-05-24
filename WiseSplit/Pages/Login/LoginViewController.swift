@@ -4,8 +4,6 @@
 //
 //  Created by beni garcia on 22/03/24.
 //
-
-import Foundation
 import UIKit
 
 class LoginViewController: BaseViewController {
@@ -113,6 +111,27 @@ class LoginViewController: BaseViewController {
     }
     
     @objc func loginButtonTapped() {
+        // login otp maks 5x sehari
+//        loginOTP()
+        loginWithoutOTP()
+    }
+    
+    func navigateToHome() {
+        let homeVC = TabBarController()
+        navigationController?.pushViewController(homeVC, animated: true)
+    }
+    
+    func showErrorMessage(_ message: String) {
+        messageLabel.text = message
+        messageLabel.textColor = .red
+    }
+    
+    func showSuccessMessage(_ message: String) {
+        messageLabel.text = message
+        messageLabel.textColor = .green
+    }
+    
+    func loginWithoutOTP() {
         guard let email = emailTF.text, let password = passwordTF.text else {
             return
         }
@@ -139,18 +158,32 @@ class LoginViewController: BaseViewController {
         self.removeLoading()
     }
     
-    private func navigateToHome() {
-        let homeVC = TabBarController()
-        navigationController?.pushViewController(homeVC, animated: true)
-    }
-    
-    private func showErrorMessage(_ message: String) {
-        messageLabel.text = message
-        messageLabel.textColor = .redCustom
-    }
-    
-    private func showSuccessMessage(_ message: String) {
-        messageLabel.text = message
-        messageLabel.textColor = .greenCustom
+    func loginOTP() {
+        guard let email = emailTF.text else {
+            return
+        }
+        
+        self.addLoading(onView: self.view)
+        
+        loginVM?.checkEmailExists(email: email) { [weak self] exists in
+            guard let self = self else { return }
+            self.removeLoading()
+            
+            if exists {
+                self.loginVM?.sendSignInLink(to: email) { error in
+                    DispatchQueue.main.async {
+                        if let error = error {
+                            self.showErrorMessage("Error sending email verification: \(error.localizedDescription)")
+                        } else {
+                            self.showSuccessMessage("Verification email sent to \(email)")
+                        }
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.showErrorMessage("Email is not registered.")
+                }
+            }
+        }
     }
 }
