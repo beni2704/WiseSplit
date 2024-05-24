@@ -1,8 +1,16 @@
-//
-//  MonthWheelPicker.swift
-//  WiseSplit
-//
-//  Created by ichiro on 20/05/24.
-//
+import SwiftUI
 
-import Foundation
+struct MonthWheelPicker: View {
+    @Binding var selectedMonth: Int
+    
+    let months = Calendar.current.monthSymbols
+    
+    var body: some View {
+        Picker(selection: $selectedMonth, label: Text("Month")) {
+            ForEach(0 ..< months.count, id: \.self) { index in
+                Text(self.months[index]).tag(index)
+            }
+        }
+        .pickerStyle(WheelPickerStyle())
+    }
+}

@@ -5,4 +5,10 @@
 //  Created by ichiro on 25/05/24.
 //
 
-import Foundation
+import UIKit
+
+struct TabItem {
+    let title: String
+    let content: UIViewController
+}
+

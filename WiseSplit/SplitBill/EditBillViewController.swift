@@ -10,11 +10,11 @@ struct AppTheme {
     
 }
 
-struct User {
-    let name: String
-    var assignedItems: [String] = []
-    var total: Int
-}
+//struct User {
+//    let name: String
+//    var assignedItems: [String] = []
+//    var total: Int
+//}
 
 class EditBillViewController: UIViewController, UITextFieldDelegate {
     
@@ -36,7 +36,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
     
     var userStackView = UIStackView()
     
-    var users: [User] = [
+    var users: [UserTemp] = [
 //        User(name: "Person A", total: 0),
 //        User(name: "Person B", total: 0),
 //        User(name: "Person C", total: 0),
@@ -56,7 +56,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
 //        User(name: "Person E", total: 0),
 //        User(name: "Person F", total: 0)
     ]
-    var selectedUser: User?
+    var selectedUser: UserTemp?
     var userButtons: [UIButton] = []
     
     var allTextFields = [UITextField]()
@@ -428,7 +428,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
         newButton.addTarget(self, action: #selector(userButtonTapped(_:)), for: .touchUpInside)
         
         userStackView.insertArrangedSubview(newButton, at: 0) // Insert at index 0 to add it to the left
-        let newUser = User(name: name, total: 0)
+        let newUser = UserTemp(name: name, total: 0, yearlyData: [])
         users.append(newUser)
     }
 
