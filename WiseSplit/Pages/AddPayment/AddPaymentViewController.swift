@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class AddPaymentViewController: BaseViewController {
+    var addPaymentVM: AddPaymentViewModel?
     var titleLabel = UILabel()
     var titleBudgetTF = UILabel()
     var budgetTF = PaddedTextField()
@@ -19,10 +20,12 @@ class AddPaymentViewController: BaseViewController {
     var titleDateTF = UILabel()
     var datePicker = UIDatePicker()
     var dateTF = PaddedTextField()
+    var errorLabel = UILabel()
     var addButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addPaymentVM = AddPaymentViewModel()
         setupViews()
         setupCategoryPicker()
         setupDatePicker()
@@ -72,6 +75,11 @@ class AddPaymentViewController: BaseViewController {
         dateTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(dateTF)
         
+        errorLabel.text = ""
+        errorLabel.textColor = .redCustom
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(errorLabel)
+        
         addButton.setTitle("Add Payment", for: .normal)
         addButton.addTarget(self, action: #selector(addPayment), for: .touchUpInside)
         addButton.backgroundColor = .systemBlue
@@ -108,7 +116,10 @@ class AddPaymentViewController: BaseViewController {
             dateTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             dateTF.heightAnchor.constraint(equalToConstant: 48),
             
-            addButton.topAnchor.constraint(equalTo: dateTF.bottomAnchor, constant: 20),
+            errorLabel.topAnchor.constraint(equalTo: dateTF.bottomAnchor, constant: 16),
+            errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            addButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 16),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             addButton.heightAnchor.constraint(equalToConstant: 40)
@@ -123,21 +134,39 @@ class AddPaymentViewController: BaseViewController {
     
     @objc private func addPayment() {
         guard let budgetText = budgetTF.text, let amount = Int(budgetText) else {
-            // Handle invalid input
             return
         }
         
-        // Do something with the budget amount, for example, save it to a database
+        guard let selectedCategory = categoryTF.text, !selectedCategory.isEmpty else {
+            return
+        }
         
-        budgetTF.text = ""
-        categoryTF.text = ""
-        dateTF.text = ""
+        let date = datePicker.date
         
-        // Show a confirmation alert or perform any other necessary action
-        let alertController = UIAlertController(title: "Payment Added", message: "Your payment of \(amount) Rupiah has been added.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-        
+        addPaymentVM?.addPayment(amount: amount, category: selectedCategory, date: date) { error in
+            if let error = error {
+                print("Error adding payment: \(error.localizedDescription)")
+                switch error {
+                case AddPaymentError.emptyField:
+                    self.errorLabel.text = "All fields must be filled"
+                case AddPaymentError.invalidAmount:
+                    self.errorLabel.text = "Amount must be above 0"
+                case AddPaymentError.insufficientAmount:
+                    self.errorLabel.text = "Budget is not enough"
+                default:
+                    self.errorLabel.text = "An error occurred"
+                }
+            } else {
+                let alertController = UIAlertController(title: "Payment Added", message: "Your payment of \(amount) Rupiah has been added.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+                
+                self.budgetTF.text = ""
+                self.categoryTF.text = ""
+                self.dateTF.text = ""
+                self.errorLabel.text = ""
+            }
+        }
     }
 }

@@ -66,6 +66,19 @@
 		B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5B92BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift */; };
 		B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */; };
 		B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5BD2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift */; };
+		B165D5C22BD7FD2700EC6BF7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5C12BD7FD2700EC6BF7 /* HomeViewModel.swift */; };
+		B165D5C52BD813EC00EC6BF7 /* HistoryPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5C42BD813EC00EC6BF7 /* HistoryPaymentViewController.swift */; };
+		B165D5C72BD813F500EC6BF7 /* HistoryPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5C62BD813F500EC6BF7 /* HistoryPaymentViewModel.swift */; };
+		B165D5C92BDB583200EC6BF7 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5C82BDB583100EC6BF7 /* LoadingIndicator.swift */; };
+		B165D5CB2BDB5EC800EC6BF7 /* EnumAddBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5CA2BDB5EC800EC6BF7 /* EnumAddBudget.swift */; };
+		B165D5CD2BDB63DF00EC6BF7 /* EnumAddPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5CC2BDB63DF00EC6BF7 /* EnumAddPayment.swift */; };
+		B165D5D02BE5005500EC6BF7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5CF2BE5005500EC6BF7 /* Transaction.swift */; };
+		B165D5D22BE5036600EC6BF7 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D12BE5036600EC6BF7 /* TransactionTableViewCell.swift */; };
+		B165D5D52BF6889E00EC6BF7 /* SearchFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D42BF6889E00EC6BF7 /* SearchFriendViewModel.swift */; };
+		B165D5D72BF689FE00EC6BF7 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D62BF689FE00EC6BF7 /* SearchFriendViewController.swift */; };
+		B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */; };
+		B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */; };
+		B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +116,19 @@
 		B165D5B92BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentUIPickerCategory.swift; sourceTree = "<group>"; };
 		B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B165D5BD2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentDatePicker.swift; sourceTree = "<group>"; };
+		B165D5C12BD7FD2700EC6BF7 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B165D5C42BD813EC00EC6BF7 /* HistoryPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPaymentViewController.swift; sourceTree = "<group>"; };
+		B165D5C62BD813F500EC6BF7 /* HistoryPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPaymentViewModel.swift; sourceTree = "<group>"; };
+		B165D5C82BDB583100EC6BF7 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		B165D5CA2BDB5EC800EC6BF7 /* EnumAddBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumAddBudget.swift; sourceTree = "<group>"; };
+		B165D5CC2BDB63DF00EC6BF7 /* EnumAddPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumAddPayment.swift; sourceTree = "<group>"; };
+		B165D5CF2BE5005500EC6BF7 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		B165D5D12BE5036600EC6BF7 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		B165D5D42BF6889E00EC6BF7 /* SearchFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendViewModel.swift; sourceTree = "<group>"; };
+		B165D5D62BF689FE00EC6BF7 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
+		B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendTableViewCell.swift; sourceTree = "<group>"; };
+		B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
+		B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,13 +208,7 @@
 				B165D5A42BC9A28A00EC6BF7 /* Asset */,
 				B165D5B42BCA870900EC6BF7 /* Component */,
 				B143BB192BA35DAD008B2F4D /* Model */,
-				B143BB162BA35D90008B2F4D /* Register */,
-				B165D5932BAD5B6D00EC6BF7 /* Login */,
-				B165D5A72BC9AE8F00EC6BF7 /* TabBar */,
-				B165D5982BB2B6B200EC6BF7 /* Home */,
-				B165D5AA2BC9AF5B00EC6BF7 /* AddBudget */,
-				B165D5B32BCA86E900EC6BF7 /* AddPayment */,
-				B165D59D2BBB9A3600EC6BF7 /* Profile */,
+				B165D5CE2BE4FB5F00EC6BF7 /* Pages */,
 				B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */,
 				B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */,
 				B143BB0C2B9EE49A008B2F4D /* Info.plist */,
@@ -211,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				B143BB172BA35DA8008B2F4D /* Account.swift */,
+				B165D5CF2BE5005500EC6BF7 /* Transaction.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -228,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				B165D5A22BBBA0AA00EC6BF7 /* HomeViewController.swift */,
+				B165D5C12BD7FD2700EC6BF7 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -263,6 +285,7 @@
 			children = (
 				B165D5AB2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift */,
 				B165D5AF2BC9B76200EC6BF7 /* AddBudgetViewModel.swift */,
+				B165D5CA2BDB5EC800EC6BF7 /* EnumAddBudget.swift */,
 			);
 			path = AddBudget;
 			sourceTree = "<group>";
@@ -274,6 +297,7 @@
 				B165D5B72BCA883600EC6BF7 /* AddPaymentViewModel.swift */,
 				B165D5B92BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift */,
 				B165D5BD2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift */,
+				B165D5CC2BDB63DF00EC6BF7 /* EnumAddPayment.swift */,
 			);
 			path = AddPayment;
 			sourceTree = "<group>";
@@ -283,8 +307,55 @@
 			children = (
 				B165D5B52BCA872300EC6BF7 /* PaddedTextField.swift */,
 				B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */,
+				B165D5C82BDB583100EC6BF7 /* LoadingIndicator.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		B165D5C32BD813D100EC6BF7 /* HistoryPayment */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5C42BD813EC00EC6BF7 /* HistoryPaymentViewController.swift */,
+				B165D5C62BD813F500EC6BF7 /* HistoryPaymentViewModel.swift */,
+				B165D5D12BE5036600EC6BF7 /* TransactionTableViewCell.swift */,
+			);
+			path = HistoryPayment;
+			sourceTree = "<group>";
+		};
+		B165D5CE2BE4FB5F00EC6BF7 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5DC2C00E27100EC6BF7 /* OTP */,
+				B143BB162BA35D90008B2F4D /* Register */,
+				B165D5932BAD5B6D00EC6BF7 /* Login */,
+				B165D5A72BC9AE8F00EC6BF7 /* TabBar */,
+				B165D5982BB2B6B200EC6BF7 /* Home */,
+				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
+				B165D5AA2BC9AF5B00EC6BF7 /* AddBudget */,
+				B165D5B32BCA86E900EC6BF7 /* AddPayment */,
+				B165D5C32BD813D100EC6BF7 /* HistoryPayment */,
+				B165D59D2BBB9A3600EC6BF7 /* Profile */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		B165D5D32BF6883B00EC6BF7 /* SearchFriend */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5D42BF6889E00EC6BF7 /* SearchFriendViewModel.swift */,
+				B165D5D62BF689FE00EC6BF7 /* SearchFriendViewController.swift */,
+				B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */,
+			);
+			path = SearchFriend;
+			sourceTree = "<group>";
+		};
+		B165D5DC2C00E27100EC6BF7 /* OTP */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */,
+				B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */,
+			);
+			path = OTP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,18 +461,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B165D5D52BF6889E00EC6BF7 /* SearchFriendViewModel.swift in Sources */,
 				B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */,
+				B165D5C72BD813F500EC6BF7 /* HistoryPaymentViewModel.swift in Sources */,
 				B143BB182BA35DA8008B2F4D /* Account.swift in Sources */,
+				B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */,
+				B165D5D72BF689FE00EC6BF7 /* SearchFriendViewController.swift in Sources */,
+				B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */,
 				5D2AC93D2BF71C4500B033AE /* ResultViewController.swift in Sources */,
 				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
 				B165D5A12BBB9FBF00EC6BF7 /* ProfileViewController.swift in Sources */,
+				B165D5C52BD813EC00EC6BF7 /* HistoryPaymentViewController.swift in Sources */,
 				B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */,
 				B165D5B82BCA883600EC6BF7 /* AddPaymentViewModel.swift in Sources */,
 				5DCE3CC32BDD74090067F9FD /* SeparateBillViewController.swift in Sources */,
 				B143BB542BA4368D008B2F4D /* EnumRegister.swift in Sources */,
+				B165D5CD2BDB63DF00EC6BF7 /* EnumAddPayment.swift in Sources */,
 				B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */,
 				B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */,
 				B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */,
+				B165D5C92BDB583200EC6BF7 /* LoadingIndicator.swift in Sources */,
+				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
+				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
+				B165D5CB2BDB5EC800EC6BF7 /* EnumAddBudget.swift in Sources */,
+				B165D5D02BE5005500EC6BF7 /* Transaction.swift in Sources */,
 				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
 				5DCE3CC12BDD73F90067F9FD /* BillManager.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
@@ -411,6 +494,9 @@
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
 				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
 				B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */,
+				B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */,
+				B165D5D22BE5036600EC6BF7 /* TransactionTableViewCell.swift in Sources */,
+				B165D5C22BD7FD2700EC6BF7 /* HomeViewModel.swift in Sources */,
 				5DCE3CC72BDE59AD0067F9FD /* GetImageControllerView.swift in Sources */,
 				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,
 				B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */,
