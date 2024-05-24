@@ -10,75 +10,61 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class RegisterViewModel {
-    func registerAccount(nickname: String, email: String, password: String, confirmPassword: String, completion: @escaping (Result<User, Error>) -> Void) {
-        if !validateEmptyField(nickname, email, password, confirmPassword) {
-            completion(.failure(RegisterError.invalidTextField))
-            return
-        }
-        if !validateEmail(email) {
-            completion(.failure(RegisterError.invalidEmail))
-            return
-        }
-        
-        if !validatePassword(password: password, confirmPassword: confirmPassword) {
-            completion(.failure(RegisterError.passwordMismatch))
-            return
-        }
-        let account = Account(nickname: nickname, email: email, budget: 0)
-        
-        registerUser(withAccount: account, password: password, completion: completion)
-    }
-    
-    
-    func validateEmptyField(_ nickname: String, _ email: String, _ password: String, _ confirmPassword: String) -> Bool{
-        return !nickname.isEmpty && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty
-    }
-    
-    func validateEmail(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
-    }
-    
-    func validatePassword(password: String, confirmPassword: String) -> Bool {
-        guard password == confirmPassword else {
-            return false
-        }
-        
-        guard password.count >= 6 else {
-            return false
-        }
-        
-        guard password.rangeOfCharacter(from: .uppercaseLetters) != nil else {
-            return false
-        }
-        
-        return true
-    }
-    
-    func registerUser(withAccount account: Account, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        Auth.auth().createUser(withEmail: account.email, password: password) { authResult, error in
+    func checkPhoneExists(phoneNumber: String, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("users").whereField("phone", isEqualTo: phoneNumber).getDocuments { snapshot, error in
             if let error = error {
-                completion(.failure(error))
-            } else if let user = authResult?.user {
-                let db = Firestore.firestore()
-                let userRef = db.collection("users").document(user.uid)
-                
-                let userData: [String: Any] = [
-                    "nickname": account.nickname,
-                    "email": account.email.lowercased(),
-                    "budget": 0
-                ]
-                
-                userRef.setData(userData) { error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        completion(.success(user))
-                    }
-                }
+                print("Error fetching documents: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            completion(!snapshot!.documents.isEmpty)
+        }
+    }
+
+    func registerUserIfNotExists(account: Account, completion: @escaping (Bool) -> Void) {
+        checkPhoneExists(phoneNumber: account.phone) { exists in
+            if exists {
+                completion(false)
+            } else {
+                self.sendVerificationCode(phoneNumber: account.phone)
+                completion(true)
             }
         }
     }
     
+    func validateNickname(_ nickname: String) -> Bool{
+        let length = nickname.count
+        guard length >= 4 && length <= 12 else {
+            return false
+        }
+        return true
+    }
+    
+    func validatePhone(_ phoneNumber: String) -> Bool {
+        guard phoneNumber.hasPrefix("+628") else {
+            return false
+        }
+        
+        let length = phoneNumber.count
+        guard length >= 12 && length <= 15 else {
+            return false
+        }
+        
+        let numericPart = phoneNumber.dropFirst(4)
+        let isNumeric = numericPart.allSatisfy { $0.isNumber }
+        
+        return isNumeric
+    }
+    
+    func sendVerificationCode(phoneNumber: String) {
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+        }
+    }
 }
 

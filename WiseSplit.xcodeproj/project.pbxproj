@@ -68,6 +68,8 @@
 		B165D5D52BF6889E00EC6BF7 /* SearchFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D42BF6889E00EC6BF7 /* SearchFriendViewModel.swift */; };
 		B165D5D72BF689FE00EC6BF7 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D62BF689FE00EC6BF7 /* SearchFriendViewController.swift */; };
 		B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */; };
+		B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */; };
+		B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +109,8 @@
 		B165D5D42BF6889E00EC6BF7 /* SearchFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendViewModel.swift; sourceTree = "<group>"; };
 		B165D5D62BF689FE00EC6BF7 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
 		B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendTableViewCell.swift; sourceTree = "<group>"; };
+		B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
+		B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,11 +290,12 @@
 		B165D5CE2BE4FB5F00EC6BF7 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
+				B165D5DC2C00E27100EC6BF7 /* OTP */,
 				B143BB162BA35D90008B2F4D /* Register */,
 				B165D5932BAD5B6D00EC6BF7 /* Login */,
 				B165D5A72BC9AE8F00EC6BF7 /* TabBar */,
 				B165D5982BB2B6B200EC6BF7 /* Home */,
+				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
 				B165D5AA2BC9AF5B00EC6BF7 /* AddBudget */,
 				B165D5B32BCA86E900EC6BF7 /* AddPayment */,
 				B165D5C32BD813D100EC6BF7 /* HistoryPayment */,
@@ -307,6 +312,15 @@
 				B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */,
 			);
 			path = SearchFriend;
+			sourceTree = "<group>";
+		};
+		B165D5DC2C00E27100EC6BF7 /* OTP */ = {
+			isa = PBXGroup;
+			children = (
+				B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */,
+				B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */,
+			);
+			path = OTP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,6 +430,7 @@
 				B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */,
 				B165D5C72BD813F500EC6BF7 /* HistoryPaymentViewModel.swift in Sources */,
 				B143BB182BA35DA8008B2F4D /* Account.swift in Sources */,
+				B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */,
 				B165D5D72BF689FE00EC6BF7 /* SearchFriendViewController.swift in Sources */,
 				B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */,
 				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
@@ -437,6 +452,7 @@
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
 				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
 				B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */,
+				B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */,
 				B165D5D22BE5036600EC6BF7 /* TransactionTableViewCell.swift in Sources */,
 				B165D5C22BD7FD2700EC6BF7 /* HomeViewModel.swift in Sources */,
 				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,

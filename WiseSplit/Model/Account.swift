@@ -9,19 +9,19 @@ import Foundation
 
 struct Account {
     let nickname: String
-    let email: String
+    let phone: String
     var budget = 0
     var transactions: [TransactionUser] = []
     
-    init(nickname: String, email: String, budget: Int, transactions: [TransactionUser] = []) {
+    init(nickname: String, phone: String, budget: Int, transactions: [TransactionUser] = []) {
         self.nickname = nickname
-        self.email = email
+        self.phone = phone
         self.budget = budget
         self.transactions = transactions
     }
     
-    init(nickname: String, email: String) {
+    init(nickname: String, phone: String) {
         self.nickname = nickname
-        self.email = email
+        self.phone = phone
     }
 }

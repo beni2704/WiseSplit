@@ -27,8 +27,8 @@ class SearchFriendViewModel {
             for document in snapshot!.documents {
                 let data = document.data()
                 if let nickname = data["nickname"] as? String,
-                   let email = data["email"] as? String {
-                    let user = Account(nickname: nickname, email: email)
+                   let phone = data["phone"] as? String {
+                    let user = Account(nickname: nickname, phone: phone)
                     self.users.append(user)
                 }
             }

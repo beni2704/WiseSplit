@@ -46,6 +46,6 @@ class SearchFriendTableViewCell: UITableViewCell {
     
     func configure(with user: Account) {
         nicknameLabel.text = user.nickname
-        emailLabel.text = user.email
+        emailLabel.text = user.phone
     }
 }
