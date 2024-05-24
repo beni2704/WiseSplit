@@ -150,13 +150,12 @@ class RegisterViewController: BaseViewController {
             messageLabel.text = "Please confirm your password"
             return
         }
-        
+        self.addLoading(onView: self.view)
         registerVM?.registerAccount(nickname: nickname, email: email, password: password, confirmPassword: confirmPassword) { result in
             switch result {
             case .success(_):
                 let loginVC = LoginViewController()
                 loginVC.successMessage = "Registration successful. Please log in to your account."
-                
                 if let navigationController = self.navigationController {
                     navigationController.pushViewController(loginVC, animated: true)
                 }
@@ -174,6 +173,7 @@ class RegisterViewController: BaseViewController {
                     self.messageLabel.text = "\(error.localizedDescription)"
                 }
             }
+            self.removeLoading()
         }
     }
     

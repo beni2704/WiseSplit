@@ -8,13 +8,16 @@
 import UIKit
 
 class AddBudgetViewController: BaseViewController {
+    var addBudgetVM: AddBudgetViewModel?
     var titleLabel = UILabel()
     var titleBudgetTF = UILabel()
     var budgetTF = PaddedTextField()
+    var errorLabel = UILabel()
     var addButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addBudgetVM = AddBudgetViewModel()
         setupViews()
     }
     
@@ -37,6 +40,11 @@ class AddBudgetViewController: BaseViewController {
         budgetTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(budgetTF)
         
+        errorLabel.text = ""
+        errorLabel.textColor = .redCustom
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(errorLabel)
+        
         addButton.setTitle("Add Your Budget", for: .normal)
         addButton.addTarget(self, action: #selector(addBudget), for: .touchUpInside)
         addButton.backgroundColor = .systemBlue
@@ -57,7 +65,10 @@ class AddBudgetViewController: BaseViewController {
             budgetTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             budgetTF.heightAnchor.constraint(equalToConstant: 48),
             
-            addButton.topAnchor.constraint(equalTo: budgetTF.bottomAnchor, constant: 20),
+            errorLabel.topAnchor.constraint(equalTo: budgetTF.bottomAnchor, constant: 16),
+            errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            addButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 20),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             addButton.heightAnchor.constraint(equalToConstant: 40)
@@ -71,15 +82,27 @@ class AddBudgetViewController: BaseViewController {
             return
         }
         
-        // Do something with the budget amount, for example, save it to a database
+        addBudgetVM?.addBudget(amount: amount) { error in
+            if let error = error {
+                // Handle error
+                print("Error updating budget: \(error.localizedDescription)")
+                if error as! AddBudgetError == AddBudgetError.invalidAmount {
+                    self.errorLabel.text = "Budget must be above 0"
+                }
+            } else {
+                // Clear the text field after adding the budget
+                DispatchQueue.main.async {
+                    self.budgetTF.text = ""
+                    self.errorLabel.text = ""
+                }
+                
+                // Show a confirmation alert or perform any other necessary action
+                let alertController = UIAlertController(title: "Budget Added", message: "Your budget of \(amount) Rupiah has been added.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
         
-        // Clear the text field after adding the budget
-        budgetTF.text = ""
-        
-        // Show a confirmation alert or perform any other necessary action
-        let alertController = UIAlertController(title: "Budget Added", message: "Your budget of \(amount) Rupiah has been added.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
     }
 }

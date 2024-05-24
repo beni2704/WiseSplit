@@ -40,27 +40,19 @@ class RegisterViewModel {
     }
     
     func validatePassword(password: String, confirmPassword: String) -> Bool {
-        var validateUpper = false
-        if password.count < 6 {
-            return true
+        guard password == confirmPassword else {
+            return false
         }
         
-        for char in password {
-            if char.isUppercase && char.isLetter {
-                validateUpper = true
-                break
-            }
+        guard password.count >= 6 else {
+            return false
         }
         
-        if password != confirmPassword {
-            return true
+        guard password.rangeOfCharacter(from: .uppercaseLetters) != nil else {
+            return false
         }
         
-        if validateUpper {
-            return true
-        }
-        
-        return false
+        return true
     }
     
     func registerUser(withAccount account: Account, password: String, completion: @escaping (Result<User, Error>) -> Void) {
@@ -73,7 +65,8 @@ class RegisterViewModel {
                 
                 let userData: [String: Any] = [
                     "nickname": account.nickname,
-                    "email": account.email.lowercased()
+                    "email": account.email.lowercased(),
+                    "budget": 0
                 ]
                 
                 userRef.setData(userData) { error in

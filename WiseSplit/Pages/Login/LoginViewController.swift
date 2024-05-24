@@ -114,27 +114,29 @@ class LoginViewController: BaseViewController {
     
     @objc func loginButtonTapped() {
         guard let email = emailTF.text, let password = passwordTF.text else {
-                return
-            }
-            loginVM?.checkEmailExists(email: email) { [weak self] exists in
-                guard let self = self else { return }
-                if exists {
-                    self.loginVM?.loginUser(email: email, password: password) { result in
-                        switch result {
-                        case .success(_):
-                            DispatchQueue.main.async {
-                                self.navigateToHome()
-                            }
-                        case .failure(_):
-                            DispatchQueue.main.async {
-                                self.showErrorMessage("Email or password wrong")
-                            }
+            return
+        }
+        self.addLoading(onView: self.view)
+        loginVM?.checkEmailExists(email: email) { [weak self] exists in
+            guard let self = self else { return }
+            if exists {
+                self.loginVM?.loginUser(email: email, password: password) { result in
+                    switch result {
+                    case .success(_):
+                        DispatchQueue.main.async {
+                            self.navigateToHome()
+                        }
+                    case .failure(_):
+                        DispatchQueue.main.async {
+                            self.showErrorMessage("Email or password wrong")
                         }
                     }
-                } else {
-                    self.showErrorMessage("Email is not registered.")
                 }
+            } else {
+                self.showErrorMessage("Email is not registered.")
             }
+        }
+        self.removeLoading()
     }
     
     private func navigateToHome() {
