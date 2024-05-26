@@ -1,8 +1,18 @@
-//
-//  User.swift
-//  WiseSplit
-//
-//  Created by ichiro on 20/05/24.
-//
+import SwiftUI
 
-import Foundation
+struct UserTemp {
+    let name: String
+    var assignedItems: [String] = []
+    var total: Int
+    var yearlyData: [YearlyData]
+}
+
+struct YearlyData {
+    var monthData: [MonthData]
+}
+
+struct MonthData {
+    var val1: Double
+    var val2: Double
+    var val3: Double
+}

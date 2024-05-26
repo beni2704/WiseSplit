@@ -13,13 +13,13 @@ class ResultViewController: UIViewController {
     let backgroundView = UIView()
     let scrollView = UIScrollView()
     
-    var displayedUser: [User] = []
+    var displayedUser: [UserTemp] = []
     
     var itemYOffset: CGFloat = 40
     
     // MARK: - Initialization
     
-    init(displayedUser: [User]) {
+    init(displayedUser: [UserTemp]) {
         self.displayedUser = displayedUser
         super.init(nibName: nil, bundle: nil)
     }
