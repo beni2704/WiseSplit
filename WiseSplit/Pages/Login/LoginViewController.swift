@@ -4,30 +4,23 @@
 //
 //  Created by beni garcia on 22/03/24.
 //
-
-import Foundation
 import UIKit
 
 class LoginViewController: BaseViewController {
     var loginVM: LoginViewModel?
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
-    var emailTF = PaddedTextField()
-    var passwordTF = PaddedTextField()
+    var phoneLabel = UILabel()
+    var phoneTF = PaddedTextField()
     var messageLabel = UILabel()
     var loginButton = UIButton()
     var registerButton = UIButton()
-    var successMessage: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         loginVM = LoginViewModel()
         setAll()
-        
-        if let successMessage = successMessage {
-            showSuccessMessage(successMessage)
-        }
     }
     
     func setAll() {
@@ -41,18 +34,16 @@ class LoginViewController: BaseViewController {
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subTitleLabel)
         
-        emailTF.placeholder = "Email"
-        emailTF.borderStyle = .none
-        emailTF.backgroundColor = .grayBgFormCustom
-        emailTF.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(emailTF)
+        phoneLabel.text = "Phone (e.g +6281389971674)"
+        phoneLabel.translatesAutoresizingMaskIntoConstraints = false
+        phoneLabel.font = .preferredFont(forTextStyle: .callout)
+        view.addSubview(phoneLabel)
         
-        passwordTF.placeholder = "Password"
-        passwordTF.borderStyle = .none
-        passwordTF.backgroundColor = .grayBgFormCustom
-        passwordTF.isSecureTextEntry = true
-        passwordTF.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(passwordTF)
+        phoneTF.placeholder = "Phone Number"
+        phoneTF.borderStyle = .none
+        phoneTF.backgroundColor = .grayBgFormCustom
+        phoneTF.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(phoneTF)
         
         loginButton.setTitle("Login", for: .normal)
         loginButton.backgroundColor = .systemBlue
@@ -82,18 +73,18 @@ class LoginViewController: BaseViewController {
             subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             
-            emailTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emailTF.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
-            emailTF.widthAnchor.constraint(equalToConstant: 250),
-            emailTF.heightAnchor.constraint(equalToConstant: 44),
+            phoneLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            phoneLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
+            phoneLabel.widthAnchor.constraint(equalToConstant: 250),
+            phoneLabel.heightAnchor.constraint(equalToConstant: 44),
             
-            passwordTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordTF.topAnchor.constraint(equalTo: emailTF.bottomAnchor, constant: 14),
-            passwordTF.widthAnchor.constraint(equalToConstant: 250),
-            passwordTF.heightAnchor.constraint(equalToConstant: 44),
+            phoneTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            phoneTF.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 7),
+            phoneTF.widthAnchor.constraint(equalToConstant: 250),
+            phoneTF.heightAnchor.constraint(equalToConstant: 44),
             
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 14),
+            loginButton.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 14),
             loginButton.widthAnchor.constraint(equalToConstant: 250),
             loginButton.heightAnchor.constraint(equalToConstant: 44),
             
@@ -113,42 +104,33 @@ class LoginViewController: BaseViewController {
     }
     
     @objc func loginButtonTapped() {
-        guard let email = emailTF.text, let password = passwordTF.text else {
-                return
-            }
-            loginVM?.checkEmailExists(email: email) { [weak self] exists in
-                guard let self = self else { return }
-                if exists {
-                    self.loginVM?.loginUser(email: email, password: password) { result in
-                        switch result {
-                        case .success(_):
-                            DispatchQueue.main.async {
-                                self.navigateToHome()
-                            }
-                        case .failure(_):
-                            DispatchQueue.main.async {
-                                self.showErrorMessage("Email or password wrong")
-                            }
-                        }
-                    }
-                } else {
-                    self.showErrorMessage("Email is not registered.")
+        // login otp sms maks 10x sehari
+        guard let phoneNumber = phoneTF.text, !phoneNumber.isEmpty else {
+            showErrorMessage("Please enter your phone number.")
+            return
+        }
+        
+        loginVM?.checkPhoneNumberExists(phoneNumber: phoneNumber) { [weak self] exists in
+            if exists {
+                self?.loginVM?.sendVerificationCode(phoneNumber: phoneNumber)
+                let newAcc = Account(nickname: "", phone: phoneNumber)
+                
+                if let navigationController = self?.navigationController {
+                    navigationController.pushViewController(OTPViewController(account: newAcc), animated: true)
                 }
+            } else {
+                self?.showErrorMessage("Phone number not found. Please register first.")
             }
+        }
     }
     
-    private func navigateToHome() {
+    func navigateToHome() {
         let homeVC = TabBarController()
         navigationController?.pushViewController(homeVC, animated: true)
     }
     
-    private func showErrorMessage(_ message: String) {
+    func showErrorMessage(_ message: String) {
         messageLabel.text = message
-        messageLabel.textColor = .redCustom
-    }
-    
-    private func showSuccessMessage(_ message: String) {
-        messageLabel.text = message
-        messageLabel.textColor = .greenCustom
+        messageLabel.textColor = .red
     }
 }

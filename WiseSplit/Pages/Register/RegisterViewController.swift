@@ -12,10 +12,10 @@ class RegisterViewController: BaseViewController {
     var registerVM: RegisterViewModel?
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
+    var nicknameLabel = UILabel()
     var nicknameTF = PaddedTextField()
-    var emailTF = PaddedTextField()
-    var passwordTF = PaddedTextField()
-    var confirmPasswordTF = PaddedTextField()
+    var phoneLabel = UILabel()
+    var phoneTF = PaddedTextField()
     var messageLabel = UILabel()
     var registerButton = UIButton()
     var loginButton = UIButton()
@@ -38,31 +38,27 @@ class RegisterViewController: BaseViewController {
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subTitleLabel)
         
+        nicknameLabel.text = "Nickname (e.g Beni)"
+        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nicknameLabel.font = .preferredFont(forTextStyle: .callout)
+        view.addSubview(nicknameLabel)
+        
         nicknameTF.placeholder = "Nickname"
         nicknameTF.borderStyle = .none
         nicknameTF.backgroundColor = .grayBgFormCustom
         nicknameTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nicknameTF)
         
-        emailTF.placeholder = "Email"
-        emailTF.borderStyle = .none
-        emailTF.backgroundColor = .grayBgFormCustom
-        emailTF.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(emailTF)
+        phoneLabel.text = "Phone (e.g +6281389971674)"
+        phoneLabel.translatesAutoresizingMaskIntoConstraints = false
+        phoneLabel.font = .preferredFont(forTextStyle: .callout)
+        view.addSubview(phoneLabel)
         
-        passwordTF.placeholder = "Password"
-        passwordTF.borderStyle = .none
-        passwordTF.backgroundColor = .grayBgFormCustom
-        passwordTF.isSecureTextEntry = true
-        passwordTF.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(passwordTF)
-        
-        confirmPasswordTF.placeholder = "Confirm Password"
-        confirmPasswordTF.borderStyle = .none
-        confirmPasswordTF.backgroundColor = .grayBgFormCustom
-        confirmPasswordTF.isSecureTextEntry = true
-        confirmPasswordTF.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(confirmPasswordTF)
+        phoneTF.placeholder = "Phone Number"
+        phoneTF.borderStyle = .none
+        phoneTF.backgroundColor = .grayBgFormCustom
+        phoneTF.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(phoneTF)
         
         registerButton.setTitle("Register", for: .normal)
         registerButton.backgroundColor = .systemBlue
@@ -92,28 +88,26 @@ class RegisterViewController: BaseViewController {
             subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             
+            nicknameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nicknameLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
+            nicknameLabel.widthAnchor.constraint(equalToConstant: 250),
+            
             nicknameTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nicknameTF.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
+            nicknameTF.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 7),
             nicknameTF.widthAnchor.constraint(equalToConstant: 250),
             nicknameTF.heightAnchor.constraint(equalToConstant: 44),
             
-            emailTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emailTF.topAnchor.constraint(equalTo: nicknameTF.bottomAnchor, constant: 14),
-            emailTF.widthAnchor.constraint(equalToConstant: 250),
-            emailTF.heightAnchor.constraint(equalToConstant: 44),
+            phoneLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            phoneLabel.topAnchor.constraint(equalTo: nicknameTF.bottomAnchor, constant: 14),
+            phoneLabel.widthAnchor.constraint(equalToConstant: 250),
             
-            passwordTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordTF.topAnchor.constraint(equalTo: emailTF.bottomAnchor, constant: 14),
-            passwordTF.widthAnchor.constraint(equalToConstant: 250),
-            passwordTF.heightAnchor.constraint(equalToConstant: 44),
-            
-            confirmPasswordTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            confirmPasswordTF.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 14),
-            confirmPasswordTF.widthAnchor.constraint(equalToConstant: 250),
-            confirmPasswordTF.heightAnchor.constraint(equalToConstant: 44),
+            phoneTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            phoneTF.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 7),
+            phoneTF.widthAnchor.constraint(equalToConstant: 250),
+            phoneTF.heightAnchor.constraint(equalToConstant: 44),
             
             registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            registerButton.topAnchor.constraint(equalTo: confirmPasswordTF.bottomAnchor, constant: 14),
+            registerButton.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 14),
             registerButton.widthAnchor.constraint(equalToConstant: 250),
             registerButton.heightAnchor.constraint(equalToConstant: 44),
             
@@ -128,51 +122,31 @@ class RegisterViewController: BaseViewController {
     }
     
     @objc func registerButtonTapped() {
-        guard let nickname = nicknameTF.text, let email = emailTF.text, let password = passwordTF.text, let confirmPassword = confirmPasswordTF.text else {
-            return
-        }
-        if nickname.isEmpty {
-            messageLabel.text = "Please enter your nickname"
+        guard let nickname = nicknameTF.text, let phone = phoneTF.text, let registerVM = registerVM else {
             return
         }
         
-        if email.isEmpty {
-            messageLabel.text = "Please enter your email"
+        if !registerVM.validateNickname(nickname) {
+            messageLabel.text = "Nickname must be 4 - 12 length"
             return
         }
         
-        if password.isEmpty {
-            messageLabel.text = "Please enter your password"
+        if !registerVM.validatePhone(phone) {
+            messageLabel.text = "Please enter your correct phone number"
             return
         }
         
-        if confirmPassword.isEmpty {
-            messageLabel.text = "Please confirm your password"
-            return
-        }
+        self.addLoading(onView: self.view)
+        let newAcc = Account(nickname: nickname, phone: phone)
         
-        registerVM?.registerAccount(nickname: nickname, email: email, password: password, confirmPassword: confirmPassword) { result in
-            switch result {
-            case .success(_):
-                let loginVC = LoginViewController()
-                loginVC.successMessage = "Registration successful. Please log in to your account."
-                
+        registerVM.registerUserIfNotExists(account: newAcc) { success in
+            if success {
                 if let navigationController = self.navigationController {
-                    navigationController.pushViewController(loginVC, animated: true)
+                    navigationController.pushViewController(OTPViewController(account: newAcc), animated: true)
                 }
-            case .failure(let error):
-                if let registerError = error as? RegisterError {
-                    switch registerError {
-                    case.invalidTextField :
-                        self.messageLabel.text = "All fields must be filled"
-                    case .invalidEmail:
-                        self.messageLabel.text = "Invalid email format"
-                    case .passwordMismatch:
-                        self.messageLabel.text = "Password missmatch or at least must be 1 uppercase character "
-                    }
-                } else {
-                    self.messageLabel.text = "\(error.localizedDescription)"
-                }
+            } else {
+                self.messageLabel.text = "Phone number already registered"
+                self.removeLoading()
             }
         }
     }
