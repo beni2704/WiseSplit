@@ -32,6 +32,7 @@ class SearchFriendViewModel {
                     self.users.append(user)
                 }
             }
+            self.users.append(Account(nickname: nickname, phone: "Not Registered"))
             self.filteredUsers = self.users
             completion()
         }

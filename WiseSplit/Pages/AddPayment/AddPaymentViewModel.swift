@@ -46,7 +46,7 @@ class AddPaymentViewModel {
                         let data: [String: Any] = [
                             "amount": -amount,
                             "category": category,
-                            "date": Timestamp(date: Date.now)
+                            "date": Timestamp(date: date)
                         ]
                         
                         transactionRef.setData(data) { error in

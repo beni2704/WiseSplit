@@ -16,6 +16,7 @@ extension UIColor {
     static var grayBgFormCustom = UIColor(hex: "#EEEEEE")
     static var greenCustom = UIColor(hex: "#30DB5B")
     static var redCustom = UIColor(hex: "#DE0000")
+    static var lightGrayCustom = UIColor(hex: "#D9D9D9")
     
     convenience init?(hex: String) {
             var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)

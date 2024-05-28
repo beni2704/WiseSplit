@@ -97,7 +97,7 @@ class AddBudgetViewController: BaseViewController {
                 }
                 
                 // Show a confirmation alert or perform any other necessary action
-                let alertController = UIAlertController(title: "Budget Added", message: "Your budget of \(amount) Rupiah has been added.", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Budget Added", message: "Your budget of \(formatToIDR(amount)) has been added.", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(okAction)
                 self.present(alertController, animated: true, completion: nil)

@@ -10,6 +10,7 @@ import UIKit
 
 class SearchFriendViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     let viewModel = SearchFriendViewModel()
+    let titleLabel = UILabel()
     let tableView = UITableView()
     let searchBar = UISearchBar()
     
@@ -19,15 +20,24 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
         setupSearchBar()
         setupTableView()
         
+        
         searchBar.delegate = self
     }
     
     private func setupSearchBar() {
+        titleLabel.text = "Search Friend"
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(titleLabel)
+        
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchBar)
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])

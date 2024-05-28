@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             navigationController = UINavigationController(rootViewController: LoginViewController())
         }
-        //        navigationController = UINavigationController(rootViewController: TabBarController())
+//        navigationController = UINavigationController(rootViewController: ViewController())
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         return true

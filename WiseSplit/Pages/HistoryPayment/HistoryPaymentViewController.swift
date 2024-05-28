@@ -10,19 +10,44 @@ import UIKit
 
 class HistoryPaymentViewController: UIViewController {
     
+    var rectangleBorder = UIView()
+    var spendingTitle = UILabel()
+    var spendingTotal = UILabel()
+    var categoryFilter = UISegmentedControl(items: ["Spending", "Bill Owe", "Bill Received"])
+    
     var tableView: UITableView!
     var historyPaymentVM: HistoryPaymentViewModel!
     var transactions: [TransactionUser] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         historyPaymentVM = HistoryPaymentViewModel()
         setupUI()
-        fetchTransactions()
+        fetchSpendingTransaction()
     }
     
     private func setupUI() {
         title = "Transaction History"
+        
+        rectangleBorder.translatesAutoresizingMaskIntoConstraints = false
+        rectangleBorder.layer.cornerRadius = 10
+        rectangleBorder.backgroundColor = .lightGrayCustom
+        view.addSubview(rectangleBorder)
+        
+        spendingTitle.text = "Total Spending"
+        spendingTitle.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        spendingTitle.translatesAutoresizingMaskIntoConstraints = false
+        rectangleBorder.addSubview(spendingTitle)
+        
+        spendingTotal.text = "IDR 0"
+        spendingTotal.font = UIFont.preferredFont(forTextStyle: .title3)
+        spendingTotal.translatesAutoresizingMaskIntoConstraints = false
+        rectangleBorder.addSubview(spendingTotal)
+        
+        categoryFilter.selectedSegmentIndex = 0
+        categoryFilter.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        categoryFilter.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(categoryFilter)
         
         // Create table view
         tableView = UITableView()
@@ -34,23 +59,88 @@ class HistoryPaymentViewController: UIViewController {
         
         // Setup constraints
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            rectangleBorder.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            rectangleBorder.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            rectangleBorder.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            spendingTitle.topAnchor.constraint(equalTo: rectangleBorder.topAnchor, constant: 16),
+            spendingTitle.centerXAnchor.constraint(equalTo: rectangleBorder.centerXAnchor),
+            
+            spendingTotal.topAnchor.constraint(equalTo: spendingTitle.bottomAnchor, constant: 16),
+            spendingTotal.centerXAnchor.constraint(equalTo: rectangleBorder.centerXAnchor),
+            spendingTotal.bottomAnchor.constraint(equalTo: rectangleBorder.bottomAnchor, constant: -16),
+            
+            categoryFilter.topAnchor.constraint(equalTo: rectangleBorder.bottomAnchor, constant: 16),
+            categoryFilter.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            categoryFilter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            tableView.topAnchor.constraint(equalTo: categoryFilter.bottomAnchor, constant: 16),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
-    private func fetchTransactions() {
-        historyPaymentVM.fetchTransactions { [weak self] result in
+    @objc private func segmentChanged(_ sender: UISegmentedControl) {
+        self.addLoading(onView: self.view)
+        switch sender.selectedSegmentIndex {
+        case 0:
+            fetchSpendingTransaction()
+        case 1:
+            fetchBillOweTransactions()
+        case 2:
+            fetchBillReceivedTransactions()
+        default:
+            break
+        }
+        self.removeLoading()
+    }
+    
+    private func fetchSpendingTransaction() {
+        historyPaymentVM.fetchTransactionsSpending { [weak self] result in
             switch result {
             case .success(let transactions):
                 self?.transactions = transactions
                 self?.tableView.reloadData()
+                self?.updateTotalSpending()
+                self?.spendingTitle.text = "Total Spending"
             case .failure(let error):
                 print("Error fetching transactions: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func fetchBillOweTransactions() {
+        historyPaymentVM.fetchTransactionsBillOwe { [weak self] result in
+            switch result {
+            case .success(let transactions):
+                self?.transactions = transactions
+                self?.tableView.reloadData()
+                self?.updateTotalSpending()
+                self?.spendingTitle.text = "Total Owe"
+            case .failure(let error):
+                print("Error fetching transactions: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func fetchBillReceivedTransactions() {
+        historyPaymentVM.fetchTransactionsBillReceived { [weak self] result in
+            switch result {
+            case .success(let transactions):
+                self?.transactions = transactions
+                self?.tableView.reloadData()
+                self?.updateTotalSpending()
+                self?.spendingTitle.text = "Total Received"
+            case .failure(let error):
+                print("Error fetching transactions: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func updateTotalSpending() {
+        let totalSpending = abs(transactions.reduce(0) { $0 + $1.amount })
+        spendingTotal.text = "\(formatToIDR(totalSpending))"
     }
 }
 
