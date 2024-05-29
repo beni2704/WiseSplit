@@ -157,7 +157,7 @@ class AddPaymentViewController: BaseViewController {
                     self.errorLabel.text = "An error occurred"
                 }
             } else {
-                let alertController = UIAlertController(title: "Payment Added", message: "Your payment of \(amount) Rupiah has been added.", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Payment Added", message: "Your payment of \(formatToIDR(amount)) has been added.", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(okAction)
                 self.present(alertController, animated: true, completion: nil)

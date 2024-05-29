@@ -27,7 +27,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         button.setBackgroundImage(UIImage(color: UIColor.lightGray), for: .disabled)
         button.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)
-        button.isEnabled = false
+//        button.isEnabled = false
         return button
     }()
 

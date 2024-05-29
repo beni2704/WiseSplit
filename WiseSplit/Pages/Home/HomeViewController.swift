@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import FirebaseAuth
+import SwiftUI
+import Charts
 
 class HomeViewController: UIViewController {
     var homeVM: HomeViewModel?
@@ -18,6 +20,7 @@ class HomeViewController: UIViewController {
     var spendingTitle = UILabel()
     var spendingButton = UIButton()
     var account: Account?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,15 +54,7 @@ class HomeViewController: UIViewController {
         notifButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(notifButton)
         
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "IDR"
-        formatter.maximumFractionDigits = 0
-        if let budgetAmount = account?.budget {
-            numBudget.text = formatter.string(from: NSNumber(value: budgetAmount))
-        } else {
-            numBudget.text = formatter.string(from: NSNumber(value: 0))
-        }
+        numBudget.text = "\(formatToIDR(account?.budget ?? 0))"
         numBudget.font = UIFont.preferredFont(forTextStyle: .title2)
         numBudget.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(numBudget)
@@ -99,7 +94,24 @@ class HomeViewController: UIViewController {
             
             spendingButton.topAnchor.constraint(equalTo: titleBudget.bottomAnchor, constant: 8),
             spendingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
+        ])
+        
+        setupBarChart()
+    }
+    
+    func setupBarChart() {
+        let barChartsView = BarChartsView()
+        let hostingController = UIHostingController(rootView: barChartsView)
+        addChild(hostingController)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: spendingTitle.bottomAnchor, constant: 16),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 350)
         ])
     }
     

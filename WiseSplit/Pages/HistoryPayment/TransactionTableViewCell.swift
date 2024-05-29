@@ -11,6 +11,14 @@ import UIKit
 class TransactionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "TransactionTableViewCell"
     
+    let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .grayCustom
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -21,9 +29,10 @@ class TransactionTableViewCell: UITableViewCell {
     
     let amountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.textColor = .redCustom
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
@@ -35,6 +44,7 @@ class TransactionTableViewCell: UITableViewCell {
         return label
     }()
     
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -45,22 +55,26 @@ class TransactionTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        addSubview(iconImageView)
         addSubview(categoryLabel)
         addSubview(amountLabel)
         addSubview(dateLabel)
         
         NSLayoutConstraint.activate([
+            iconImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            iconImageView.widthAnchor.constraint(equalToConstant: 48),
+            iconImageView.heightAnchor.constraint(equalToConstant: 48),
+            
             categoryLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            categoryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            categoryLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
             categoryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            amountLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 4),
-            amountLabel.leadingAnchor.constraint(equalTo: categoryLabel.leadingAnchor),
-            amountLabel.trailingAnchor.constraint(equalTo: categoryLabel.trailingAnchor),
+            amountLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            amountLabel.trailingAnchor.constraint(equalTo: categoryLabel.trailingAnchor, constant: -16),
             
-            dateLabel.topAnchor.constraint(equalTo: amountLabel.bottomAnchor, constant: 4),
-            dateLabel.leadingAnchor.constraint(equalTo: categoryLabel.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: categoryLabel.trailingAnchor),
+            dateLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 8),
+            dateLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
@@ -69,5 +83,18 @@ class TransactionTableViewCell: UITableViewCell {
         categoryLabel.text = transaction.category
         amountLabel.text = "\(transaction.amount) IDR"
         dateLabel.text = "\(transaction.date)"
+        
+        switch transaction.category {
+        case "Food & Beverage":
+            iconImageView.image = UIImage(systemName: "fork.knife")
+        case "Health Care":
+            iconImageView.image = UIImage(systemName: "stethoscope")
+        case "Transportation":
+            iconImageView.image = UIImage(systemName: "bus")
+        case "Entertainment":
+            iconImageView.image = UIImage(systemName: "guitars")
+        default:
+            iconImageView.image = UIImage(systemName: "newspaper")
+        }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct TransactionUser {
+struct TransactionUser: Identifiable{
     let id: String
     let amount: Int
     let category: String
@@ -26,5 +26,12 @@ struct TransactionUser {
         self.amount = amount
         self.category = category
         self.date = timestamp.dateValue()
+    }
+    
+    init(id: String, amount: Int, category: String, date: Date) {
+        self.id = id
+        self.amount = amount
+        self.category = category
+        self.date = date
     }
 }
