@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GetImageControllerView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class InitiateSplitBillViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var titleLabel = UILabel()
     var firstText = UILabel()
@@ -93,7 +93,7 @@ class GetImageControllerView: UIViewController, UIImagePickerControllerDelegate,
             
             let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
                 guard let self = self else { return }
-                let viewController = ViewController()
+                let viewController = InitiateSplitBillViewController()
                 self.navigationController?.pushViewController(viewController, animated: true)
             }
             actionSheet.addAction(takePhotoAction)

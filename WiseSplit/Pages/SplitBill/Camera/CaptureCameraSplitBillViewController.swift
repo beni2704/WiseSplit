@@ -3,7 +3,7 @@ import CoreML
 import Vision
 import AVKit
 
-class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
+class InitiateSplitBillViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
 
     var photoOutput: AVCapturePhotoOutput?
     
