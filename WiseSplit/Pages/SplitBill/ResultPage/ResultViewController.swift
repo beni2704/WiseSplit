@@ -1,3 +1,11 @@
+//
+//  ResultBillViewController.swift
+//  WiseSplit
+//
+//  Created by beni garcia on 30/05/24.
+//
+
+import Foundation
 import UIKit
 
 class ResultViewController: UIViewController {
