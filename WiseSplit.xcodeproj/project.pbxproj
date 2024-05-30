@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D296D272C08A7F10073E210 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D262C08A7F10073E210 /* ResultViewModel.swift */; };
+		5D296D2B2C08A80A0073E210 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2A2C08A80A0073E210 /* ResultModel.swift */; };
+		5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2D2C08A8290073E210 /* OweResultViewController.swift */; };
+		5D296D312C08A8520073E210 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D302C08A8520073E210 /* PaymentViewController.swift */; };
+		5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D332C08A8720073E210 /* AddPaymentInfo.swift */; };
+		5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D362C08A8900073E210 /* WhatsAppConfig.swift */; };
 		5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */; };
 		5D2AC93D2BF71C4500B033AE /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */; };
 		5DB30EC82BFB6BA1007F34D5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB30EC72BFB6BA1007F34D5 /* User.swift */; };
@@ -89,8 +95,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D296D262C08A7F10073E210 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
+		5D296D2A2C08A80A0073E210 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
+		5D296D2D2C08A8290073E210 /* OweResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OweResultViewController.swift; sourceTree = "<group>"; };
+		5D296D302C08A8520073E210 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		5D296D332C08A8720073E210 /* AddPaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfo.swift; sourceTree = "<group>"; };
+		5D296D362C08A8900073E210 /* WhatsAppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppConfig.swift; sourceTree = "<group>"; };
 		5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
-		5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResultViewController.swift; path = ../SplitBill/ResultViewController.swift; sourceTree = "<group>"; };
 		5DB30EC72BFB6BA1007F34D5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +195,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D296D252C08A7C20073E210 /* ResultPage */ = {
+			isa = PBXGroup;
+			children = (
+				5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */,
+				5D296D262C08A7F10073E210 /* ResultViewModel.swift */,
+				5D296D2A2C08A80A0073E210 /* ResultModel.swift */,
+			);
+			path = ResultPage;
+			sourceTree = "<group>";
+		};
+		5D296D2C2C08A8190073E210 /* Owe */ = {
+			isa = PBXGroup;
+			children = (
+				5D296D2D2C08A8290073E210 /* OweResultViewController.swift */,
+			);
+			path = Owe;
+			sourceTree = "<group>";
+		};
+		5D296D2F2C08A8320073E210 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				5D296D302C08A8520073E210 /* PaymentViewController.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		5D296D322C08A85E0073E210 /* AddPaymentInfo */ = {
+			isa = PBXGroup;
+			children = (
+				5D296D332C08A8720073E210 /* AddPaymentInfo.swift */,
+			);
+			path = AddPaymentInfo;
+			sourceTree = "<group>";
+		};
+		5D296D352C08A8810073E210 /* WhatsAppConfig */ = {
+			isa = PBXGroup;
+			children = (
+				5D296D362C08A8900073E210 /* WhatsAppConfig.swift */,
+			);
+			path = WhatsAppConfig;
+			sourceTree = "<group>";
+		};
 		5DCE3CB32BDD6F660067F9FD /* SplitBill */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +249,6 @@
 				5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */,
 				5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */,
 				5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */,
-				5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */,
 			);
 			path = SplitBill;
 			sourceTree = "<group>";
@@ -219,6 +272,11 @@
 		B143BAFD2B9EE497008B2F4D /* WiseSplit */ = {
 			isa = PBXGroup;
 			children = (
+				5D296D352C08A8810073E210 /* WhatsAppConfig */,
+				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
+				5D296D2F2C08A8320073E210 /* Payment */,
+				5D296D2C2C08A8190073E210 /* Owe */,
+				5D296D252C08A7C20073E210 /* ResultPage */,
 				5DCE3CB32BDD6F660067F9FD /* SplitBill */,
 				B165D5A42BC9A28A00EC6BF7 /* Asset */,
 				B1C96B792C06388C00158F40 /* Utility */,
@@ -526,6 +584,7 @@
 				B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */,
 				B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */,
 				B1C96B7D2C063D0900158F40 /* FormatDateFirebase.swift in Sources */,
+				5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */,
 				5DB30EC82BFB6BA1007F34D5 /* User.swift in Sources */,
 				B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */,
 				B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */,
@@ -536,13 +595,16 @@
 				B165D5CB2BDB5EC800EC6BF7 /* EnumAddBudget.swift in Sources */,
 				B165D5D02BE5005500EC6BF7 /* Transaction.swift in Sources */,
 				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
+				5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */,
 				B1C96B762C0630C100158F40 /* SplitBillStore.swift in Sources */,
 				5DCE3CC12BDD73F90067F9FD /* BillManager.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
+				5D296D312C08A8520073E210 /* PaymentViewController.swift in Sources */,
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
 				5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
+				5D296D2B2C08A80A0073E210 /* ResultModel.swift in Sources */,
 				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
 				B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */,
 				B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */,
@@ -557,6 +619,8 @@
 				B165D5972BAD5B8A00EC6BF7 /* LoginViewModel.swift in Sources */,
 				5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */,
 				B165D5B22BCA86E500EC6BF7 /* AddPaymentViewController.swift in Sources */,
+				5D296D272C08A7F10073E210 /* ResultViewModel.swift in Sources */,
+				5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

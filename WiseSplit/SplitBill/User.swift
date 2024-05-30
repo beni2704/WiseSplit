@@ -2,10 +2,15 @@ import SwiftUI
 
 struct UserTemp {
     let name: String
+    let phoneNumber: String
     var assignedItems: [String] = []
-    var total: Int
+    var totalOwe: Double
+    var currentBalance: Int
+    var paidStatus: Bool
     var yearlyData: [YearlyData]
 }
+
+
 
 struct YearlyData {
     var monthData: [MonthData]

@@ -4,27 +4,22 @@ class ResultViewController: UIViewController {
     
     // MARK: - Properties
     
-    var titleLabel = UILabel()
-    var firstText = UILabel()
-    var secondText = UILabel()
+    var viewModel: ResultViewModel!
     
-    var userLabel = UILabel()
-    
-    let backgroundView = UIView()
-    let scrollView = UIScrollView()
-    
-    var displayedUser: [UserTemp] = []
-    
-    var itemYOffset: CGFloat = 40
+    private var titleLabel = UILabel()
+    private var firstText = UILabel()
+    private var secondText = UILabel()
+    private var backgroundView = UIView()
+    private var scrollView = UIScrollView()
     
     // MARK: - Initialization
     
-    init(displayedUser: [UserTemp]) {
-        self.displayedUser = displayedUser
+    init(viewModel: ResultViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -33,19 +28,18 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        bindViewModel()
     }
     
     // MARK: - Setup UI
     
     private func setupUI() {
-        view.backgroundColor = AppTheme.backgroundColor
+        view.backgroundColor = .white
         
         setupLabels()
         setupBackgroundView()
         setupScrollView()
         setupButtons()
-        
-        displayUser()
     }
     
     private func setupLabels() {
@@ -54,7 +48,7 @@ class ResultViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        firstText.text = "Nama Restoran"
+        firstText.text = viewModel.billName
         firstText.font = UIFont.boldSystemFont(ofSize: 24)
         firstText.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(firstText)
@@ -91,74 +85,170 @@ class ResultViewController: UIViewController {
     }
     
     private func setupScrollView() {
-        scrollView.backgroundColor = .blue
+        scrollView.backgroundColor = .lightGray
         scrollView.layer.cornerRadius = 10
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsHorizontalScrollIndicator = false
         backgroundView.addSubview(scrollView)
         
-        userLabel.numberOfLines = 0 // Allows for multiple lines
-        userLabel.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(userLabel)
-        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
-            scrollView.heightAnchor.constraint(equalToConstant: 200),
-            
-            userLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            userLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            userLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            userLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -287)
         ])
     }
     
     private func setupButtons() {
         let addPaymentButton = UIButton(type: .system)
-        addPaymentButton.setTitle("Add Payment", for: .normal)
-        addPaymentButton.setTitleColor(AppTheme.textColor, for: .normal)
-        addPaymentButton.backgroundColor = AppTheme.gray
-        addPaymentButton.frame = CGRect(x: 50, y: itemYOffset, width: 342.28, height: 39)
+        addPaymentButton.setTitle("Add/Edit Your Payment Information", for: .normal)
+        addPaymentButton.setTitleColor(.white, for: .normal)
         addPaymentButton.addTarget(self, action: #selector(addPaymentButtonTapped), for: .touchUpInside)
-        //backgroundView.addSubview(addPaymentButton)
+        addPaymentButton.backgroundColor = .gray // Update with your AppTheme
+        addPaymentButton.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(addPaymentButton)
         
         let shareLink = UIButton(type: .system)
-        shareLink.setTitle("Share Link", for: .normal)
-        shareLink.setTitleColor(AppTheme.textColor, for: .normal)
-        shareLink.backgroundColor = AppTheme.green
-        shareLink.frame = CGRect(x: 240, y: itemYOffset, width: 342.28, height: 39)
+        shareLink.setTitle("Share Bill", for: .normal)
+        shareLink.setTitleColor(.white, for: .normal)
         shareLink.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
-        //backgroundView.addSubview(shareLink)
+        shareLink.backgroundColor = .green // Update with your AppTheme
+        shareLink.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(shareLink)
         
         NSLayoutConstraint.activate([
-//            addPaymentButton.topAnchor.constraint(equalTo: firstText.bottomAnchor, constant: 16),
-//            addPaymentButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
-//            addPaymentButton.trailingAnchor.constraint(equalTo: shareLink.leadingAnchor, constant: -16),
-//            addPaymentButton.bottomAnchor.constraint(equalTo: shareLink.topAnchor, constant: -16),
-//
-//            shareLink.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-//            shareLink.heightAnchor.constraint(equalToConstant: 39),
-//            shareLink.widthAnchor.constraint(equalToConstant: 100),
-//            shareLink.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16)
+            shareLink.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
+            shareLink.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+            shareLink.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+            shareLink.heightAnchor.constraint(equalToConstant: 39),
+            
+            addPaymentButton.bottomAnchor.constraint(equalTo: shareLink.topAnchor, constant: -16),
+            addPaymentButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+            addPaymentButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+            addPaymentButton.heightAnchor.constraint(equalToConstant: 39)
         ])
     }
     
-    private func displayUser() {
-        var displayedUserText = ""
-        for user in displayedUser {
-            displayedUserText += "\(user.name): \(user.assignedItems.joined(separator: ", "))\n"
+    private func bindViewModel() {
+        titleLabel.text = viewModel.titleLabelText
+        firstText.text = viewModel.firstLabelText
+        secondText.text = viewModel.secondLabelText
+        viewModel.setupBackgroundView(backgroundView)
+        viewModel.setupScrollView(scrollView, in: backgroundView)
+
+        displayUsers()
+    }
+    
+    private func displayUsers() {
+        var lastView: UIView? = nil
+        
+        for user in viewModel.displayedUsers {
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.backgroundColor = .lightGray
+            scrollView.addSubview(containerView)
+            
+            let nameLabel = UILabel()
+            nameLabel.text = viewModel.userNameText(for: user)
+            nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+            nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(nameLabel)
+            
+            let phoneNumberLabel = UILabel()
+            phoneNumberLabel.text = viewModel.userPhoneNumberText(for: user)
+            phoneNumberLabel.font = UIFont.boldSystemFont(ofSize: 9)
+            phoneNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(phoneNumberLabel)
+            
+            let statusButton = UIButton(type: .system)
+            statusButton.setTitle(viewModel.userStatusButtonText(for: user), for: .normal)
+            statusButton.backgroundColor = viewModel.userStatusButtonColor(for: user)
+            statusButton.setTitleColor(.white, for: .normal)
+            statusButton.isEnabled = viewModel.userStatusButtonEnabled(for: user)
+            statusButton.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(statusButton)
+            
+            if user.paidStatus {
+                statusButton.addTarget(self, action: #selector(openPaymentPage), for: .touchUpInside)
+            }
+            
+            NSLayoutConstraint.activate([
+                containerView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? scrollView.topAnchor, constant: 16),
+                containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                containerView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                
+                nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+                nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                
+                phoneNumberLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+                phoneNumberLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                phoneNumberLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                
+                statusButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 4),
+                statusButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            ])
+            
+            lastView = containerView
+            
+            let divider = UIView()
+            divider.backgroundColor = .gray
+            divider.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview(divider)
+            
+            NSLayoutConstraint.activate([
+                divider.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 8),
+                divider.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                divider.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
+                divider.heightAnchor.constraint(equalToConstant: 1),
+            ])
+            
+            lastView = divider
+            
+            for item in user.assignedItems {
+                let itemLabel = UILabel()
+                itemLabel.text = item
+                itemLabel.font = UIFont.systemFont(ofSize: 16)
+                itemLabel.translatesAutoresizingMaskIntoConstraints = false
+                scrollView.addSubview(itemLabel)
+                
+                NSLayoutConstraint.activate([
+                    itemLabel.topAnchor.constraint(equalTo: lastView!.bottomAnchor, constant: 8),
+                    itemLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
+                    itemLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16)
+                ])
+                
+                lastView = itemLabel
+            }
         }
-        userLabel.text = displayedUserText
+        
+        if let lastView = lastView {
+            lastView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16).isActive = true
+        }
+
+        scrollView.layoutIfNeeded()
     }
     
     // MARK: - Button Actions
     
     @objc private func addPaymentButtonTapped() {
-        // Add payment logic
+        let addPaymentInfoVC = AddPaymentInfo()
+        let navigationController = UINavigationController(rootViewController: addPaymentInfoVC)
+        navigationController.modalPresentationStyle = .pageSheet
+        
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        
+        present(navigationController, animated: true, completion: nil)
     }
     
     @objc private func shareLinkButtonTapped() {
         // Share link logic
+    }
+    
+    @objc private func openPaymentPage() {
+        let paymentViewController = PaymentViewController()
+        navigationController?.pushViewController(paymentViewController, animated: true)
     }
 }
