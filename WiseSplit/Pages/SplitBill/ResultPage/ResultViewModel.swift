@@ -10,10 +10,10 @@ import UIKit
 
 class ResultViewModel {
     
-    var displayedUsers: [UserTemp]
+    var displayedUsers: [PersonTotal]
     var billName: String
     
-    init(displayedUsers: [UserTemp], billName: String) {
+    init(displayedUsers: [PersonTotal], billName: String) {
         self.displayedUsers = displayedUsers
         self.billName = billName
     }
@@ -55,24 +55,24 @@ class ResultViewModel {
     
     // MARK: - Display Users
     
-    func userNameText(for user: UserTemp) -> String {
-        let formattedTotalOwe = String(format: "%.2f", user.totalOwe)
-        return "\(user.name)'s total: \(formattedTotalOwe)"
+    func userNameText(for user: PersonTotal) -> String {
+        let formattedTotalOwe = String(format: "%.2f", user.totalAmount)
+        return "\(user.personName)'s total: \(formattedTotalOwe)"
     }
     
-    func userPhoneNumberText(for user: UserTemp) -> String {
-        return "\(user.phoneNumber)"
+    func userPhoneNumberText(for user: PersonTotal) -> String {
+        return "\(user.personPhoneNumber)"
     }
     
-    func userStatusButtonText(for user: UserTemp) -> String {
-        return user.paidStatus ? "See Payment" : "Unpaid"
+    func userStatusButtonText(for user: PersonTotal) -> String {
+        return user.isPaid ? "See Payment" : "Unpaid"
     }
     
-    func userStatusButtonColor(for user: UserTemp) -> UIColor {
-        return user.paidStatus ? .green : .gray
+    func userStatusButtonColor(for user: PersonTotal) -> UIColor {
+        return user.isPaid ? .green : .gray
     }
     
-    func userStatusButtonEnabled(for user: UserTemp) -> Bool {
-        return user.paidStatus
+    func userStatusButtonEnabled(for user: PersonTotal) -> Bool {
+        return user.isPaid
     }
 }

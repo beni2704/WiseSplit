@@ -28,11 +28,11 @@ class SearchFriendViewModel {
                 let data = document.data()
                 if let nickname = data["nickname"] as? String,
                    let phone = data["phone"] as? String {
-                    let user = Account(nickname: nickname, phone: phone)
+                    let user = Account(uuid: document.documentID, nickname: nickname, phone: phone)
                     self.users.append(user)
                 }
             }
-            self.users.append(Account(nickname: nickname, phone: "Not Registered"))
+            self.users.append(Account(uuid: "0", nickname: nickname, phone: "Not Registered"))
             self.filteredUsers = self.users
             completion()
         }

@@ -20,8 +20,9 @@ struct SplitBill {
 struct PersonTotal {
     let personUUID: String
     let personName: String
-    let totalAmount: Int
-    let items: [BillItem]
+    let personPhoneNumber: String
+    var totalAmount: Int
+    var items: [BillItem]
     var isPaid: Bool
 }
 
@@ -29,6 +30,12 @@ struct BillItem {
     let name: String
     let quantity: Int
     let price: Int
+    
+    init(name: String, quantity: Int, price: Int) {
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+    }
 }
 
 extension BillItem {
@@ -46,6 +53,7 @@ extension PersonTotal {
         return [
             "personUUID": personUUID,
             "personName": personName,
+            "personPhoneNumber": personPhoneNumber,
             "totalAmount": totalAmount,
             "items": items.map { $0.toDictionary() },
             "isPaid": isPaid

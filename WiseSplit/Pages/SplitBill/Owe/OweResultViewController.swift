@@ -15,7 +15,7 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
     
     let scrollView = UIScrollView()
     
-    var displayedUser: [UserTemp] = []
+    var displayedUser: [PersonTotal] = []
     
     var paymentInfo = UILabel()
     var paymentDetail = UILabel()
@@ -30,7 +30,7 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
     
     // MARK: - Initialization
     
-    init(displayedUser: [UserTemp], paymentMethod: String, accountName: String, accountNumber: String) {
+    init(displayedUser: [PersonTotal], paymentMethod: String, accountName: String, accountNumber: String) {
         self.displayedUser = displayedUser
         self.paymentMethod = paymentMethod
         self.accountName = accountName
@@ -213,13 +213,13 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
             scrollView.addSubview(containerView)
             
             let nameLabel = UILabel()
-            nameLabel.text = "\(user.name)'s total"
+            nameLabel.text = "\(user.personName)'s total"
             nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(nameLabel)
             
             let phoneNumberLabel = UILabel()
-            phoneNumberLabel.text = "\(user.phoneNumber)"
+            phoneNumberLabel.text = "\(user.personPhoneNumber)"
             phoneNumberLabel.font = UIFont.boldSystemFont(ofSize: 9)
             phoneNumberLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(phoneNumberLabel)
@@ -257,9 +257,9 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
             
             lastView = divider
             
-            for item in user.assignedItems {
+            for item in user.items {
                 let itemLabel = UILabel()
-                itemLabel.text = item
+                itemLabel.text = "\(item.name) + \(item.quantity) + \(item.price)"
                 itemLabel.font = UIFont.systemFont(ofSize: 16)
                 itemLabel.translatesAutoresizingMaskIntoConstraints = false
                 scrollView.addSubview(itemLabel)

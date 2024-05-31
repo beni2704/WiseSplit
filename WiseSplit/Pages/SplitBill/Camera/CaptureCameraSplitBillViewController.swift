@@ -3,7 +3,7 @@ import CoreML
 import Vision
 import AVKit
 
-class InitiateSplitBillViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
+class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
 
     var photoOutput: AVCapturePhotoOutput?
     
@@ -74,7 +74,7 @@ class InitiateSplitBillViewController: UIViewController, AVCaptureVideoDataOutpu
             captureSession.addOutput(outputData)
         }
 
-        setupIdentifierConfidenceLabel()
+//        setupIdentifierConfidenceLabel()
         setupCaptureButton()
     }
     
