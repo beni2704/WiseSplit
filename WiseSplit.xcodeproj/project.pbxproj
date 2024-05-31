@@ -7,22 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D296D272C08A7F10073E210 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D262C08A7F10073E210 /* ResultViewModel.swift */; };
-		5D296D2B2C08A80A0073E210 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2A2C08A80A0073E210 /* ResultModel.swift */; };
 		5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2D2C08A8290073E210 /* OweResultViewController.swift */; };
 		5D296D312C08A8520073E210 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D302C08A8520073E210 /* PaymentViewController.swift */; };
 		5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D332C08A8720073E210 /* AddPaymentInfo.swift */; };
 		5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D362C08A8900073E210 /* WhatsAppConfig.swift */; };
 		5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */; };
-		5D2AC93D2BF71C4500B033AE /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */; };
-		5DB30EC82BFB6BA1007F34D5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB30EC72BFB6BA1007F34D5 /* User.swift */; };
-		5DCE3CBB2BDD73CA0067F9FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */; };
+		5DB30EC82BFB6BA1007F34D5 /* UserTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */; };
+		5DCE3CBB2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBA2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift */; };
 		5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */; };
 		5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */; };
-		5DCE3CC12BDD73F90067F9FD /* BillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC02BDD73F90067F9FD /* BillManager.swift */; };
-		5DCE3CC32BDD74090067F9FD /* SeparateBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */; };
 		5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */; };
-		5DCE3CC72BDE59AD0067F9FD /* GetImageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */; };
+		5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */; };
 		B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */; };
 		B143BB082B9EE49A008B2F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B143BB072B9EE49A008B2F4D /* Assets.xcassets */; };
 		B143BB0B2B9EE49A008B2F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */; };
@@ -86,6 +81,11 @@
 		B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */; };
 		B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */; };
 		B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */; };
+		B17E7A342C08C78A0045659C /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A332C08C78A0045659C /* ResultViewController.swift */; };
+		B17E7A362C08C79C0045659C /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A352C08C79C0045659C /* ResultViewModel.swift */; };
+		B17E7A3E2C08D4F60045659C /* EditSplitBillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A3D2C08D4F60045659C /* EditSplitBillViewModel.swift */; };
+		B17E7A402C08DF540045659C /* ShowSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A3F2C08DF540045659C /* ShowSheet.swift */; };
+		B17E7A422C08E3D10045659C /* SearchFriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */; };
 		B1C96B712C0329BA00158F40 /* BarChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B702C0329BA00158F40 /* BarChartsView.swift */; };
 		B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B722C03937100158F40 /* FormatIDR.swift */; };
 		B1C96B762C0630C100158F40 /* SplitBillStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B752C0630C100158F40 /* SplitBillStore.swift */; };
@@ -95,22 +95,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5D296D262C08A7F10073E210 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
-		5D296D2A2C08A80A0073E210 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
 		5D296D2D2C08A8290073E210 /* OweResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OweResultViewController.swift; sourceTree = "<group>"; };
 		5D296D302C08A8520073E210 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		5D296D332C08A8720073E210 /* AddPaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfo.swift; sourceTree = "<group>"; };
 		5D296D362C08A8900073E210 /* WhatsAppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppConfig.swift; sourceTree = "<group>"; };
 		5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
-		5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResultViewController.swift; path = ../SplitBill/ResultViewController.swift; sourceTree = "<group>"; };
-		5DB30EC72BFB6BA1007F34D5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTemp.swift; sourceTree = "<group>"; };
+		5DCE3CBA2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCameraSplitBillViewController.swift; sourceTree = "<group>"; };
 		5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewController.swift; sourceTree = "<group>"; };
-		5DCE3CC02BDD73F90067F9FD /* BillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillManager.swift; sourceTree = "<group>"; };
-		5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparateBillViewController.swift; sourceTree = "<group>"; };
 		5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ImageReceiptModel.mlmodel; sourceTree = "<group>"; };
-		5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetImageControllerView.swift; sourceTree = "<group>"; };
+		5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateSplitBillViewController.swift; sourceTree = "<group>"; };
 		B143BAFB2B9EE497008B2F4D /* WiseSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B143BB072B9EE49A008B2F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -149,6 +144,11 @@
 		B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendTableViewCell.swift; sourceTree = "<group>"; };
 		B165D5DA2C00E26B00EC6BF7 /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
 		B165D5DD2C00E28700EC6BF7 /* OTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewModel.swift; sourceTree = "<group>"; };
+		B17E7A332C08C78A0045659C /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		B17E7A352C08C79C0045659C /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
+		B17E7A3D2C08D4F60045659C /* EditSplitBillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSplitBillViewModel.swift; sourceTree = "<group>"; };
+		B17E7A3F2C08DF540045659C /* ShowSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSheet.swift; sourceTree = "<group>"; };
+		B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendDelegate.swift; sourceTree = "<group>"; };
 		B1C96B702C0329BA00158F40 /* BarChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartsView.swift; sourceTree = "<group>"; };
 		B1C96B722C03937100158F40 /* FormatIDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatIDR.swift; sourceTree = "<group>"; };
 		B1C96B752C0630C100158F40 /* SplitBillStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBillStore.swift; sourceTree = "<group>"; };
@@ -195,16 +195,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5D296D252C08A7C20073E210 /* ResultPage */ = {
-			isa = PBXGroup;
-			children = (
-				5D2AC93C2BF71C4500B033AE /* ResultViewController.swift */,
-				5D296D262C08A7F10073E210 /* ResultViewModel.swift */,
-				5D296D2A2C08A80A0073E210 /* ResultModel.swift */,
-			);
-			path = ResultPage;
-			sourceTree = "<group>";
-		};
 		5D296D2C2C08A8190073E210 /* Owe */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,15 +230,19 @@
 		5DCE3CB32BDD6F660067F9FD /* SplitBill */ = {
 			isa = PBXGroup;
 			children = (
+				B17E7A3A2C08CA170045659C /* Initiate */,
+				B17E7A372C08C8B30045659C /* Camera */,
+				B17E7A382C08C8BB0045659C /* ImageView */,
+				B17E7A392C08C8D60045659C /* PerformOCR */,
+				B17E7A3B2C08CA260045659C /* EditSplitBill */,
+				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
+				B17E7A322C08C77C0045659C /* ResultPage */,
+				5D296D2C2C08A8190073E210 /* Owe */,
+				5D296D352C08A8810073E210 /* WhatsAppConfig */,
+				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
+				5D296D2F2C08A8320073E210 /* Payment */,
 				5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */,
-				5DCE3CBA2BDD73CA0067F9FD /* ViewController.swift */,
-				5DB30EC72BFB6BA1007F34D5 /* User.swift */,
-				5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */,
-				5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */,
-				5DCE3CC02BDD73F90067F9FD /* BillManager.swift */,
-				5DCE3CC22BDD74090067F9FD /* SeparateBillViewController.swift */,
-				5DCE3CC62BDE59AD0067F9FD /* GetImageControllerView.swift */,
-				5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */,
+				B1C96B752C0630C100158F40 /* SplitBillStore.swift */,
 			);
 			path = SplitBill;
 			sourceTree = "<group>";
@@ -272,12 +266,6 @@
 		B143BAFD2B9EE497008B2F4D /* WiseSplit */ = {
 			isa = PBXGroup;
 			children = (
-				5D296D352C08A8810073E210 /* WhatsAppConfig */,
-				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
-				5D296D2F2C08A8320073E210 /* Payment */,
-				5D296D2C2C08A8190073E210 /* Owe */,
-				5D296D252C08A7C20073E210 /* ResultPage */,
-				5DCE3CB32BDD6F660067F9FD /* SplitBill */,
 				B165D5A42BC9A28A00EC6BF7 /* Asset */,
 				B1C96B792C06388C00158F40 /* Utility */,
 				B165D5B42BCA870900EC6BF7 /* Component */,
@@ -304,6 +292,7 @@
 		B143BB192BA35DAD008B2F4D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */,
 				B143BB172BA35DA8008B2F4D /* Account.swift */,
 				B165D5CF2BE5005500EC6BF7 /* Transaction.swift */,
 				B1C96B772C06337600158F40 /* SplitBill.swift */,
@@ -384,6 +373,7 @@
 				B165D5B52BCA872300EC6BF7 /* PaddedTextField.swift */,
 				B165D5BB2BCA944C00EC6BF7 /* BaseViewController.swift */,
 				B165D5C82BDB583100EC6BF7 /* LoadingIndicator.swift */,
+				B17E7A3F2C08DF540045659C /* ShowSheet.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -401,13 +391,12 @@
 		B165D5CE2BE4FB5F00EC6BF7 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				B1C96B742C0630AF00158F40 /* SplitBill */,
+				5DCE3CB32BDD6F660067F9FD /* SplitBill */,
 				B165D5DC2C00E27100EC6BF7 /* OTP */,
 				B143BB162BA35D90008B2F4D /* Register */,
 				B165D5932BAD5B6D00EC6BF7 /* Login */,
 				B165D5A72BC9AE8F00EC6BF7 /* TabBar */,
 				B165D5982BB2B6B200EC6BF7 /* Home */,
-				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
 				B165D5AA2BC9AF5B00EC6BF7 /* AddBudget */,
 				B165D5B32BCA86E900EC6BF7 /* AddPayment */,
 				B165D5C32BD813D100EC6BF7 /* HistoryPayment */,
@@ -422,6 +411,7 @@
 				B165D5D62BF689FE00EC6BF7 /* SearchFriendViewController.swift */,
 				B165D5D42BF6889E00EC6BF7 /* SearchFriendViewModel.swift */,
 				B165D5D82BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift */,
+				B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */,
 			);
 			path = SearchFriend;
 			sourceTree = "<group>";
@@ -435,20 +425,62 @@
 			path = OTP;
 			sourceTree = "<group>";
 		};
+		B17E7A322C08C77C0045659C /* ResultPage */ = {
+			isa = PBXGroup;
+			children = (
+				B17E7A332C08C78A0045659C /* ResultViewController.swift */,
+				B17E7A352C08C79C0045659C /* ResultViewModel.swift */,
+			);
+			path = ResultPage;
+			sourceTree = "<group>";
+		};
+		B17E7A372C08C8B30045659C /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE3CBA2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		B17E7A382C08C8BB0045659C /* ImageView */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */,
+			);
+			path = ImageView;
+			sourceTree = "<group>";
+		};
+		B17E7A392C08C8D60045659C /* PerformOCR */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */,
+			);
+			path = PerformOCR;
+			sourceTree = "<group>";
+		};
+		B17E7A3A2C08CA170045659C /* Initiate */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */,
+			);
+			path = Initiate;
+			sourceTree = "<group>";
+		};
+		B17E7A3B2C08CA260045659C /* EditSplitBill */ = {
+			isa = PBXGroup;
+			children = (
+				5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */,
+				B17E7A3D2C08D4F60045659C /* EditSplitBillViewModel.swift */,
+			);
+			path = EditSplitBill;
+			sourceTree = "<group>";
+		};
 		B1C96B6B2C0326A700158F40 /* BarCharts */ = {
 			isa = PBXGroup;
 			children = (
 				B1C96B702C0329BA00158F40 /* BarChartsView.swift */,
 			);
 			path = BarCharts;
-			sourceTree = "<group>";
-		};
-		B1C96B742C0630AF00158F40 /* SplitBill */ = {
-			isa = PBXGroup;
-			children = (
-				B1C96B752C0630C100158F40 /* SplitBillStore.swift */,
-			);
-			path = SplitBill;
 			sourceTree = "<group>";
 		};
 		B1C96B792C06388C00158F40 /* Utility */ = {
@@ -566,26 +598,27 @@
 			files = (
 				B165D5D52BF6889E00EC6BF7 /* SearchFriendViewModel.swift in Sources */,
 				B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */,
+				B17E7A422C08E3D10045659C /* SearchFriendDelegate.swift in Sources */,
 				B165D5C72BD813F500EC6BF7 /* HistoryPaymentViewModel.swift in Sources */,
 				B143BB182BA35DA8008B2F4D /* Account.swift in Sources */,
 				B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */,
 				B165D5D72BF689FE00EC6BF7 /* SearchFriendViewController.swift in Sources */,
+				B17E7A3E2C08D4F60045659C /* EditSplitBillViewModel.swift in Sources */,
 				B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */,
 				B1C96B782C06337600158F40 /* SplitBill.swift in Sources */,
-				5D2AC93D2BF71C4500B033AE /* ResultViewController.swift in Sources */,
 				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
 				B165D5A12BBB9FBF00EC6BF7 /* ProfileViewController.swift in Sources */,
 				B165D5C52BD813EC00EC6BF7 /* HistoryPaymentViewController.swift in Sources */,
 				B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */,
 				B165D5B82BCA883600EC6BF7 /* AddPaymentViewModel.swift in Sources */,
-				5DCE3CC32BDD74090067F9FD /* SeparateBillViewController.swift in Sources */,
 				B143BB542BA4368D008B2F4D /* EnumRegister.swift in Sources */,
 				B165D5CD2BDB63DF00EC6BF7 /* EnumAddPayment.swift in Sources */,
 				B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */,
 				B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */,
 				B1C96B7D2C063D0900158F40 /* FormatDateFirebase.swift in Sources */,
 				5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */,
-				5DB30EC82BFB6BA1007F34D5 /* User.swift in Sources */,
+				B17E7A402C08DF540045659C /* ShowSheet.swift in Sources */,
+				5DB30EC82BFB6BA1007F34D5 /* UserTemp.swift in Sources */,
 				B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */,
 				B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */,
 				B165D5C92BDB583200EC6BF7 /* LoadingIndicator.swift in Sources */,
@@ -597,29 +630,28 @@
 				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
 				5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */,
 				B1C96B762C0630C100158F40 /* SplitBillStore.swift in Sources */,
-				5DCE3CC12BDD73F90067F9FD /* BillManager.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
 				5D296D312C08A8520073E210 /* PaymentViewController.swift in Sources */,
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
+				B17E7A362C08C79C0045659C /* ResultViewModel.swift in Sources */,
 				5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
-				5D296D2B2C08A80A0073E210 /* ResultModel.swift in Sources */,
 				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
 				B165D5B62BCA872300EC6BF7 /* PaddedTextField.swift in Sources */,
 				B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */,
 				B1C96B712C0329BA00158F40 /* BarChartsView.swift in Sources */,
 				B165D5D22BE5036600EC6BF7 /* TransactionTableViewCell.swift in Sources */,
 				B165D5C22BD7FD2700EC6BF7 /* HomeViewModel.swift in Sources */,
-				5DCE3CC72BDE59AD0067F9FD /* GetImageControllerView.swift in Sources */,
+				5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */,
 				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,
 				B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */,
 				5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */,
-				5DCE3CBB2BDD73CA0067F9FD /* ViewController.swift in Sources */,
+				5DCE3CBB2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift in Sources */,
 				B165D5972BAD5B8A00EC6BF7 /* LoginViewModel.swift in Sources */,
 				5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */,
+				B17E7A342C08C78A0045659C /* ResultViewController.swift in Sources */,
 				B165D5B22BCA86E500EC6BF7 /* AddPaymentViewController.swift in Sources */,
-				5D296D272C08A7F10073E210 /* ResultViewModel.swift in Sources */,
 				5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,13 +7,10 @@ struct AppTheme {
     static let textFieldBorderColor = UIColor.gray
     static let green = UIColor.systemGreen
     static let gray = UIColor.systemGray
-    
 }
 
 
-
-class EditBillViewController: UIViewController, UITextFieldDelegate {
-    
+class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFriendDelegate {
     var titleLabel = UILabel()
     var firstText = UILabel()
     var secondText = UILabel()
@@ -38,36 +35,17 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
     var totalAmountLabel = UILabel()
     
     var billNameTextField = UITextField()
-    var itemNames: [String] = ["item12", "item2", "item3", "item4", "item5", "item1", "item2", "item3", "item4", "item5"]
-    var quantities: [String] = ["2", "2", "3", "4", "5", "2", "2", "3", "4", "5"]
-    var prices: [String] = ["20", "30", "40", "50", "60", "20", "30", "40", "50", "60"]
+    var itemNames: [String] = []
+    var quantities: [String] = []
+    var prices: [String] = []
     let scrollView = UIScrollView()
     
     var userStackView = UIStackView()
     
     var paymentDetail = UILabel()
     
-    var users: [UserTemp] = [
-        //        User(name: "Person A", total: 0),
-        //        User(name: "Person B", total: 0),
-        //        User(name: "Person C", total: 0),
-        //        User(name: "Person D", total: 0),
-        //        User(name: "Person E", total: 0),
-        //        User(name: "Person F", total: 0),
-        //        User(name: "Person A", total: 0),
-        //        User(name: "Person B", total: 0),
-        //        User(name: "Person C", total: 0),
-        //        User(name: "Person D", total: 0),
-        //        User(name: "Person E", total: 0),
-        //        User(name: "Person F", total: 0),
-        //        User(name: "Person A", total: 0),
-        //        User(name: "Person B", total: 0),
-        //        User(name: "Person C", total: 0),
-        //        User(name: "Person D", total: 0),
-        //        User(name: "Person E", total: 0),
-        //        User(name: "Person F", total: 0)
-    ]
-    var selectedUser: UserTemp?
+    var users: [PersonTotal] = []
+    var selectedUser: PersonTotal?
     var userButtons: [UIButton] = []
     
     var allTextFields = [UITextField]()
@@ -76,14 +54,45 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
     var valuesLabels: [UILabel] = []
     var contentHeight: CGFloat = 20
     
+    var editBillVM: EditSplitBillViewModel?
+    var searchFriendViewController: SearchFriendViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        editBillVM = EditSplitBillViewModel()
+        searchFriendViewController?.delegate = self
+        fetchCurrentUser()
         calculateSubtotal()
         setup()
         
         updateUI()
+    }
+    
+    func didSelectUser(_ user: PersonTotal) {
+        let newButton = UIButton(type: .system)
+        newButton.setTitle(user.personName, for: .normal)
+        newButton.addTarget(self, action: #selector(userButtonTapped(_:)), for: .touchUpInside)
         
+        userStackView.insertArrangedSubview(newButton, at: 0)
         
+        let newUser = PersonTotal(personUUID: user.personUUID, personName: user.personName, personPhoneNumber: user.personPhoneNumber, totalAmount: 0, items: [], isPaid: false)
+        users.append(newUser)
+    }
+    
+    private func fetchCurrentUser() {
+        editBillVM?.fetchLoginAccount { [weak self] result in
+            switch result {
+            case .success(let accountData):
+                let newButton = UIButton(type: .system)
+                newButton.setTitle(accountData.personName, for: .normal)
+                newButton.addTarget(self, action: #selector(self?.userButtonTapped(_:)), for: .touchUpInside)
+                
+                self?.userStackView.insertArrangedSubview(newButton, at: 0)
+                self?.users.append(accountData)
+            case .failure(let error):
+                self?.showAlert(title: "Error", message: error.localizedDescription)
+            }
+        }
     }
     
     private func setup() {
@@ -172,12 +181,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
             userStackView.topAnchor.constraint(equalTo: secondText.bottomAnchor, constant: 16),
             userStackView.bottomAnchor.constraint(equalTo: horizontalScrollView.bottomAnchor)
         ])
-        var previousButton: UIButton?
-        
-        
-        
-        var userYOffset: CGFloat = 0
-        var leadingAnchor = scrollView.leadingAnchor
         
         //for user in users {
         let userButton = UIButton(type: .system)
@@ -185,7 +188,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
        
         userButton.setTitleColor(.black, for: .normal)
         userButton.backgroundColor = .lightGray
-        userButton.addTarget(self, action: #selector(addButtonTapped(_:)), for: .touchUpInside)
+        userButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(userButton)
         //}
         
@@ -205,12 +208,10 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
             let price = prices[index]
             
             let button = UIButton(type: .system)
-            button.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\tPrice: \(price)", for: .normal)
+            button.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\t \(formatToIDR(Int(price) ?? 0))", for: .normal)
             //width harusnya sama dengan buttonWidth
             button.setTitleColor(.black, for: .normal)
             
-            ///x = -10 || width = 400
-            ///x = 40  || width = 300
             button.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
             button.addTarget(self, action: #selector(itemButtonTapped(_:)), for: .touchUpInside)
             //button.translatesAutoresizingMaskIntoConstraints = false
@@ -336,9 +337,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
             confirmButton.topAnchor.constraint(equalTo: editButton.topAnchor),
             confirmButton.leadingAnchor.constraint(equalTo: editButton.trailingAnchor, constant: 16),
             confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-            
-            
-            
         ])
     }
     
@@ -467,17 +465,13 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
         }
         
         for index in users.indices {
-            var totalPrice = 0.0
-            for itemName in users[index].assignedItems {
-                if let priceString = itemName.components(separatedBy: "Price: ").last,
-                   let price = Double(priceString) {
-                    totalPrice += price
-                }
+            var totalPrice = 0
+            for itemName in users[index].items {
+                totalPrice += itemName.price
             }
-            users[index].totalOwe = Double(totalPrice)
+            users[index].totalAmount = Int(Double(totalPrice))
         }
         
-        let selectedUsers = [selectedUser]
         let viewModel = ResultViewModel(displayedUsers: users, billName: billName)
         let viewController = ResultViewController(viewModel: viewModel)
 
@@ -497,10 +491,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let selectedUsers = [selectedUser] // Assuming selectedUser is an array
-        let paymentMethod = ""
-        let accountName = ""
-        let accountNumber = ""
+        let selectedUsers = [selectedUser]
         
         let viewController = OweResultViewController(displayedUser: selectedUsers, paymentMethod: "", accountName: "", accountNumber: "")
         self.navigationController?.pushViewController(viewController, animated: true)
@@ -528,17 +519,21 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
             let quantity = quantities[index]
             let price = prices[index]
             
-            let calculatedPrice = Double(price)! / Double(quantity)!
-            selectedUser.assignedItems.append("\(itemName) - Quantity: 1, Price: \(String(format: "%.2f", calculatedPrice))")
+            guard let price = Double(price), let quantity = Double(quantity) else {
+                return
+            }
+            let calculatedPrice = price / quantity
+//            selectedUser.assignedItems.append("\(itemName) - Quantity: 1, Price: \(String(format: "%.2f", calculatedPrice))")
+            selectedUser.items.append(BillItem(name: itemName, quantity: 1, price: Int(calculatedPrice)))
             
-            if let index = users.firstIndex(where: { $0.name == selectedUser.name }) {
+            if let index = users.firstIndex(where: { $0.personName == selectedUser.personName }) {
                 users[index] = selectedUser
             }
             
             self.selectedUser = selectedUser
         }
         
-        print("Added \(selectedItemTitle) to \(selectedUser.name)'s assigned items.")
+        print("Added \(selectedItemTitle) to \(selectedUser.personName)'s assigned items.")
         showResults()
     }
     
@@ -565,64 +560,20 @@ class EditBillViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func showResults() {
-        
         for user in users{
-            print("\(user.name): \(user.assignedItems)")
+            print("\(user.personName): \(user.items)")
         }
     }
     
     @objc private func userButtonTapped(_ sender: UIButton) {
-        
         guard let tappedUserName = sender.currentTitle else { return }
-        
-        
-        selectedUser = users.first(where: { $0.name == tappedUserName })
-        
-        
+        selectedUser = users.first(where: { $0.personName == tappedUserName })
     }
     
-    @objc func addButtonTapped(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Enter Button Info", message: nil, preferredStyle: .alert)
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Button Name"
-        }
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Phone Number"
-            textField.keyboardType = .phonePad
-        }
-        
-        let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] (_) in
-            if let textFields = alertController.textFields, textFields.count == 2,
-               let buttonName = textFields[0].text, !buttonName.isEmpty,
-               let phoneNumber = textFields[1].text, !phoneNumber.isEmpty {
-                self?.addNewButtonWithName(buttonName, phoneNumber: phoneNumber)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alertController.addAction(addAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
+    @objc func addButtonTapped() {
+        let searchFriendVC = SearchFriendViewController()
+        searchFriendVC.delegate = self
+        showSheet(vc: searchFriendVC, presentingVC: self)
+        self.searchFriendViewController = searchFriendVC
     }
-    
-    private func addNewButtonWithName(_ name: String, phoneNumber: String) {
-        let newButton = UIButton(type: .system)
-        newButton.setTitle(name, for: .normal)
-        newButton.addTarget(self, action: #selector(userButtonTapped(_:)), for: .touchUpInside)
-        
-        userStackView.insertArrangedSubview(newButton, at: 0) // Insert at index 0 to add it to the left
-        
-        let newUser = UserTemp(name: name, phoneNumber: phoneNumber, totalOwe: 0, currentBalance: 440000, paidStatus: true, yearlyData: [])
-        users.append(newUser)
-    }
-    
-    
-    @objc private func buttonTapped(_ sender: UIButton) {
-        if let index = userStackView.arrangedSubviews.firstIndex(of: sender) {
-            print("Button \(users[index]) tapped!")
-        }
-    }
-    
 }

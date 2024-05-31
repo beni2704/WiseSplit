@@ -119,6 +119,7 @@ class SplitBillStore {
         let personTotals: [PersonTotal] = try personTotalsData.map { personTotalData in
             guard let personUUID = personTotalData["personUUID"] as? String,
                   let personName = personTotalData["personName"] as? String,
+                  let personPhoneNumber = personTotalData["personPhoneNumber"] as? String,
                   let totalAmount = personTotalData["totalAmount"] as? Int,
                   let isPaid = personTotalData["isPaid"] as? Bool,
                   let itemsData = personTotalData["items"] as? [[String: Any]] else {
@@ -134,7 +135,7 @@ class SplitBillStore {
                 return BillItem(name: name, quantity: quantity, price: price)
             }
             
-            return PersonTotal(personUUID: personUUID, personName: personName, totalAmount: totalAmount, items: items, isPaid: isPaid)
+            return PersonTotal(personUUID: personUUID, personName: personName, personPhoneNumber: personPhoneNumber, totalAmount: totalAmount, items: items, isPaid: isPaid)
         }
         
         return SplitBill(title: title, date: date, total: total, imageUrl: imageUrl, personTotals: personTotals)

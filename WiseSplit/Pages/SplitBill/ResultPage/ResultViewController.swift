@@ -176,7 +176,7 @@ class ResultViewController: UIViewController {
             statusButton.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(statusButton)
             
-            if user.paidStatus {
+            if user.isPaid {
                 statusButton.addTarget(self, action: #selector(openPaymentPage), for: .touchUpInside)
             }
             
@@ -212,9 +212,9 @@ class ResultViewController: UIViewController {
             
             lastView = divider
             
-            for item in user.assignedItems {
+            for item in user.items {
                 let itemLabel = UILabel()
-                itemLabel.text = item
+                itemLabel.text = "\(item.name) + \(item.quantity) + \(item.price)"
                 itemLabel.font = UIFont.systemFont(ofSize: 16)
                 itemLabel.translatesAutoresizingMaskIntoConstraints = false
                 scrollView.addSubview(itemLabel)
@@ -239,16 +239,7 @@ class ResultViewController: UIViewController {
     // MARK: - Button Actions
     
     @objc private func addPaymentButtonTapped() {
-        let addPaymentInfoVC = AddPaymentInfo()
-        let navigationController = UINavigationController(rootViewController: addPaymentInfoVC)
-        navigationController.modalPresentationStyle = .pageSheet
-        
-        if let sheet = navigationController.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-        }
-        
-        present(navigationController, animated: true, completion: nil)
+        showSheet(vc: AddPaymentInfo(), presentingVC: self)
     }
     
     @objc private func shareLinkButtonTapped() {

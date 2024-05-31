@@ -14,6 +14,8 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
     let tableView = UITableView()
     let searchBar = UISearchBar()
     
+    weak var delegate: SearchFriendDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -86,5 +88,17 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
                 self?.tableView.reloadData()
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedUser = viewModel.filteredUsers[indexPath.row]
+        
+        let newPerson = PersonTotal(personUUID: selectedUser.uuid ?? "0", personName: selectedUser.nickname, personPhoneNumber: selectedUser.phone, totalAmount: 0, items: [], isPaid: false)
+        print(newPerson)
+        delegate?.didSelectUser(newPerson)
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }

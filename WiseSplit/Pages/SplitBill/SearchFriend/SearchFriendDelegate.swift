@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol SearchFriendDelegate: AnyObject {
+    func didSelectUser(_ user: PersonTotal)
+}

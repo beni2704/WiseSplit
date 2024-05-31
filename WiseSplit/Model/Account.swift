@@ -8,6 +8,7 @@
 import Foundation
 
 struct Account {
+    var uuid: String?
     let nickname: String
     let phone: String
     var budget = 0
@@ -21,6 +22,12 @@ struct Account {
     }
     
     init(nickname: String, phone: String) {
+        self.nickname = nickname
+        self.phone = phone
+    }
+    
+    init(uuid: String, nickname: String, phone: String) {
+        self.uuid = uuid
         self.nickname = nickname
         self.phone = phone
     }

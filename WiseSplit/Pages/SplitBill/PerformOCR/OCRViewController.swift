@@ -17,7 +17,7 @@ class OCRViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.numberOfLines = 0
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(showBillDetails), for: .touchUpInside)
+        button.addTarget(OCRViewController.self, action: #selector(showBillDetails), for: .touchUpInside)
         return button
     }()
     
@@ -160,18 +160,18 @@ class OCRViewController: UIViewController {
                                         for word in words {
                                             if let wordText = word["WordText"] as? String {
                                                 if wordText.contains(".") || wordText.contains("$") || wordText.contains(",") {
-                                                    price = wordText ?? "0"
+                                                    price = wordText
                                                     self.prices.append(price!)
                                                     
                                                 } else if let number = Int(wordText), wordText.count <= 1 {
-                                                    quantity = "\(number)" ?? "0"
+                                                    quantity = "\(number)"
                                                     self.quantities.append(quantity!)
                                                     
                                                 } else {
                                                     let isValidCharacter = wordText.rangeOfCharacter(from: CharacterSet(charactersIn: "&").union(CharacterSet.letters)) != nil || wordText.contains("-")
                                                     if isValidCharacter && wordText != "x" && wordText != "*" && !wordText.contains("I") &&
                                                         !wordText.contains("#") {
-                                                        itemName = (itemName == nil) ? wordText : "\(itemName!) \(wordText)" ?? "0"
+                                                        itemName = (itemName == nil) ? wordText : "\(itemName!) \(wordText)"
                                                         self.itemNames.append(itemName!)
                                                     }
                                                 }
@@ -197,7 +197,6 @@ class OCRViewController: UIViewController {
                         
                         print("Prices: \(self.prices)")
                         
-                        let billManager = BillManager(apiKey: "EAAAl59w6UNSJ_O2dGDyEm7JSVzF8yPbcUCesz0w88QYpJaSxaJEEM80wXin6BrV")
                         let receiptDetails = self.generateReceiptDetails(items: items, totalPrice: totalPrice)
                         self.billDetailsButton.setTitle(receiptDetails, for: .normal)
                         
@@ -259,11 +258,41 @@ class OCRViewController: UIViewController {
     
     @objc public func showSeparateBill() {
         let separateBillVC = EditBillViewController()
+        
+        for (index, price) in prices.enumerated() {
+            if price.hasPrefix("S") || price.hasPrefix("$") {
+                let modifiedPrice = String(price.dropFirst())
+                
+                if let doublePrice = Double(modifiedPrice) {
+                    let multipliedPrice = doublePrice * 16000
+                    let integerPrice = Int(multipliedPrice)
+                    prices[index] = "\(integerPrice)"
+                    passingItemsToEditSplitBill(separateBillVC: separateBillVC)
+                } else {
+                    print("Invalid price: \(price)")
+                }
+            } else {
+                if let doublePrice = Double(price) {
+                    let multipliedPrice = doublePrice * 16000
+                    let integerPrice = Int(multipliedPrice)
+                    prices[index] = "\(integerPrice)"
+                    passingItemsToEditSplitBill(separateBillVC: separateBillVC)
+                } else {
+                    print("Invalid price: \(price)")
+                }
+            }
+        }
+
+        
+        
+        navigationController?.pushViewController(separateBillVC, animated: true)
+        
+    }
+    
+    private func passingItemsToEditSplitBill(separateBillVC: EditBillViewController) {
         separateBillVC.itemNames = itemNames
         separateBillVC.quantities = quantities
         separateBillVC.prices = prices
-        navigationController?.pushViewController(separateBillVC, animated: true)
-        
     }
     
     private func generateReceiptDetails(items: [(name: String, quantity: Int, price: Double)], totalPrice: Double) -> String {
