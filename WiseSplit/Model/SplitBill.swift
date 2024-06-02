@@ -15,6 +15,13 @@ struct SplitBill {
     var image: UIImage?
     let imageUrl: String
     let personTotals: [PersonTotal]
+    var paymentInfo: PaymentInfo?
+}
+
+struct PaymentInfo {
+    let paymentMethod: String
+    let accountName: String
+    let accountNumber: String
 }
 
 struct PersonTotal {
@@ -24,6 +31,8 @@ struct PersonTotal {
     var totalAmount: Int
     var items: [BillItem]
     var isPaid: Bool
+    var imagePaid: UIImage?
+    var imagePaidUrl: String
 }
 
 struct BillItem {
@@ -56,7 +65,8 @@ extension PersonTotal {
             "personPhoneNumber": personPhoneNumber,
             "totalAmount": totalAmount,
             "items": items.map { $0.toDictionary() },
-            "isPaid": isPaid
+            "isPaid": isPaid,
+            "imagePaidUrl": imagePaidUrl,
         ]
     }
 }
@@ -69,6 +79,16 @@ extension SplitBill {
             "total": total,
             "imageUrl": imageUrl,
             "personTotals": personTotals.map { $0.toDictionary() }
+        ]
+    }
+}
+
+extension PaymentInfo {
+    func toDictionary() -> [String: Any] {
+        return [
+            "paymentMethod": paymentMethod,
+            "accountName": accountName,
+            "accountNumber": accountNumber,
         ]
     }
 }

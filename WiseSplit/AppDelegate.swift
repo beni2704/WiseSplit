@@ -12,19 +12,27 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .white
         let navigationController: UINavigationController?
         if Auth.auth().currentUser != nil {
             navigationController = UINavigationController(rootViewController: TabBarController())
         } else {
             navigationController = UINavigationController(rootViewController: LoginViewController())
         }
-//        navigationController = UINavigationController(rootViewController: ViewController())
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+        
+        let theme = UserDefaults.standard.string(forKey: "Theme") ?? "light"
+        if theme == "dark" {
+            window?.overrideUserInterfaceStyle = .dark
+            window?.backgroundColor = .black
+        } else {
+            window?.overrideUserInterfaceStyle = .light
+            window?.backgroundColor = .white
+        }
+        
         return true
     }
 }

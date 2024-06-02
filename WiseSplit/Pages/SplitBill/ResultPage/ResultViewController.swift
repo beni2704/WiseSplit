@@ -10,20 +10,22 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    // MARK: - Properties
+    var resultVM: ResultViewModel?
+    var splitBillDetail: SplitBill?
+    var splitBillDetailId: String?
     
-    var viewModel: ResultViewModel!
+    var isComplete: Bool?
     
-    private var titleLabel = UILabel()
-    private var firstText = UILabel()
-    private var secondText = UILabel()
-    private var backgroundView = UIView()
-    private var scrollView = UIScrollView()
+    var titleLabel = UILabel()
+    var firstText = UILabel()
+    var secondText = UILabel()
+    var backgroundView = UIView()
+    var scrollView = UIScrollView()
     
-    // MARK: - Initialization
-    
-    init(viewModel: ResultViewModel) {
-        self.viewModel = viewModel
+    init(splitBillId: String) {
+        self.resultVM = ResultViewModel()
+        self.splitBillDetailId = splitBillId
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,15 +33,39 @@ class ResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        bindViewModel()
+        fetchSplitBillDetail(splitBillId: splitBillDetailId ?? "empty") { [weak self] in
+            self?.setupUI()
+            self?.bindViewModel()
+            
+            if self?.isComplete ?? false {
+                self?.setupCustomBackButton()
+            }
+        }
     }
     
-    // MARK: - Setup UI
+    private func fetchSplitBillDetail(splitBillId: String, completion: @escaping () -> Void) {
+        resultVM?.fetchSplitBillDetail(splitBillId: splitBillId) { [weak self] result in
+            switch result {
+            case .success(let newSplitBill):
+                self?.splitBillDetail = newSplitBill ?? SplitBill(title: "", date: Date(), total: 0, imageUrl: "", personTotals: [])
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion()
+            }
+        }
+    }
+    
+    private func setupCustomBackButton() {
+        let backButton = UIBarButtonItem(title: "Complete", style: .plain, target: self, action: #selector(backToRoot))
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc private func backToRoot() {
+        navigationController?.popToRootViewController(animated: true)
+    }
     
     private func setupUI() {
         view.backgroundColor = .white
@@ -51,17 +77,21 @@ class ResultViewController: UIViewController {
     }
     
     private func setupLabels() {
-        titleLabel.text = "Total Amount"
+        guard let splitBillDetail = splitBillDetail else {
+            return
+        }
+        
+        titleLabel.text = "Total Amount \(formatToIDR(splitBillDetail.total))"
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        firstText.text = viewModel.billName
+        firstText.text = splitBillDetail.title
         firstText.font = UIFont.boldSystemFont(ofSize: 24)
         firstText.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(firstText)
         
-        secondText.text = "Bill Date"
+        secondText.text = formatDateHour(splitBillDetail.date.description)
         secondText.font = UIFont.preferredFont(forTextStyle: .caption1)
         secondText.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(secondText)
@@ -108,41 +138,64 @@ class ResultViewController: UIViewController {
     }
     
     private func setupButtons() {
-        let addPaymentButton = UIButton(type: .system)
-        addPaymentButton.setTitle("Add/Edit Your Payment Information", for: .normal)
-        addPaymentButton.setTitleColor(.white, for: .normal)
-        addPaymentButton.addTarget(self, action: #selector(addPaymentButtonTapped), for: .touchUpInside)
-        addPaymentButton.backgroundColor = .gray // Update with your AppTheme
-        addPaymentButton.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.addSubview(addPaymentButton)
+        guard let splitBillDetail = splitBillDetail else {
+            return
+        }
         
-        let shareLink = UIButton(type: .system)
-        shareLink.setTitle("Share Bill", for: .normal)
-        shareLink.setTitleColor(.white, for: .normal)
-        shareLink.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
-        shareLink.backgroundColor = .green // Update with your AppTheme
-        shareLink.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.addSubview(shareLink)
-        
-        NSLayoutConstraint.activate([
-            shareLink.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
-            shareLink.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
-            shareLink.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-            shareLink.heightAnchor.constraint(equalToConstant: 39),
+        if splitBillDetail.imageUrl == "Owner" {
+            let addPaymentButton = UIButton(type: .system)
+            addPaymentButton.setTitle("Add/Edit Your Payment Information", for: .normal)
+            addPaymentButton.setTitleColor(.white, for: .normal)
+            addPaymentButton.addTarget(self, action: #selector(addPaymentButtonTapped), for: .touchUpInside)
+            addPaymentButton.backgroundColor = .gray // Update with your AppTheme
+            addPaymentButton.translatesAutoresizingMaskIntoConstraints = false
+            addPaymentButton.layer.cornerRadius = 12
+            backgroundView.addSubview(addPaymentButton)
             
-            addPaymentButton.bottomAnchor.constraint(equalTo: shareLink.topAnchor, constant: -16),
-            addPaymentButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
-            addPaymentButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-            addPaymentButton.heightAnchor.constraint(equalToConstant: 39)
-        ])
+            let shareLink = UIButton(type: .system)
+            shareLink.setTitle("Share Bill", for: .normal)
+            shareLink.setTitleColor(.white, for: .normal)
+            shareLink.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
+            shareLink.backgroundColor = .green // Update with your AppTheme
+            shareLink.translatesAutoresizingMaskIntoConstraints = false
+            shareLink.layer.cornerRadius = 12
+            backgroundView.addSubview(shareLink)
+            
+            NSLayoutConstraint.activate([
+                shareLink.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
+                shareLink.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+                shareLink.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                shareLink.heightAnchor.constraint(equalToConstant: 39),
+                
+                addPaymentButton.bottomAnchor.constraint(equalTo: shareLink.topAnchor, constant: -16),
+                addPaymentButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+                addPaymentButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                addPaymentButton.heightAnchor.constraint(equalToConstant: 39)
+            ])
+        } else {
+            let confirmPayment = UIButton(type: .system)
+            confirmPayment.setTitle("Share Bill", for: .normal)
+            confirmPayment.setTitleColor(.white, for: .normal)
+            confirmPayment.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
+            confirmPayment.backgroundColor = .green
+            confirmPayment.translatesAutoresizingMaskIntoConstraints = false
+            confirmPayment.layer.cornerRadius = 12
+            backgroundView.addSubview(confirmPayment)
+            
+            NSLayoutConstraint.activate([
+                confirmPayment.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
+                confirmPayment.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+                confirmPayment.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                confirmPayment.heightAnchor.constraint(equalToConstant: 39),
+            ])
+        }
+        
+        
     }
     
     private func bindViewModel() {
-        titleLabel.text = viewModel.titleLabelText
-        firstText.text = viewModel.firstLabelText
-        secondText.text = viewModel.secondLabelText
-        viewModel.setupBackgroundView(backgroundView)
-        viewModel.setupScrollView(scrollView, in: backgroundView)
+        resultVM?.setupBackgroundView(backgroundView)
+        resultVM?.setupScrollView(scrollView, in: backgroundView)
 
         displayUsers()
     }
@@ -150,33 +203,39 @@ class ResultViewController: UIViewController {
     private func displayUsers() {
         var lastView: UIView? = nil
         
-        for user in viewModel.displayedUsers {
+        guard let personTotals = splitBillDetail?.personTotals else {
+            return
+        }
+        
+        for person in personTotals {
             let containerView = UIView()
             containerView.translatesAutoresizingMaskIntoConstraints = false
             containerView.backgroundColor = .lightGray
             scrollView.addSubview(containerView)
             
             let nameLabel = UILabel()
-            nameLabel.text = viewModel.userNameText(for: user)
+            nameLabel.text = person.personName
             nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(nameLabel)
             
             let phoneNumberLabel = UILabel()
-            phoneNumberLabel.text = viewModel.userPhoneNumberText(for: user)
+            phoneNumberLabel.text = person.personPhoneNumber
             phoneNumberLabel.font = UIFont.boldSystemFont(ofSize: 9)
             phoneNumberLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(phoneNumberLabel)
             
             let statusButton = UIButton(type: .system)
-            statusButton.setTitle(viewModel.userStatusButtonText(for: user), for: .normal)
-            statusButton.backgroundColor = viewModel.userStatusButtonColor(for: user)
+            statusButton.setTitle(person.imagePaidUrl == "Owner" ? "Owner" : person.personPhoneNumber == "Not Registered" ? "Anonym" : person.isPaid ? "Paid" : "Not Paid", for: .normal)
+            statusButton.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .grayCustom : person.isPaid ? .greenCustom : .redCustom
             statusButton.setTitleColor(.white, for: .normal)
-            statusButton.isEnabled = viewModel.userStatusButtonEnabled(for: user)
+            statusButton.isEnabled = person.isPaid ? true : false
             statusButton.translatesAutoresizingMaskIntoConstraints = false
+            statusButton.layer.cornerRadius = 12
+            statusButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 4)
             containerView.addSubview(statusButton)
             
-            if user.isPaid {
+            if person.personPhoneNumber != "Not Registered" {
                 statusButton.addTarget(self, action: #selector(openPaymentPage), for: .touchUpInside)
             }
             
@@ -192,8 +251,8 @@ class ResultViewController: UIViewController {
                 phoneNumberLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 phoneNumberLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
                 
-                statusButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 4),
-                statusButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+                statusButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+                statusButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             ])
             
             lastView = containerView
@@ -212,9 +271,9 @@ class ResultViewController: UIViewController {
             
             lastView = divider
             
-            for item in user.items {
+            for item in person.items {
                 let itemLabel = UILabel()
-                itemLabel.text = "\(item.name) + \(item.quantity) + \(item.price)"
+                itemLabel.text = "\(item.name) x\(item.quantity) = \(formatToIDR(item.price))"
                 itemLabel.font = UIFont.systemFont(ofSize: 16)
                 itemLabel.translatesAutoresizingMaskIntoConstraints = false
                 scrollView.addSubview(itemLabel)
@@ -243,11 +302,12 @@ class ResultViewController: UIViewController {
     }
     
     @objc private func shareLinkButtonTapped() {
-        // Share link logic
+        
     }
     
     @objc private func openPaymentPage() {
-        let paymentViewController = PaymentViewController()
-        navigationController?.pushViewController(paymentViewController, animated: true)
+        let imageVC = ImageViewController()
+        imageVC.capturedImage = splitBillDetail?.image
+        navigationController?.pushViewController(imageVC, animated: true)
     }
 }

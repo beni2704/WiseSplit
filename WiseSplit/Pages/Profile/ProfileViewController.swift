@@ -14,9 +14,13 @@ class ProfileViewController: UIViewController {
     var usernameLabel = UILabel()
     var emailLabel = UILabel()
     var logoutButton = UIButton()
+    var changeTheme = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileVM.fetchAccount { res in
+            self.usernameLabel.text = res.nickname
+        }
         setupViews()
     }
     
@@ -26,19 +30,26 @@ class ProfileViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        usernameLabel.text = "Beni"
         usernameLabel.font = .preferredFont(forTextStyle: .title2)
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(usernameLabel)
         
-        emailLabel.text = "\(Auth.auth().currentUser?.email ?? "Guest")"
+        emailLabel.text = "\(Auth.auth().currentUser?.phoneNumber ?? "Guest")"
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emailLabel)
         
+        changeTheme.setTitle("Change Theme", for: .normal)
+        changeTheme.addTarget(self, action: #selector(changeThemes), for: .touchUpInside)
+        changeTheme.backgroundColor = .gray
+        changeTheme.translatesAutoresizingMaskIntoConstraints = false
+        changeTheme.layer.cornerRadius = 8
+        view.addSubview(changeTheme)
+        
         logoutButton.setTitle("Logout", for: .normal)
         logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        logoutButton.setTitleColor(.red, for: .normal)
+        logoutButton.backgroundColor = .red
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        logoutButton.layer.cornerRadius = 8
         view.addSubview(logoutButton)
         
         NSLayoutConstraint.activate([
@@ -51,12 +62,33 @@ class ProfileViewController: UIViewController {
             emailLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 4),
             emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
-            logoutButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 64),
+            changeTheme.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 32),
+            changeTheme.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            changeTheme.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            logoutButton.topAnchor.constraint(equalTo: changeTheme.bottomAnchor, constant: 16),
             logoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
+            logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
         ])
         
+    }
+    
+    @objc func changeThemes() {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let interfaceStyle = window?.overrideUserInterfaceStyle == .unspecified ? UIScreen.main.traitCollection.userInterfaceStyle : window?.overrideUserInterfaceStyle
+        
+        if interfaceStyle == .light {
+            window?.overrideUserInterfaceStyle = .dark
+            window?.backgroundColor = .black
+            UserDefaults.standard.setValue("dark", forKey: "Theme")
+        } else {
+            window?.overrideUserInterfaceStyle = .light
+            window?.backgroundColor = .white
+            UserDefaults.standard.setValue("light", forKey: "Theme")
+        }
     }
     
     @objc private func logoutButtonTapped() {

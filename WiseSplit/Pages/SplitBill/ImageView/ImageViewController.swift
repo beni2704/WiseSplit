@@ -5,10 +5,10 @@ class ImageViewController: UIViewController {
     var capturedImage: UIImage?
     var imageFileName: String?
     var imageView: UIImageView!
+    var performOCR: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -29,6 +29,7 @@ class ImageViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Perform OCR", for: .normal)
         button.addTarget(self, action: #selector(goToOCRViewController), for: .touchUpInside)
+        button.isHidden = performOCR ?? false ? false : true
         view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -41,6 +42,7 @@ class ImageViewController: UIViewController {
         let ocrViewController = OCRViewController()
         ocrViewController.capturedImage = capturedImage
         ocrViewController.imageFileName = imageFileName
+        
         navigationController?.pushViewController(ocrViewController, animated: true)
     }
     

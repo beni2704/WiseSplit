@@ -8,14 +8,14 @@
 import FirebaseStorage
 import UIKit
 
-func uploadImage(image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
+func uploadImage(path: String, image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
     guard let imageData = image.jpegData(compressionQuality: 0.8) else {
         completion(.failure(NSError(domain: "ImageConversionError", code: -1, userInfo: nil)))
         return
     }
     
     let storageRef = Storage.storage().reference()
-    let imageRef = storageRef.child("split_bill/\(UUID().uuidString).jpg")
+    let imageRef = storageRef.child("\(path)\(UUID().uuidString).jpg")
     
     let metadata = StorageMetadata()
     metadata.contentType = "image/jpeg"

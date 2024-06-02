@@ -14,7 +14,7 @@ import Charts
 class HomeViewController: UIViewController {
     var homeVM: HomeViewModel?
     var titleLabel = UILabel()
-    var notifButton = UIButton()
+    var themeButton = UIButton()
     var numBudget = UILabel()
     var titleBudget = UILabel()
     var spendingTitle = UILabel()
@@ -49,10 +49,12 @@ class HomeViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        notifButton.setImage(UIImage(systemName: "bell.fill"), for: .normal)
-        notifButton.tintColor = .yellowCustom
-        notifButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(notifButton)
+        let theme = UserDefaults.standard.string(forKey: "Theme") ?? "light"
+        themeButton.setImage(UIImage(systemName: theme == "dark" ? "sun.max" : "moon.fill"), for: .normal)
+        themeButton.tintColor = .yellowCustom
+        themeButton.translatesAutoresizingMaskIntoConstraints = false
+        themeButton.addTarget(self, action: #selector(changeTheme), for: .touchUpInside)
+        view.addSubview(themeButton)
         
         numBudget.text = "\(formatToIDR(account?.budget ?? 0))"
         numBudget.font = UIFont.preferredFont(forTextStyle: .title2)
@@ -80,8 +82,8 @@ class HomeViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
-            notifButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            notifButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            themeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            themeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             numBudget.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             numBudget.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -111,12 +113,31 @@ class HomeViewController: UIViewController {
             hostingController.view.topAnchor.constraint(equalTo: spendingTitle.bottomAnchor, constant: 16),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            hostingController.view.heightAnchor.constraint(equalToConstant: 350)
+            hostingController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.45)
         ])
     }
     
     @objc func seeAllButtonTapped() {
         let historyPaymentVC = HistoryPaymentViewController()
         navigationController?.pushViewController(historyPaymentVC, animated: true)
+    }
+    
+    @objc private func changeTheme() {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let interfaceStyle = window?.overrideUserInterfaceStyle == .unspecified ? UIScreen.main.traitCollection.userInterfaceStyle : window?.overrideUserInterfaceStyle
+        
+        if interfaceStyle == .light {
+            window?.overrideUserInterfaceStyle = .dark
+            window?.backgroundColor = .black
+            UserDefaults.standard.setValue("dark", forKey: "Theme")
+            themeButton.setImage(UIImage(systemName: interfaceStyle == .light ? "sun.max" : "moon.fill"), for: .normal)
+        } else {
+            window?.overrideUserInterfaceStyle = .light
+            window?.backgroundColor = .white
+            UserDefaults.standard.setValue("light", forKey: "Theme")
+            themeButton.setImage(UIImage(systemName: interfaceStyle == .light ? "sun.max" : "moon.fill"), for: .normal)
+        }
     }
 }

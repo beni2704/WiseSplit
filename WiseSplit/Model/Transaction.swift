@@ -13,6 +13,7 @@ struct TransactionUser: Identifiable{
     let amount: Int
     let category: String
     let date: Date
+    var splitBillId: String?
     
     init?(document: DocumentSnapshot) {
         guard let data = document.data(),
@@ -26,6 +27,12 @@ struct TransactionUser: Identifiable{
         self.amount = amount
         self.category = category
         self.date = timestamp.dateValue()
+        
+        if let data = document.data(), let splitBillId = data["splitBillUID"] as? String {
+            self.splitBillId = splitBillId
+        }
+        
+        
     }
     
     init(id: String, amount: Int, category: String, date: Date) {
@@ -33,5 +40,13 @@ struct TransactionUser: Identifiable{
         self.amount = amount
         self.category = category
         self.date = date
+    }
+    
+    init(id: String, amount: Int, category: String, date: Date, splitBillId: String) {
+        self.id = id
+        self.amount = amount
+        self.category = category
+        self.date = date
+        self.splitBillId = splitBillId
     }
 }

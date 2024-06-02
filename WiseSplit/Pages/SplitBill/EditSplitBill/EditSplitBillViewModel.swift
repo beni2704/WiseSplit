@@ -43,11 +43,86 @@ class EditSplitBillViewModel {
                 personPhoneNumber: phone,
                 totalAmount: 0,
                 items: [],
-                isPaid: false
+                isPaid: true,
+                imagePaidUrl: "Owner"
             )
             
             completion(.success(personTotal))
         }
     }
     
+    func saveSplitBill(splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let image = splitBill.image else {
+            let error = NSError(domain: "ImageError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Image is nil"])
+            completion(.failure(error))
+            return
+        }
+        
+        guard let compressedImageData = compressImage(image) else {
+            let error = NSError(domain: "CompressionError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to compress image"])
+            completion(.failure(error))
+            return
+        }
+        
+        uploadImage(path: "splitbill/bill/", image: UIImage(data: compressedImageData)!) { result in
+            switch result {
+            case .success(let imageUrl):
+                let splitBillData = splitBill.toDictionary(imageUrl: imageUrl)
+                let db = Firestore.firestore()
+                var ref: DocumentReference? = nil
+                ref = db.collection("splitBills").addDocument(data: splitBillData) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        if let documentID = ref?.documentID {
+                            self.saveTransactionForUsers(splitBillUID: documentID, splitBill: splitBill) { [weak self] res in
+                                switch res {
+                                case .success(_):
+                                    completion(.success(documentID))
+                                case .failure(let error):
+                                    completion(.failure(error.localizedDescription as! Error))
+                                }
+                            }
+                        } else {
+                            let error = NSError(domain: "FirestoreError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to retrieve document ID"])
+                            completion(.failure(error))
+                        }
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func saveTransactionForUsers(splitBillUID: String, splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
+        let db = Firestore.firestore()
+        let batch = db.batch()
+        
+        guard let user = Auth.auth().currentUser else {
+            completion(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user is currently logged in."])))
+            return
+        }
+        
+        for personTotal in splitBill.personTotals {
+            let transactionData: [String: Any] = [
+                "amount": personTotal.totalAmount,
+                "category": personTotal.personUUID == user.uid ? "Split Bill Received" : "Split Bill Owe",
+                "date": Date(),
+                "splitBillUID": splitBillUID
+            ]
+            
+            let userRef = db.collection("users").document(personTotal.personUUID)
+            let transactionRef = userRef.collection("transactions").document()
+            batch.setData(transactionData, forDocument: transactionRef)
+        }
+        
+        batch.commit { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success("Transactions saved successfully"))
+            }
+        }
+    }
 }

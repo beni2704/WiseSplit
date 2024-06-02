@@ -51,7 +51,7 @@ class HomeViewModel: ObservableObject {
                     if let transaction = TransactionUser(document: document) {
                         var category = transaction.category
                         if category == "Income" {
-                            continue
+                            category = "Income"
                         }else if category != "Health Care" {
                             category = "Spending"
                         }

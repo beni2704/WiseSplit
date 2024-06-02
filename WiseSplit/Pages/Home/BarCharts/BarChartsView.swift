@@ -13,7 +13,7 @@ struct BarChartsView: View {
     
     init() {
         homeVM.fetchTransaction {
-            print("Success fetching transactions")
+            return
         }
     }
     
@@ -55,14 +55,27 @@ struct BarChartsView: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 VStack(alignment: .leading) {
+                    Text("Total Saving")
+                    Text("Rp. \(filteredSpentCategory.filter { $0.category == "Income" }.reduce(0, { $0 + $1.amount }))")
+                        .foregroundColor(.green)
+                        .fontWeight(.bold)
+
                     Text("Total Spending")
-                    Text("Rp. \(filteredSpentCategory.reduce(0, { $0 + $1.amount }))")
+                    Text("Rp. \(filteredSpentCategory.filter { $0.category != "Income" }.reduce(0, { $0 + $1.amount }))")
                         .foregroundColor(.red)
                         .fontWeight(.bold)
+                    
                     Text("\(selectedMonth) \(String(selectedYear))")
                 }
                 Spacer()
                 VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "line.diagonal")
+                            .rotationEffect(Angle(degrees: 45))
+                            .foregroundColor(.green)
+                        Text("Income")
+                            .foregroundColor(.secondary)
+                    }
                     HStack {
                         Image(systemName: "line.diagonal")
                             .rotationEffect(Angle(degrees: 45))
@@ -80,7 +93,7 @@ struct BarChartsView: View {
                     HStack {
                         Image(systemName: "line.diagonal")
                             .rotationEffect(Angle(degrees: 45))
-                            .foregroundColor(.green)
+                            .foregroundColor(.yellow)
                         Text("Health Care")
                             .foregroundColor(.secondary)
                     }
@@ -118,7 +131,7 @@ struct BarChartsView: View {
                     .frame(maxWidth: .infinity, maxHeight: 180, alignment: .center)
             } else {
                 Chart {
-                    ForEach(["Spending", "Owe", "Health Care"], id: \.self) { category in
+                    ForEach(["Income", "Spending", "Owe", "Health Care"], id: \.self) { category in
                         let categoryData = filteredSpentCategory.filter { $0.category == category }
                         let totalSpent = categoryData.reduce(0) { $0 + $1.amount }
                         
@@ -127,7 +140,6 @@ struct BarChartsView: View {
                             .cornerRadius(12)
                     }
                 }
-                .frame(height: 180)
             }
         }
         .padding(12)
@@ -137,12 +149,14 @@ struct BarChartsView: View {
     
     func color(for category: String) -> Color {
         switch category {
+        case "Income":
+            return .green
         case "Spending":
             return .gray
         case "Owe":
             return .red
         case "Health Care":
-            return .green
+            return .yellow
         default:
             return .blue
         }

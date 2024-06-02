@@ -27,7 +27,7 @@ class HistoryPaymentViewModel {
                 var transactions: [TransactionUser] = []
                 for document in snapshot!.documents {
                     if let transaction = TransactionUser(document: document) {
-                        if transaction.category == "Bill Owe" || transaction.category == "Bill Received" || transaction.category == "Income"{
+                        if transaction.category == "Split Bill Owe" || transaction.category == "Split Bill Received" || transaction.category == "Income"{
                             continue
                         }
                         transactions.append(transaction)
@@ -53,8 +53,8 @@ class HistoryPaymentViewModel {
                 var transactions: [TransactionUser] = []
                 for document in snapshot!.documents {
                     if let transaction = TransactionUser(document: document) {
-                        if transaction.category == "Bill Owe"{
-                            transactions.append(transaction)
+                        if transaction.category == "Split Bill Owe"{
+                            transactions.append(TransactionUser(id: transaction.id, amount: (transaction.amount) * -1, category: transaction.category, date: transaction.date))
                         }
                     }
                 }
@@ -78,8 +78,8 @@ class HistoryPaymentViewModel {
                 var transactions: [TransactionUser] = []
                 for document in snapshot!.documents {
                     if let transaction = TransactionUser(document: document) {
-                        if transaction.category == "Bill Received" {
-                            transactions.append(transaction)
+                        if transaction.category == "Split Bill Received" {
+                            transactions.append(TransactionUser(id: transaction.id, amount: abs(transaction.amount), category: transaction.category, date: transaction.date, splitBillId: transaction.splitBillId ?? "empty"))
                         }
                     }
                 }

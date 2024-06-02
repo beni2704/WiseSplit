@@ -95,7 +95,7 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
         
         let selectedUser = viewModel.filteredUsers[indexPath.row]
         
-        let newPerson = PersonTotal(personUUID: selectedUser.uuid ?? "0", personName: selectedUser.nickname, personPhoneNumber: selectedUser.phone, totalAmount: 0, items: [], isPaid: false)
+        let newPerson = PersonTotal(personUUID: selectedUser.uuid ?? "0", personName: selectedUser.nickname, personPhoneNumber: selectedUser.phone, totalAmount: 0, items: [], isPaid: false, imagePaidUrl: "")
         print(newPerson)
         delegate?.didSelectUser(newPerson)
         
