@@ -9,6 +9,11 @@ struct AppTheme {
     static let gray = UIColor.systemGray
 }
 
+struct ItemView {
+    let itemButton: UIButton
+    let assignedUserScrollView: UIScrollView
+    let assignedUserStackView: UIStackView
+}
 
 class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFriendDelegate {
     var titleLabel = UILabel()
@@ -35,6 +40,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var totalAmountTF = UITextField()
     var totalAmountLabel = UILabel()
     
+    let editButton = UIButton(type: .system)
+    var confirmationShown = false
     var billNameTextField = UITextField()
     var itemNames: [String] = []
     var quantities: [String] = []
@@ -42,6 +49,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     let scrollView = UIScrollView()
     
     var userStackView = UIStackView()
+    var itemViews: [ItemView] = []
     
     var paymentDetail = UILabel()
     
@@ -210,15 +218,15 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let quantity = quantities[index]
             let price = prices[index]
             
-            let button = UIButton(type: .system)
-            button.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\t \(formatToIDR(Int(price) ?? 0))", for: .normal)
+            let itemButton = UIButton(type: .system)
+            itemButton.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\t \(formatToIDR(Int(price) ?? 0))", for: .normal)
             //width harusnya sama dengan buttonWidth
-            button.setTitleColor(.black, for: .normal)
+            itemButton.setTitleColor(.black, for: .normal)
             
-            button.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
-            button.addTarget(self, action: #selector(itemButtonTapped(_:)), for: .touchUpInside)
+            itemButton.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
+            itemButton.addTarget(self, action: #selector(itemButtonTapped(_:)), for: .touchUpInside)
             //button.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview(button)
+            scrollView.addSubview(itemButton)
             
             
             let nameTextField = createTextField(withText: itemNames[index], frame: CGRect(x: 50, y: itemYOffset, width: 100, height: 30), tag: index * 3)
@@ -235,14 +243,39 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             
             allTextFields.append(contentsOf: [nameTextField, quantityTextField, priceTextField])
             
+            let assignedUserScrollView = UIScrollView()
             
+            assignedUserScrollView.translatesAutoresizingMaskIntoConstraints = false
+            assignedUserScrollView.showsHorizontalScrollIndicator = false
+            assignedUserScrollView.showsVerticalScrollIndicator = false
             
-            let dividerLine = UIView(frame: CGRect(x: 0, y: itemYOffset + 79, width: scrollView.bounds.width, height: 1)) // Adjust the height and color as needed
-            dividerLine.backgroundColor = UIColor.gray // Adjust the color as needed
+            scrollView.addSubview(assignedUserScrollView)
+            
+            NSLayoutConstraint.activate([
+                assignedUserScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+                assignedUserScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+                assignedUserScrollView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: itemYOffset + 40),
+                assignedUserScrollView.heightAnchor.constraint(equalToConstant: 30)
+            ])
+            
+            let assignedUserStackView = UIStackView()
+            assignedUserStackView.axis = .horizontal
+            assignedUserStackView.spacing = 10
+            assignedUserStackView.translatesAutoresizingMaskIntoConstraints = false
+            assignedUserScrollView.addSubview(assignedUserStackView)
+            
+            NSLayoutConstraint.activate([
+                assignedUserStackView.leadingAnchor.constraint(equalTo: assignedUserScrollView.leadingAnchor),
+                assignedUserStackView.trailingAnchor.constraint(equalTo: assignedUserScrollView.trailingAnchor),
+            ])
+            
+            let dividerLine = UIView(frame: CGRect(x: 0, y: itemYOffset + 79, width: scrollView.bounds.width, height: 1))
+            dividerLine.backgroundColor = UIColor.gray
             scrollView.addSubview(dividerLine)
             
             
-            itemButtons.append(button)
+            itemButtons.append(itemButton)
+            itemViews.append(ItemView(itemButton: itemButton, assignedUserScrollView: assignedUserScrollView, assignedUserStackView: assignedUserStackView))
             
             itemYOffset += 76
             contentHeight += 74
@@ -294,7 +327,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         
-        let editButton = UIButton(type: .system)
+        
         editButton.setTitle("Edit Bill", for: .normal)
         editButton.setTitleColor(.white, for: .normal)
         editButton.backgroundColor = .black
@@ -557,10 +590,64 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             }
             
             self.selectedUser = selectedUser
+            
+            let assignedUserStackView = itemViews[index].assignedUserStackView
+            
+            let userItemButton = UIButton(type: .system)
+            userItemButton.setTitle("\(selectedUser.personName)", for: .normal)
+            userItemButton.backgroundColor = .clear
+            userItemButton.setTitleColor(.systemBlue, for: .normal)
+            userItemButton.layer.cornerRadius = 8
+            userItemButton.addTarget(self, action: #selector(userItemButtonTapped(_:)), for: .touchUpInside)
+                    
+            assignedUserStackView.addArrangedSubview(userItemButton)
         }
         
         print("Added \(selectedItemTitle) to \(selectedUser.personName)'s assigned items.")
         showResults()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            sender.backgroundColor = .yellow
+            sender.setTitleColor(.black, for: .normal)
+            sender.layer.cornerRadius = 8
+        }) { (_) in
+            UIView.animate(withDuration: 0.2) {
+                sender.backgroundColor = .clear
+                sender.setTitleColor(.systemBlue, for: .normal)
+                sender.layer.cornerRadius = 0
+            }
+        }
+    }
+    
+    @objc private func userItemButtonTapped(_ sender: UIButton) {
+        // Find the assigned user
+        guard var selectedUser = self.selectedUser else {
+            showAlert(title: "Error", message: "No user selected.")
+            return
+        }
+        
+        // Find the item index
+        guard let index = itemViews.firstIndex(where: { $0.assignedUserStackView === sender.superview }) else {
+            showAlert(title: "Error", message: "Failed to find the item.")
+            return
+        }
+        
+        // Remove the user item button from the stack view
+        sender.removeFromSuperview()
+        
+        // Remove the assignment from the selected user
+        let itemName = itemNames[index]
+        selectedUser.items.removeAll { $0.name == itemName }
+        
+        // Update the users array if necessary
+        if let userIndex = users.firstIndex(where: { $0.personName == selectedUser.personName }) {
+            users[userIndex] = selectedUser
+        }
+        
+        // Update the selected user
+        self.selectedUser = selectedUser
+        
+        print("Removed \(itemName) from \(selectedUser.personName)'s assigned items.")
     }
     
     private func showAlert(title: String, message: String) {
@@ -594,9 +681,44 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     @objc private func userButtonTapped(_ sender: UIButton) {
         guard let tappedUserName = sender.currentTitle else { return }
         selectedUser = users.first(where: { $0.personName == tappedUserName })
+        
+        sender.backgroundColor = .yellow
+        sender.setTitleColor(.black, for: .normal)
+        sender.layer.cornerRadius = 8
+        for button in userStackView.subviews.compactMap({ $0 as? UIButton }) {
+            if button != sender {
+                button.backgroundColor = .clear
+                button.setTitleColor(.systemBlue, for: .normal)
+                button.layer.cornerRadius = 0
+            }
+        }
     }
     
     @objc func addButtonTapped() {
+        guard !confirmationShown else {
+                showSearchFriend()
+            return
+            }
+        
+        let confirmationAlert = UIAlertController(title: "Confirmation", message: "Did you finish editing the bill?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { [weak self] (_) in
+            self?.confirmationShown = true
+            self?.editButton.isEnabled = false
+            self?.editButton.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+            self?.showSearchFriend()
+        }
+        
+        let noAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        
+        confirmationAlert.addAction(yesAction)
+        confirmationAlert.addAction(noAction)
+        
+        present(confirmationAlert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func showSearchFriend() {
         let searchFriendVC = SearchFriendViewController()
         searchFriendVC.delegate = self
         showSheet(vc: searchFriendVC, presentingVC: self)
