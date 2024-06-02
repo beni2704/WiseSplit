@@ -155,4 +155,12 @@ extension HistoryPaymentViewController: UITableViewDataSource, UITableViewDelega
         cell.configure(with: transaction)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let transaction = transactions[indexPath.row]
+        if transaction.category == "Split Bill Received" || transaction.category == "Split Bill Owe" {
+            let resultViewController = ResultViewController(splitBillId: transaction.splitBillId ?? "empty")
+            navigationController?.pushViewController(resultViewController, animated: true)
+        }
+    }
 }

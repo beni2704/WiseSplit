@@ -30,7 +30,6 @@ class TransactionTableViewCell: UITableViewCell {
     let amountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        label.textColor = .redCustom
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -81,7 +80,8 @@ class TransactionTableViewCell: UITableViewCell {
     
     func configure(with transaction: TransactionUser) {
         categoryLabel.text = transaction.category
-        amountLabel.text = "\(transaction.amount) IDR"
+        amountLabel.text = "\(formatToIDR(transaction.amount))"
+        amountLabel.textColor = .redCustom
         dateLabel.text = "\(transaction.date)"
         
         switch transaction.category {
@@ -93,6 +93,9 @@ class TransactionTableViewCell: UITableViewCell {
             iconImageView.image = UIImage(systemName: "bus")
         case "Entertainment":
             iconImageView.image = UIImage(systemName: "guitars")
+        case "Split Bill Received":
+            iconImageView.image = UIImage(systemName: "newspaper")
+            amountLabel.textColor = .greenCustom
         default:
             iconImageView.image = UIImage(systemName: "newspaper")
         }

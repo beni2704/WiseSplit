@@ -35,3 +35,7 @@ extension UIColor {
             self.init(red: red, green: green, blue: blue, alpha: 1.0)
         }
 }
+
+struct Colors {
+    static let darkCustom = UIColor(named: "blackCustom")
+}

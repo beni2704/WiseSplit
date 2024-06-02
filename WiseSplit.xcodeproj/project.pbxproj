@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2D2C08A8290073E210 /* OweResultViewController.swift */; };
-		5D296D312C08A8520073E210 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D302C08A8520073E210 /* PaymentViewController.swift */; };
 		5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D332C08A8720073E210 /* AddPaymentInfo.swift */; };
 		5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D362C08A8900073E210 /* WhatsAppConfig.swift */; };
 		5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */; };
@@ -86,9 +85,11 @@
 		B17E7A3E2C08D4F60045659C /* EditSplitBillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A3D2C08D4F60045659C /* EditSplitBillViewModel.swift */; };
 		B17E7A402C08DF540045659C /* ShowSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A3F2C08DF540045659C /* ShowSheet.swift */; };
 		B17E7A422C08E3D10045659C /* SearchFriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */; };
+		B17E7A442C0B01C30045659C /* PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A432C0B01C30045659C /* PresentAlert.swift */; };
+		B17E7A462C0B07020045659C /* CompressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A452C0B07020045659C /* CompressImage.swift */; };
+		B1A86E352C0B9CC100E0B8E2 /* FormatDateHour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */; };
 		B1C96B712C0329BA00158F40 /* BarChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B702C0329BA00158F40 /* BarChartsView.swift */; };
 		B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B722C03937100158F40 /* FormatIDR.swift */; };
-		B1C96B762C0630C100158F40 /* SplitBillStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B752C0630C100158F40 /* SplitBillStore.swift */; };
 		B1C96B782C06337600158F40 /* SplitBill.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B772C06337600158F40 /* SplitBill.swift */; };
 		B1C96B7B2C0638A500158F40 /* StorageImageFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B7A2C0638A500158F40 /* StorageImageFirebase.swift */; };
 		B1C96B7D2C063D0900158F40 /* FormatDateFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B7C2C063D0900158F40 /* FormatDateFirebase.swift */; };
@@ -96,7 +97,6 @@
 
 /* Begin PBXFileReference section */
 		5D296D2D2C08A8290073E210 /* OweResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OweResultViewController.swift; sourceTree = "<group>"; };
-		5D296D302C08A8520073E210 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		5D296D332C08A8720073E210 /* AddPaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfo.swift; sourceTree = "<group>"; };
 		5D296D362C08A8900073E210 /* WhatsAppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppConfig.swift; sourceTree = "<group>"; };
 		5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
@@ -149,9 +149,11 @@
 		B17E7A3D2C08D4F60045659C /* EditSplitBillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSplitBillViewModel.swift; sourceTree = "<group>"; };
 		B17E7A3F2C08DF540045659C /* ShowSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSheet.swift; sourceTree = "<group>"; };
 		B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendDelegate.swift; sourceTree = "<group>"; };
+		B17E7A432C0B01C30045659C /* PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAlert.swift; sourceTree = "<group>"; };
+		B17E7A452C0B07020045659C /* CompressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressImage.swift; sourceTree = "<group>"; };
+		B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDateHour.swift; sourceTree = "<group>"; };
 		B1C96B702C0329BA00158F40 /* BarChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartsView.swift; sourceTree = "<group>"; };
 		B1C96B722C03937100158F40 /* FormatIDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatIDR.swift; sourceTree = "<group>"; };
-		B1C96B752C0630C100158F40 /* SplitBillStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBillStore.swift; sourceTree = "<group>"; };
 		B1C96B772C06337600158F40 /* SplitBill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBill.swift; sourceTree = "<group>"; };
 		B1C96B7A2C0638A500158F40 /* StorageImageFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageImageFirebase.swift; sourceTree = "<group>"; };
 		B1C96B7C2C063D0900158F40 /* FormatDateFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDateFirebase.swift; sourceTree = "<group>"; };
@@ -203,14 +205,6 @@
 			path = Owe;
 			sourceTree = "<group>";
 		};
-		5D296D2F2C08A8320073E210 /* Payment */ = {
-			isa = PBXGroup;
-			children = (
-				5D296D302C08A8520073E210 /* PaymentViewController.swift */,
-			);
-			path = Payment;
-			sourceTree = "<group>";
-		};
 		5D296D322C08A85E0073E210 /* AddPaymentInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,9 +234,7 @@
 				5D296D2C2C08A8190073E210 /* Owe */,
 				5D296D352C08A8810073E210 /* WhatsAppConfig */,
 				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
-				5D296D2F2C08A8320073E210 /* Payment */,
 				5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */,
-				B1C96B752C0630C100158F40 /* SplitBillStore.swift */,
 			);
 			path = SplitBill;
 			sourceTree = "<group>";
@@ -489,6 +481,9 @@
 				B1C96B722C03937100158F40 /* FormatIDR.swift */,
 				B1C96B7A2C0638A500158F40 /* StorageImageFirebase.swift */,
 				B1C96B7C2C063D0900158F40 /* FormatDateFirebase.swift */,
+				B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */,
+				B17E7A432C0B01C30045659C /* PresentAlert.swift */,
+				B17E7A452C0B07020045659C /* CompressImage.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -608,6 +603,7 @@
 				B1C96B782C06337600158F40 /* SplitBill.swift in Sources */,
 				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
 				B165D5A12BBB9FBF00EC6BF7 /* ProfileViewController.swift in Sources */,
+				B1A86E352C0B9CC100E0B8E2 /* FormatDateHour.swift in Sources */,
 				B165D5C52BD813EC00EC6BF7 /* HistoryPaymentViewController.swift in Sources */,
 				B165D5BC2BCA944C00EC6BF7 /* BaseViewController.swift in Sources */,
 				B165D5B82BCA883600EC6BF7 /* AddPaymentViewModel.swift in Sources */,
@@ -629,9 +625,7 @@
 				B165D5D02BE5005500EC6BF7 /* Transaction.swift in Sources */,
 				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
 				5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */,
-				B1C96B762C0630C100158F40 /* SplitBillStore.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
-				5D296D312C08A8520073E210 /* PaymentViewController.swift in Sources */,
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
 				B17E7A362C08C79C0045659C /* ResultViewModel.swift in Sources */,
 				5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */,
@@ -652,6 +646,8 @@
 				5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */,
 				B17E7A342C08C78A0045659C /* ResultViewController.swift in Sources */,
 				B165D5B22BCA86E500EC6BF7 /* AddPaymentViewController.swift in Sources */,
+				B17E7A442C0B01C30045659C /* PresentAlert.swift in Sources */,
+				B17E7A462C0B07020045659C /* CompressImage.swift in Sources */,
 				5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

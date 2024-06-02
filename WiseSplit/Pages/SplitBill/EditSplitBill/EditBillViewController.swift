@@ -14,6 +14,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var titleLabel = UILabel()
     var firstText = UILabel()
     var secondText = UILabel()
+    var capturedImage: UIImage?
     
     var subtotal: Double = 0.0
     var subtotalTF = UITextField()
@@ -54,6 +55,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var valuesLabels: [UILabel] = []
     var contentHeight: CGFloat = 20
     
+    var splitBillId: String?
+    
     var editBillVM: EditSplitBillViewModel?
     var searchFriendViewController: SearchFriendViewController?
     
@@ -75,7 +78,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         userStackView.insertArrangedSubview(newButton, at: 0)
         
-        let newUser = PersonTotal(personUUID: user.personUUID, personName: user.personName, personPhoneNumber: user.personPhoneNumber, totalAmount: 0, items: [], isPaid: false)
+        let newUser = PersonTotal(personUUID: user.personUUID, personName: user.personName, personPhoneNumber: user.personPhoneNumber, totalAmount: 0, items: [], isPaid: false, imagePaidUrl: "")
         users.append(newUser)
     }
     
@@ -165,7 +168,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             horizontalScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             horizontalScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             horizontalScrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
-
+            
             horizontalScrollView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
@@ -185,14 +188,14 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         //for user in users {
         let userButton = UIButton(type: .system)
         userButton.setTitle("+", for: .normal)
-       
+        
         userButton.setTitleColor(.black, for: .normal)
         userButton.backgroundColor = .lightGray
         userButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(userButton)
         //}
         
-//        userStackView.widthAnchor.constraint(greaterThanOrEqualTo: horizontalScrollView.widthAnchor).isActive = true
+        //        userStackView.widthAnchor.constraint(greaterThanOrEqualTo: horizontalScrollView.widthAnchor).isActive = true
         
         //        if let lastButton = previousButton {
         //            lastButton.trailingAnchor.constraint(equalTo: userContainerView.trailingAnchor).isActive = true
@@ -261,10 +264,10 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             backgroundView.addSubview(label)
             
             let valuesLabel = UILabel(frame: CGRect(x: 290, y: itemYOffset, width: 100, height: 30))
-                valuesLabel.text = String(values[index]) // Set the value from the values array
-                valuesLabel.textColor = .black // Adjust color as needed
-                valuesLabel.font = UIFont.systemFont(ofSize: 14)
-                backgroundView.addSubview(valuesLabel)
+            valuesLabel.text = String(values[index]) // Set the value from the values array
+            valuesLabel.textColor = .black // Adjust color as needed
+            valuesLabel.font = UIFont.systemFont(ofSize: 14)
+            backgroundView.addSubview(valuesLabel)
             
             let textField = textFields[index]
             textField.frame =  CGRect(x: 290, y: itemYOffset, width: 50, height: 30)
@@ -391,10 +394,10 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         if !isEditing {
-                // Update the values in the valuesLabels based on the text fields
+            // Update the values in the valuesLabels based on the text fields
             
-                updateValuesLabels()
-            }
+            updateValuesLabels()
+        }
         
     }
     
@@ -456,14 +459,15 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     
     @objc private func confirmButtonTapped() {
         guard let selectedUser = selectedUser else {
+            presentingAlert(title: "Error", message: "No Selected User", view: self)
             return
         }
         
         guard let billName = billNameTextField.text, !billName.isEmpty else {
-            presentAlert()
+            presentingAlert(title: "Error", message: "Bill Name can't be empty", view: self)
             return
         }
-        
+        self.addLoading(onView: self.view)
         for index in users.indices {
             var totalPrice = 0
             for itemName in users[index].items {
@@ -472,18 +476,40 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             users[index].totalAmount = Int(Double(totalPrice))
         }
         
-        let viewModel = ResultViewModel(displayedUsers: users, billName: billName)
-        let viewController = ResultViewController(viewModel: viewModel)
-
-        self.navigationController?.pushViewController(viewController, animated: true)
+        saveSplitBill { [weak self] success in
+            guard let self = self else { return }
+            
+            if success {
+                let resultVC = ResultViewController(splitBillId: self.splitBillId ?? "empty")
+                resultVC.isComplete = true
+                self.navigationController?.pushViewController(resultVC, animated: true)
+            } else {
+                print("error saving")
+                removeLoading()
+            }
+        }
     }
-
-    private func presentAlert() {
-        let alert = UIAlertController(title: "Error", message: "Bill name cannot be empty.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    
+    func saveSplitBill(completion: @escaping (Bool) -> Void) {
+        guard let billName = billNameTextField.text, !billName.isEmpty else {
+            presentingAlert(title: "Error", message: "Bill Name can't be empty", view: self)
+            return
+        }
+        
+        let newSplitBill = SplitBill(title: billName, date: Date(), total: Int(totalAmount), image: capturedImage, imageUrl: "", personTotals: users)
+        editBillVM?.saveSplitBill(splitBill: newSplitBill, completion: { result in
+            switch result {
+            case .success(let uid):
+                print(newSplitBill)
+                self.splitBillId = uid
+                completion(true)
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+            }
+        })
     }
-
+    
     
     @objc private func editButtonPressed2() {
         guard let selectedUser = selectedUser else {
@@ -523,7 +549,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
                 return
             }
             let calculatedPrice = price / quantity
-//            selectedUser.assignedItems.append("\(itemName) - Quantity: 1, Price: \(String(format: "%.2f", calculatedPrice))")
+            //            selectedUser.assignedItems.append("\(itemName) - Quantity: 1, Price: \(String(format: "%.2f", calculatedPrice))")
             selectedUser.items.append(BillItem(name: itemName, quantity: 1, price: Int(calculatedPrice)))
             
             if let index = users.firstIndex(where: { $0.personName == selectedUser.personName }) {

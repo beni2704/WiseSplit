@@ -82,17 +82,21 @@ class OCRViewController: UIViewController {
     }
     
     @objc public func performOCR() {
+        self.addLoading(onView: view)
         performOCRRequest()
+        
     }
     
     public func performOCRRequest() {
         guard let image = capturedImage else {
             print("Captured image is nil.")
+            removeLoading()
             return
         }
         
         guard let compressedData = resizeAndCompressImage(image: image, maxSizeInKB: 1024) else {
             print("Failed to resize and compress the image.")
+            removeLoading()
             return
         }
         
@@ -102,6 +106,7 @@ class OCRViewController: UIViewController {
         
         guard let url = URL(string: urlString) else {
             print("Invalid URL.")
+            removeLoading()
             return
         }
         
@@ -130,11 +135,13 @@ class OCRViewController: UIViewController {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print("Error: \(error)")
+                self.removeLoading()
                 return
             }
             
             guard let data = data else {
                 print("No data received.")
+                self.removeLoading()
                 return
             }
             
@@ -199,13 +206,15 @@ class OCRViewController: UIViewController {
                         
                         let receiptDetails = self.generateReceiptDetails(items: items, totalPrice: totalPrice)
                         self.billDetailsButton.setTitle(receiptDetails, for: .normal)
-                        
+                        removeLoading()
                     }
                 } else {
                     print("Failed to parse JSON.")
+                    self.removeLoading()
                 }
             } catch {
                 print("Error parsing JSON: \(error)")
+                self.removeLoading()
             }
         }.resume()
     }
@@ -258,6 +267,7 @@ class OCRViewController: UIViewController {
     
     @objc public func showSeparateBill() {
         let separateBillVC = EditBillViewController()
+        separateBillVC.capturedImage = capturedImage
         
         for (index, price) in prices.enumerated() {
             if price.hasPrefix("S") || price.hasPrefix("$") {
