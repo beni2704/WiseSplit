@@ -41,11 +41,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var totalAmountLabel = UILabel()
     
     let editButton = UIButton(type: .system)
+    var removeButton = UIButton(type: .system)
     var confirmationShown = false
     var billNameTextField = UITextField()
-    var itemNames: [String] = []
-    var quantities: [String] = []
-    var prices: [String] = []
+    var itemNames: [String] = ["asdasd", "baddd"]
+    var quantities: [String] = ["123", "345"]
+    var prices: [String] = ["20", "30"]
     let scrollView = UIScrollView()
     
     var userStackView = UIStackView()
@@ -54,6 +55,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var paymentDetail = UILabel()
     
     var users: [PersonTotal] = []
+    var isRemoveModeActive: Bool = false
+    var selectedButton: UIButton?
     var selectedUser: PersonTotal?
     var userButtons: [UIButton] = []
     
@@ -201,6 +204,14 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         userButton.backgroundColor = .lightGray
         userButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(userButton)
+        
+        removeButton.setTitle("-", for: .normal)
+        
+        removeButton.setTitleColor(.black, for: .normal)
+        removeButton.backgroundColor = .lightGray
+        removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
+        userStackView.addArrangedSubview(removeButton)
+        
         //}
         
         //        userStackView.widthAnchor.constraint(greaterThanOrEqualTo: horizontalScrollView.widthAnchor).isActive = true
@@ -489,39 +500,165 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         updateButtonTitles()
     }
     
+    @objc private func removeButtonTapped() {
+        guard var selectedUser = selectedUser else {
+            presentingAlert(title: "Error", message: "Please select a user first.", view: self)
+            return
+        }
+        
+        // Find the user item button in the stack view
+        guard let selectedButton = userStackView.arrangedSubviews.first(where: {
+            ($0 as? UIButton)?.currentTitle == selectedUser.personName
+        }) as? UIButton else {
+            return
+        }
+        
+        // Remove the button from the stack view
+        userStackView.removeArrangedSubview(selectedButton)
+        selectedButton.removeFromSuperview()
+        
+        for itemView in itemViews {
+                let stackView = itemView.assignedUserStackView
+                
+                // Find all buttons with the selected user's name and remove them
+                for view in stackView.arrangedSubviews {
+                    if let button = view as? UIButton, button.currentTitle == selectedUser.personName {
+                        stackView.removeArrangedSubview(button)
+                        button.removeFromSuperview()
+                    }
+                }
+            }
+        
+        
+        // Remove the user and their assigned items from the users array
+        users.removeAll { $0.personName == selectedUser.personName }
+        
+        // Clear the selected user reference
+        self.selectedUser = nil
+        
+        print("Removed \(selectedButton.currentTitle ?? "") and their assigned items.")
+        
+        // Optionally, update the UI or show a confirmation message
+        presentingAlert(title: "Success", message: "User and their assigned items have been removed.", view: self)
+    }
+    
+    private func removeCurrButton(button: UIButton) {
+        // Remove the button from the userStackView
+        userStackView.removeArrangedSubview(button)
+        button.removeFromSuperview()
+        
+        // Find the user associated with the button
+        guard let username = button.currentTitle,
+              let userIndex = users.firstIndex(where: { $0.personName == username }) else {
+            return
+        }
+
+        // Remove all buttons from the assignedUserStackView for the selected user
+        let selectedUser = users[userIndex]
+        for itemView in itemViews {
+            for subview in itemView.assignedUserStackView.arrangedSubviews {
+                if let userButton = subview as? UIButton, userButton.currentTitle == username {
+                    itemView.assignedUserStackView.removeArrangedSubview(userButton)
+                    userButton.removeFromSuperview()
+                }
+            }
+        }
+        
+        // Clear the assigned items for the selected user and remove the user from the users array
+        users[userIndex].items.removeAll()
+        users.remove(at: userIndex)
+        
+        print("Removed \(username) and their assigned items.")
+    }
     
     @objc private func confirmButtonTapped() {
-        guard let selectedUser = selectedUser else {
-            presentingAlert(title: "Error", message: "No Selected User", view: self)
-            return
+        // Debug: Print start of function
+        print("Starting confirmButtonTapped function")
+
+        // Initialize assignedItemSet
+        var assignedItemSet = Set<String>()
+        for user in users {
+            for assignedItem in user.items {
+                let itemName = assignedItem.name // Directly access the name property
+                assignedItemSet.insert(itemName)
+                // Debug: Print each assigned item name
+                print("Assigned item name: \(itemName)")
+            }
         }
-        
+
+        // Debug: Print assigned item set and item names
+        print("Assigned item set: \(assignedItemSet)")
+        print("Item names: \(itemNames)")
+
+        // Check if every item is assigned to at least one user
+        for itemName in itemNames {
+            if !assignedItemSet.contains(itemName) {
+                presentingAlert(title: "Error", message: "Every item must be assigned.", view: self)
+                // Debug: Print missing item
+                print("Missing item: \(itemName)")
+                return
+            }
+        }
+
+        // Ensure bill name is not empty
         guard let billName = billNameTextField.text, !billName.isEmpty else {
             presentingAlert(title: "Error", message: "Bill Name can't be empty", view: self)
+            // Debug: Print bill name check failure
+            print("Bill name is empty")
             return
         }
+
+        // Check if every user has at least one assigned item
+        for user in users {
+            if user.items.isEmpty {
+                presentingAlert(title: "Error", message: "Every user must be assigned.", view: self)
+                // Debug: Print user with no assigned items
+                print("User with no assigned items: \(user.personName)")
+                return
+            }
+        }
+
+        // Add loading indicator
         self.addLoading(onView: self.view)
+        // Debug: Print before calculating total amount
+        print("Calculating total amount for each user")
+
+        // Calculate total amount for each user
         for index in users.indices {
             var totalPrice = 0
-            for itemName in users[index].items {
-                totalPrice += itemName.price
+            for item in users[index].items {
+                totalPrice += item.price
             }
-            users[index].totalAmount = Int(Double(totalPrice))
+            users[index].totalAmount = totalPrice
+            // Debug: Print total amount for each user
+            print("User: \(users[index].personName), Total Amount: \(users[index].totalAmount)")
         }
-        
+
+        // Debug: Print before saving split bill
+        print("Saving split bill")
+
+        // Save the split bill
         saveSplitBill { [weak self] success in
             guard let self = self else { return }
-            
+
+            // Handle success or failure
             if success {
+                // Debug: Print success
+                print("Split bill saved successfully")
                 let resultVC = ResultViewController(splitBillId: self.splitBillId ?? "empty")
                 resultVC.isComplete = true
                 self.navigationController?.pushViewController(resultVC, animated: true)
             } else {
-                print("error saving")
-                removeLoading()
+                // Debug: Print error saving
+                print("Error saving split bill")
+                self.removeLoading()
             }
         }
+
+        // Debug: Print end of function
+        print("Ending confirmButtonTapped function")
     }
+
     
     func saveSplitBill(completion: @escaping (Bool) -> Void) {
         guard let billName = billNameTextField.text, !billName.isEmpty else {
@@ -563,12 +700,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         guard !users.isEmpty else {
-            showAlert(title: "Error", message: "No users available. Please add users first.")
+            presentingAlert(title: "Error", message: "No users available. Please add users first.", view: self)
             return
         }
         
         guard var selectedUser = self.selectedUser else {
-            showAlert(title: "Error", message: "Please select a user first.")
+            presentingAlert(title: "Error", message: "Please select a user first.", view: self)
             return
         }
         
@@ -622,13 +759,13 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     @objc private func userItemButtonTapped(_ sender: UIButton) {
         // Find the assigned user
         guard var selectedUser = self.selectedUser else {
-            showAlert(title: "Error", message: "No user selected.")
+            presentingAlert(title: "Error", message: "No user selected.", view: self)
             return
         }
         
         // Find the item index
         guard let index = itemViews.firstIndex(where: { $0.assignedUserStackView === sender.superview }) else {
-            showAlert(title: "Error", message: "Failed to find the item.")
+            presentingAlert(title: "Error", message: "Failed to find the item.", view: self)
             return
         }
         
@@ -679,20 +816,31 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     }
     
     @objc private func userButtonTapped(_ sender: UIButton) {
-        guard let tappedUserName = sender.currentTitle else { return }
-        selectedUser = users.first(where: { $0.personName == tappedUserName })
-        
-        sender.backgroundColor = .yellow
-        sender.setTitleColor(.black, for: .normal)
-        sender.layer.cornerRadius = 8
-        for button in userStackView.subviews.compactMap({ $0 as? UIButton }) {
-            if button != sender {
-                button.backgroundColor = .clear
-                button.setTitleColor(.systemBlue, for: .normal)
-                button.layer.cornerRadius = 0
+            guard let tappedUserName = sender.currentTitle else { return }
+            
+            // Find the user object corresponding to the tapped button
+            selectedUser = users.first(where: { $0.personName == tappedUserName })
+            selectedButton = sender
+            
+            if isRemoveModeActive {
+                // Activate remove mode
+                removeButtonTapped()
+            } else {
+                // Highlight the tapped button
+                sender.backgroundColor = .yellow // You can change this to any highlight color
+                sender.setTitleColor(.black, for: .normal) // Example of changing text color
+                sender.layer.cornerRadius = 8 // Example of rounding corners for highlight effect
+                
+                // Reset other buttons
+                for button in userStackView.subviews.compactMap({ $0 as? UIButton }) {
+                    if button != sender {
+                        button.backgroundColor = .clear
+                        button.setTitleColor(.systemBlue, for: .normal)
+                        button.layer.cornerRadius = 0
+                    }
+                }
             }
         }
-    }
     
     @objc func addButtonTapped() {
         guard !confirmationShown else {
