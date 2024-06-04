@@ -19,6 +19,8 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     var titleLabel = UILabel()
     var firstText = UILabel()
     var secondText = UILabel()
+    var paymentInfo = UILabel()
+    var paymentDetail = UILabel()
     var backgroundView = UIView()
     var scrollView = UIScrollView()
     
@@ -102,6 +104,14 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         secondText.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(secondText)
         
+        paymentInfo.text = "Payment Information"
+        paymentInfo.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(paymentInfo)
+        
+        paymentDetail.text = "bank - nama - no rek"
+        paymentDetail.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(paymentDetail)
+        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -176,7 +186,9 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 addPaymentButton.bottomAnchor.constraint(equalTo: shareLink.topAnchor, constant: -16),
                 addPaymentButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
                 addPaymentButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-                addPaymentButton.heightAnchor.constraint(equalToConstant: 39)
+                addPaymentButton.heightAnchor.constraint(equalToConstant: 39),
+                
+                
             ])
         } else {
             let confirmPayment = UIButton(type: .system)
@@ -193,6 +205,16 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 confirmPayment.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
                 confirmPayment.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
                 confirmPayment.heightAnchor.constraint(equalToConstant: 39),
+                
+                paymentDetail.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+                paymentDetail.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                paymentDetail.heightAnchor.constraint(equalToConstant: 39),
+                
+                paymentInfo.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+                paymentInfo.bottomAnchor.constraint(equalTo: paymentDetail.topAnchor, constant: -16),
+                paymentInfo.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+                paymentInfo.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                paymentInfo.heightAnchor.constraint(equalToConstant: 39),
             ])
         }
         

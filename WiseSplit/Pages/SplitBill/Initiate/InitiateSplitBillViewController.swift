@@ -24,7 +24,7 @@ class InitiateSplitBillViewController: UIViewController, UIImagePickerController
         titleLabel.text = "Separate Bill"
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         view.addSubview(titleLabel)
         
         firstText.text = "Capture Your Bill For Us"
@@ -93,7 +93,7 @@ class InitiateSplitBillViewController: UIViewController, UIImagePickerController
             
             let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
                 guard let self = self else { return }
-                let viewController = InitiateSplitBillViewController()
+                let viewController = CaptureCameraSplitBillViewController()
                 self.navigationController?.pushViewController(viewController, animated: true)
             }
             actionSheet.addAction(takePhotoAction)
