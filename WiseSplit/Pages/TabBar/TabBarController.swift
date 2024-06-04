@@ -18,7 +18,7 @@ class TabBarController: UITabBarController {
         let homeVC = HomeViewController()
         let addBudgetVC = AddBudgetViewController()
         let addExpenseVC = AddPaymentViewController()
-        let splitBillVC = CaptureCameraSplitBillViewController() // ganti split bill
+        let splitBillVC = InitiateSplitBillViewController() // ganti split bill
         let profileVC = ProfileViewController()
         
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
