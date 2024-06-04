@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2D2C08A8290073E210 /* OweResultViewController.swift */; };
-		5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D332C08A8720073E210 /* AddPaymentInfo.swift */; };
+		5D296D342C08A8720073E210 /* AddPaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D332C08A8720073E210 /* AddPaymentInfoViewController.swift */; };
 		5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D362C08A8900073E210 /* WhatsAppConfig.swift */; };
 		5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */; };
 		5DB30EC82BFB6BA1007F34D5 /* UserTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */; };
@@ -17,6 +17,8 @@
 		5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */; };
 		5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */; };
 		5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */; };
+		B13C369E2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */; };
+		B13C36A02C0F59DD00282F26 /* AddPaymentInfoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13C369F2C0F59DD00282F26 /* AddPaymentInfoDelegate.swift */; };
 		B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */; };
 		B143BB082B9EE49A008B2F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B143BB072B9EE49A008B2F4D /* Assets.xcassets */; };
 		B143BB0B2B9EE49A008B2F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B143BB092B9EE49A008B2F4D /* LaunchScreen.storyboard */; };
@@ -97,7 +99,7 @@
 
 /* Begin PBXFileReference section */
 		5D296D2D2C08A8290073E210 /* OweResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OweResultViewController.swift; sourceTree = "<group>"; };
-		5D296D332C08A8720073E210 /* AddPaymentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfo.swift; sourceTree = "<group>"; };
+		5D296D332C08A8720073E210 /* AddPaymentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoViewController.swift; sourceTree = "<group>"; };
 		5D296D362C08A8900073E210 /* WhatsAppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppConfig.swift; sourceTree = "<group>"; };
 		5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
 		5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTemp.swift; sourceTree = "<group>"; };
@@ -106,6 +108,8 @@
 		5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewController.swift; sourceTree = "<group>"; };
 		5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ImageReceiptModel.mlmodel; sourceTree = "<group>"; };
 		5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateSplitBillViewController.swift; sourceTree = "<group>"; };
+		B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoViewModel.swift; sourceTree = "<group>"; };
+		B13C369F2C0F59DD00282F26 /* AddPaymentInfoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoDelegate.swift; sourceTree = "<group>"; };
 		B143BAFB2B9EE497008B2F4D /* WiseSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B143BB072B9EE49A008B2F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -208,7 +212,9 @@
 		5D296D322C08A85E0073E210 /* AddPaymentInfo */ = {
 			isa = PBXGroup;
 			children = (
-				5D296D332C08A8720073E210 /* AddPaymentInfo.swift */,
+				5D296D332C08A8720073E210 /* AddPaymentInfoViewController.swift */,
+				B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */,
+				B13C369F2C0F59DD00282F26 /* AddPaymentInfoDelegate.swift */,
 			);
 			path = AddPaymentInfo;
 			sourceTree = "<group>";
@@ -231,9 +237,9 @@
 				B17E7A3B2C08CA260045659C /* EditSplitBill */,
 				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
 				B17E7A322C08C77C0045659C /* ResultPage */,
+				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
 				5D296D2C2C08A8190073E210 /* Owe */,
 				5D296D352C08A8810073E210 /* WhatsAppConfig */,
-				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
 				5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */,
 			);
 			path = SplitBill;
@@ -592,6 +598,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B165D5D52BF6889E00EC6BF7 /* SearchFriendViewModel.swift in Sources */,
+				B13C36A02C0F59DD00282F26 /* AddPaymentInfoDelegate.swift in Sources */,
 				B165D5952BAD5B8300EC6BF7 /* LoginViewController.swift in Sources */,
 				B17E7A422C08E3D10045659C /* SearchFriendDelegate.swift in Sources */,
 				B165D5C72BD813F500EC6BF7 /* HistoryPaymentViewModel.swift in Sources */,
@@ -624,10 +631,11 @@
 				B165D5CB2BDB5EC800EC6BF7 /* EnumAddBudget.swift in Sources */,
 				B165D5D02BE5005500EC6BF7 /* Transaction.swift in Sources */,
 				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
-				5D296D342C08A8720073E210 /* AddPaymentInfo.swift in Sources */,
+				5D296D342C08A8720073E210 /* AddPaymentInfoViewController.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
 				B17E7A362C08C79C0045659C /* ResultViewModel.swift in Sources */,
+				B13C369E2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift in Sources */,
 				5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
@@ -791,7 +799,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 32R3NF44SD;
+				DEVELOPMENT_TEAM = 54STNG9K7F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WiseSplit/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Access camera\"";
@@ -805,7 +813,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.prima.skripsi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skripsi.WiseSplit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

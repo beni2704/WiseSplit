@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-class ResultViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
-    
+class ResultViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AddPaymentInfoDelegate  {
     var resultVM: ResultViewModel?
+    
     var splitBillDetail: SplitBill?
     var splitBillDetailId: String?
     
@@ -21,6 +21,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     var secondText = UILabel()
     var paymentInfo = UILabel()
     var paymentDetail = UILabel()
+    var paymentNumber = UILabel()
     var backgroundView = UIView()
     var scrollView = UIScrollView()
     
@@ -53,6 +54,11 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    
+    func didSavePaymentInfo() {
+        fetchSplitBillProcess()
+    }
+    
     private func fetchSplitBillDetail(splitBillId: String, completion: @escaping () -> Void) {
         resultVM?.fetchSplitBillDetail(splitBillId: splitBillId) { [weak self] result in
             switch result {
@@ -82,6 +88,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         setupBackgroundView()
         setupScrollView()
         setupButtons()
+        setupPaymentInformation()
     }
     
     private func setupLabels() {
@@ -103,14 +110,6 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         secondText.font = UIFont.preferredFont(forTextStyle: .caption1)
         secondText.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(secondText)
-        
-        paymentInfo.text = "Payment Information"
-        paymentInfo.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.addSubview(paymentInfo)
-        
-        paymentDetail.text = "bank - nama - no rek"
-        paymentDetail.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.addSubview(paymentDetail)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -149,7 +148,40 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             scrollView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -287)
+            scrollView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -287),
+        ])
+    }
+    
+    private func setupPaymentInformation() {
+        if splitBillDetail?.paymentInfo == nil {
+            return
+        }
+        
+        paymentInfo.text = "Payment Information"
+        paymentInfo.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(paymentInfo)
+        
+        paymentDetail.text = "\(splitBillDetail?.paymentInfo?.paymentMethod ?? "empty") - \(splitBillDetail?.paymentInfo?.accountName ?? "empty")"
+        paymentDetail.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(paymentDetail)
+        
+        paymentNumber.text = splitBillDetail?.paymentInfo?.accountNumber ?? "empty"
+        paymentNumber.font = UIFont.preferredFont(forTextStyle: .title3)
+        paymentNumber.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(paymentNumber)
+        
+        NSLayoutConstraint.activate([
+            paymentInfo.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+            paymentInfo.bottomAnchor.constraint(equalTo: paymentDetail.topAnchor, constant: -16),
+            paymentInfo.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+            paymentInfo.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+            
+            paymentDetail.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+            paymentDetail.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+            
+            paymentNumber.topAnchor.constraint(equalTo: paymentDetail.bottomAnchor, constant: 4),
+            paymentNumber.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
+            paymentNumber.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
         ])
     }
     
@@ -205,27 +237,15 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 confirmPayment.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
                 confirmPayment.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
                 confirmPayment.heightAnchor.constraint(equalToConstant: 39),
-                
-                paymentDetail.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
-                paymentDetail.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-                paymentDetail.heightAnchor.constraint(equalToConstant: 39),
-                
-                paymentInfo.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
-                paymentInfo.bottomAnchor.constraint(equalTo: paymentDetail.topAnchor, constant: -16),
-                paymentInfo.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
-                paymentInfo.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-                paymentInfo.heightAnchor.constraint(equalToConstant: 39),
             ])
         }
-        
-        
     }
     
     private func bindViewModel() {
         setupBackgroundView(backgroundView)
         setupScrollView(scrollView, in: backgroundView)
-
         displayUsers()
+        setupPaymentInformation()
     }
     
     func setupBackgroundView(_ backgroundView: UIView) {
@@ -236,7 +256,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     func setupScrollView(_ scrollView: UIScrollView, in backgroundView: UIView) {
         scrollView.backgroundColor = .lightGray
         scrollView.layer.cornerRadius = 10
-        scrollView.showsVerticalScrollIndicator = true // Enable vertical scroll indicator
+        scrollView.showsVerticalScrollIndicator = true
         backgroundView.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
@@ -262,7 +282,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             scrollView.addSubview(containerView)
             
             let nameLabel = UILabel()
-            nameLabel.text = person.personName
+            nameLabel.text = "\(person.personName) - \(person.totalAmount)"
             nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(nameLabel)
@@ -362,7 +382,9 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     // MARK: - Button Actions
     
     @objc private func addPaymentButtonTapped() {
-        showSheet(vc: AddPaymentInfo(), presentingVC: self)
+        let addPaymentVC = AddPaymentInfoViewController(splitBillId: self.splitBillDetailId ?? "empty")
+        addPaymentVC.delegate = self
+        showSheet(vc: addPaymentVC, presentingVC: self)
     }
     
     @objc private func shareLinkButtonTapped() {

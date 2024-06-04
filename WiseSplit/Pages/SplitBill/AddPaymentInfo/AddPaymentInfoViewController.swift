@@ -7,8 +7,8 @@
 
 import UIKit
 
-class AddPaymentInfo: UIViewController {
-    
+class AddPaymentInfoViewController: UIViewController {
+    var addPaymentVM: AddPaymentInfoViewModel?
     var firstText = UILabel()
     var secondText = UILabel()
     
@@ -19,10 +19,22 @@ class AddPaymentInfo: UIViewController {
     var accountNumberLabel = UILabel()
     var accountNumberTF = UITextField()
     
-    var onSave: ((String, String, String) -> Void)?
+    var splitBillId: String
+    
+    weak var delegate: AddPaymentInfoDelegate?
+    
+    init(splitBillId: String) {
+        self.splitBillId = splitBillId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addPaymentVM = AddPaymentInfoViewModel()
         view.backgroundColor = .white
         setup()
     }
@@ -149,16 +161,26 @@ class AddPaymentInfo: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-            
+        
         guard let paymentMethod = paymentMethodTF.text, let accountName = accountNameTF.text, let accountNumber = accountNumberTF.text else {
-                    return
-                }
-                
-                onSave?(paymentMethod, accountName, accountNumber)
+            return
+        }
         
-       
+        if ((addPaymentVM?.checkEmpty(paymentMethod: paymentMethod, accountName: accountName, accountNumber: accountNumber)) != nil) {
+            presentingAlert(title: "Empty Field", message: "Please enter all payment fields", view: self)
+            return
+        }
         
-        //print("anjayani \(paymentMethod) - \(accountName) - \(accountNumber)")
+        let newPayment = PaymentInfo(paymentMethod: paymentMethod, accountName: accountName, accountNumber: accountNumber)
+        addPaymentVM?.savePaymentInfo(splitBillId: self.splitBillId, paymentInfo: newPayment) { res in
+            switch res {
+            case.success():
+                self.delegate?.didSavePaymentInfo()
+                self.dismiss(animated: true, completion: nil)
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
         dismiss(animated: true, completion: nil)
     }
@@ -166,6 +188,4 @@ class AddPaymentInfo: UIViewController {
     @objc private func closeButtonTapped() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
 }

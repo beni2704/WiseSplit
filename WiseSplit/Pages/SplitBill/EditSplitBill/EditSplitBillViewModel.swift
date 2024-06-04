@@ -10,6 +10,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class EditSplitBillViewModel {
+    let db = Firestore.firestore()
     
     func currUserId() -> String {
         return Auth.auth().currentUser?.uid ?? "nil"
@@ -22,7 +23,6 @@ class EditSplitBillViewModel {
         }
         
         let uid = user.uid
-        let db = Firestore.firestore()
         
         db.collection("users").document(uid).getDocument { (document, error) in
             if let error = error {
@@ -53,6 +53,39 @@ class EditSplitBillViewModel {
             
             completion(.success(personTotal))
         }
+    }
+    
+    func checkAmountUser(splitBill: SplitBill, completion: @escaping (Result<Bool, Error>) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userRef = db.collection("users").document(userId)
+        
+        userRef.getDocument { document, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let document = document, document.exists {
+                let data = document.data()
+                var currentBudget = data?["budget"] as? Int ?? 0
+                let amount = splitBill.personTotals.first{$0.personUUID == userId}?.totalAmount ?? 0
+                
+                if amount > currentBudget {
+                    completion(.success(false))
+                    return
+                }
+                currentBudget -= amount
+                
+                userRef.updateData(["budget": currentBudget]) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(true))
+                    }
+                }
+            }
+        }
+        
     }
     
     func saveSplitBill(splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
@@ -100,7 +133,6 @@ class EditSplitBillViewModel {
     }
     
     func saveTransactionForUsers(splitBillUID: String, splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
-        let db = Firestore.firestore()
         let batch = db.batch()
         
         guard let user = Auth.auth().currentUser else {

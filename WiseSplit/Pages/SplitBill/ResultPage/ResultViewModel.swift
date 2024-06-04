@@ -126,8 +126,12 @@ class ResultViewModel {
         let personTotalsData = data["personTotals"] as? [[String: Any]] ?? []
         let ownerId = data["ownerId"] as? String ?? ""
         let personTotals = personTotalsData.map { parsePersonTotal(from: $0) }
+        let paymentInfoData = data["paymentInfo"] as? [String: Any]
         
-        return SplitBill(title: title, date: date, total: total, image: nil, imageUrl: imageUrl, personTotals: personTotals, ownerId: ownerId, paymentInfo: nil)
+        let paymentInfo = paymentInfoData != nil ? parsePaymentInfo(from: paymentInfoData!) : nil
+        
+        
+        return SplitBill(title: title, date: date, total: total, image: nil, imageUrl: imageUrl, personTotals: personTotals, ownerId: ownerId, paymentInfo: paymentInfo)
     }
     
     func parsePersonTotal(from data: [String: Any]) -> PersonTotal {
@@ -150,4 +154,10 @@ class ResultViewModel {
         return BillItem(name: name, quantity: quantity, price: price)
     }
     
+    func parsePaymentInfo(from data: [String: Any]) -> PaymentInfo {
+        let accName = data["accountName"] as? String ?? ""
+        let accNumber = data["accountNumber"] as?  String ?? ""
+        let accMethod = data["paymentMethod"] as?  String ?? ""
+        return PaymentInfo(paymentMethod: accMethod, accountName: accName, accountNumber: accNumber)
+    }
 }

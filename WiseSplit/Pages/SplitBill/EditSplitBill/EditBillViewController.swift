@@ -153,8 +153,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         billNameTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(billNameTextField)
         
-        
-        
         var frameHeight = backgroundView.bounds
         frameHeight.size.height -= 278 // Adjust height as needed
         scrollView.frame = frameHeight
@@ -308,7 +306,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             backgroundView.addSubview(label)
             
             let valuesLabel = UILabel(frame: CGRect(x: 290, y: itemYOffset, width: 100, height: 30))
-            valuesLabel.text = String(values[index]) // Set the value from the values array
+            valuesLabel.text = formatToIDR(Int(values[index]))
             valuesLabel.textColor = .black // Adjust color as needed
             valuesLabel.font = UIFont.systemFont(ofSize: 14)
             backgroundView.addSubview(valuesLabel)
@@ -412,12 +410,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     }
     
     func updateUI() {
-        subtotalTF.text = String(format: "%.2f", subtotal)
-        taxTF.text = String(format: "%.2f", tax)
-        serviceTaxTF.text = String(format: "%.2f", serviceTax)
-        discountsTF.text = String(format: "%.2f", discounts)
-        othersTF.text = String(format: "%.2f", others)
-        totalAmountTF.text = String(format: "%.2f", totalAmount)
+        subtotalTF.text = formatToIDR(Int(subtotal))
+        taxTF.text = formatToIDR(Int(subtotal))
+        serviceTaxTF.text = formatToIDR(Int(serviceTax))
+        discountsTF.text = formatToIDR(Int(discounts))
+        othersTF.text = formatToIDR(Int(others))
+        totalAmountTF.text = formatToIDR(Int(totalAmount))
     }
     
     
@@ -455,7 +453,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         let values = [subtotal, tax, serviceTax, discounts, others, totalAmount]
         
         for (index, valueLabel) in valuesLabels.enumerated() {
-            valueLabel.text = String(format: "%.2f", values[index])
+//            valueLabel.text = String(format: "%.2f", values[index])
+            valueLabel.text = formatToIDR(Int(values[index]))
         }
     }
     
@@ -466,7 +465,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let quantity = quantities[index]
             let price = prices[index]
             button.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
-            button.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\tPrice: \(price)", for: .normal)
+            button.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\tPrice: \(formatToIDR(Int(price) ?? 0))", for: .normal)
             
             itemYOffset += 76
         }
@@ -516,16 +515,16 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         selectedButton.removeFromSuperview()
         
         for itemView in itemViews {
-                let stackView = itemView.assignedUserStackView
-                
-                // Find all buttons with the selected user's name and remove them
-                for view in stackView.arrangedSubviews {
-                    if let button = view as? UIButton, button.currentTitle == selectedUser.personName {
-                        stackView.removeArrangedSubview(button)
-                        button.removeFromSuperview()
-                    }
+            let stackView = itemView.assignedUserStackView
+            
+            // Find all buttons with the selected user's name and remove them
+            for view in stackView.arrangedSubviews {
+                if let button = view as? UIButton, button.currentTitle == selectedUser.personName {
+                    stackView.removeArrangedSubview(button)
+                    button.removeFromSuperview()
                 }
             }
+        }
         
         
         // Remove the user and their assigned items from the users array
@@ -550,7 +549,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
               let userIndex = users.firstIndex(where: { $0.personName == username }) else {
             return
         }
-
+        
         // Remove all buttons from the assignedUserStackView for the selected user
         let selectedUser = users[userIndex]
         for itemView in itemViews {
@@ -572,7 +571,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     @objc private func confirmButtonTapped() {
         // Debug: Print start of function
         print("Starting confirmButtonTapped function")
-
+        
         // Initialize assignedItemSet
         var assignedItemSet = Set<String>()
         for user in users {
@@ -583,21 +582,21 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
                 print("Assigned item name: \(itemName)")
             }
         }
-
+        
         // Debug: Print assigned item set and item names
         print("Assigned item set: \(assignedItemSet)")
         print("Item names: \(itemNames)")
-
+        
         // Check if every item is assigned to at least one user
-        for itemName in itemNames {
-            if !assignedItemSet.contains(itemName) {
-                presentingAlert(title: "Error", message: "Every item must be assigned.", view: self)
-                // Debug: Print missing item
-                print("Missing item: \(itemName)")
-                return
-            }
-        }
-
+        //        for itemName in itemNames {
+        //            if !assignedItemSet.contains(itemName) {
+        //                presentingAlert(title: "Error", message: "Every item must be assigned.", view: self)
+        //                // Debug: Print missing item
+        //                print("Missing item: \(itemName)")
+        //                return
+        //            }
+        //        }
+        
         // Ensure bill name is not empty
         guard let billName = billNameTextField.text, !billName.isEmpty else {
             presentingAlert(title: "Error", message: "Bill Name can't be empty", view: self)
@@ -605,7 +604,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             print("Bill name is empty")
             return
         }
-
+        
         // Check if every user has at least one assigned item
         for user in users {
             if user.items.isEmpty {
@@ -615,12 +614,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
                 return
             }
         }
-
+        
         // Add loading indicator
         self.addLoading(onView: self.view)
         // Debug: Print before calculating total amount
         print("Calculating total amount for each user")
-
+        
         // Calculate total amount for each user
         for index in users.indices {
             var totalPrice = 0
@@ -631,32 +630,24 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             // Debug: Print total amount for each user
             print("User: \(users[index].personName), Total Amount: \(users[index].totalAmount)")
         }
-
-        // Debug: Print before saving split bill
+        
         print("Saving split bill")
-
-        // Save the split bill
+        
         saveSplitBill { [weak self] success in
             guard let self = self else { return }
-
-            // Handle success or failure
+            
             if success {
-                // Debug: Print success
                 print("Split bill saved successfully")
                 let resultVC = ResultViewController(splitBillId: self.splitBillId ?? "empty")
                 resultVC.isComplete = true
                 self.navigationController?.pushViewController(resultVC, animated: true)
             } else {
-                // Debug: Print error saving
                 print("Error saving split bill")
                 self.removeLoading()
             }
         }
-
-        // Debug: Print end of function
-        print("Ending confirmButtonTapped function")
     }
-
+    
     
     func saveSplitBill(completion: @escaping (Bool) -> Void) {
         guard let billName = billNameTextField.text, !billName.isEmpty else {
@@ -665,17 +656,33 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         }
         
         let newSplitBill = SplitBill(title: billName, date: Date(), total: Int(totalAmount), image: capturedImage, imageUrl: "", personTotals: users, ownerId: editBillVM?.currUserId() ?? "nil")
-        editBillVM?.saveSplitBill(splitBill: newSplitBill, completion: { result in
+        
+        editBillVM?.checkAmountUser(splitBill: newSplitBill, completion: { result in
             switch result {
-            case .success(let uid):
-                print(newSplitBill)
-                self.splitBillId = uid
-                completion(true)
+            case .success(let valid):
+                if !valid {
+                    presentingAlert(title: "Your Budget not enough!", message: "Please add budget until sufficient amount", view: self)
+                    self.removeLoading()
+                    return
+                }else if valid {
+                    self.editBillVM?.saveSplitBill(splitBill: newSplitBill, completion: { res in
+                        switch res {
+                        case .success(let uid):
+                            print(newSplitBill)
+                            self.splitBillId = uid
+                            completion(true)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            completion(false)
+                        }
+                    })
+                }
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(false)
             }
         })
+        
+        
     }
     
     
@@ -734,7 +741,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             userItemButton.setTitleColor(.systemBlue, for: .normal)
             userItemButton.layer.cornerRadius = 8
             userItemButton.addTarget(self, action: #selector(userItemButtonTapped(_:)), for: .touchUpInside)
-                    
+            
             assignedUserStackView.addArrangedSubview(userItemButton)
         }
         
@@ -808,37 +815,37 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     }
     
     @objc private func userButtonTapped(_ sender: UIButton) {
-            guard let tappedUserName = sender.currentTitle else { return }
+        guard let tappedUserName = sender.currentTitle else { return }
+        
+        // Find the user object corresponding to the tapped button
+        selectedUser = users.first(where: { $0.personName == tappedUserName })
+        selectedButton = sender
+        
+        if isRemoveModeActive {
+            // Activate remove mode
+            removeButtonTapped()
+        } else {
+            // Highlight the tapped button
+            sender.backgroundColor = .yellow // You can change this to any highlight color
+            sender.setTitleColor(.black, for: .normal) // Example of changing text color
+            sender.layer.cornerRadius = 8 // Example of rounding corners for highlight effect
             
-            // Find the user object corresponding to the tapped button
-            selectedUser = users.first(where: { $0.personName == tappedUserName })
-            selectedButton = sender
-            
-            if isRemoveModeActive {
-                // Activate remove mode
-                removeButtonTapped()
-            } else {
-                // Highlight the tapped button
-                sender.backgroundColor = .yellow // You can change this to any highlight color
-                sender.setTitleColor(.black, for: .normal) // Example of changing text color
-                sender.layer.cornerRadius = 8 // Example of rounding corners for highlight effect
-                
-                // Reset other buttons
-                for button in userStackView.subviews.compactMap({ $0 as? UIButton }) {
-                    if button != sender {
-                        button.backgroundColor = .clear
-                        button.setTitleColor(.systemBlue, for: .normal)
-                        button.layer.cornerRadius = 0
-                    }
+            // Reset other buttons
+            for button in userStackView.subviews.compactMap({ $0 as? UIButton }) {
+                if button != sender {
+                    button.backgroundColor = .clear
+                    button.setTitleColor(.systemBlue, for: .normal)
+                    button.layer.cornerRadius = 0
                 }
             }
         }
+    }
     
     @objc func addButtonTapped() {
         guard !confirmationShown else {
-                showSearchFriend()
+            showSearchFriend()
             return
-            }
+        }
         
         let confirmationAlert = UIAlertController(title: "Confirmation", message: "Did you finish editing the bill?", preferredStyle: .alert)
         
