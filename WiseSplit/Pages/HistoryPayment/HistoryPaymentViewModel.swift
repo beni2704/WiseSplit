@@ -54,7 +54,7 @@ class HistoryPaymentViewModel {
                 for document in snapshot!.documents {
                     if let transaction = TransactionUser(document: document) {
                         if transaction.category == "Split Bill Owe"{
-                            transactions.append(TransactionUser(id: transaction.id, amount: (transaction.amount) * -1, category: transaction.category, date: transaction.date))
+                            transactions.append(TransactionUser(id: transaction.id, amount: (transaction.amount) * -1, category: transaction.category, date: transaction.date, splitBillId: transaction.splitBillId ?? "empty"))
                         }
                     }
                 }
@@ -76,14 +76,32 @@ class HistoryPaymentViewModel {
                 completion(.failure(error))
             } else {
                 var transactions: [TransactionUser] = []
+                let group = DispatchGroup()
+                
                 for document in snapshot!.documents {
-                    if let transaction = TransactionUser(document: document) {
-                        if transaction.category == "Split Bill Received" {
-                            transactions.append(TransactionUser(id: transaction.id, amount: abs(transaction.amount), category: transaction.category, date: transaction.date, splitBillId: transaction.splitBillId ?? "empty"))
+                    if let transaction = TransactionUser(document: document), transaction.category == "Split Bill Received" {
+                        let splitBillId = transaction.splitBillId ?? "empty"
+                        
+                        group.enter()
+                        let splitBillRef = self.db.collection("splitBills").document(splitBillId)
+                        splitBillRef.getDocument { splitBillSnapshot, splitBillError in
+                            if let splitBillError = splitBillError {
+                                completion(.failure(splitBillError))
+                            } else {
+                                if let splitBillData = splitBillSnapshot?.data(),
+                                   let total = splitBillData["total"] as? Int {
+                                    let calculatedAmount = total - transaction.amount
+                                    transactions.append(TransactionUser(id: transaction.id, amount: calculatedAmount, category: transaction.category, date: transaction.date, splitBillId: splitBillId))
+                                }
+                            }
+                            group.leave()
                         }
                     }
                 }
-                completion(.success(transactions))
+                
+                group.notify(queue: .main) {
+                    completion(.success(transactions))
+                }
             }
         }
     }

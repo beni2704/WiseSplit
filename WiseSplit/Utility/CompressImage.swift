@@ -14,7 +14,7 @@ func compressImage(_ image: UIImage, to targetSizeInMB: CGFloat = 1.0) -> Data? 
     var compressedData = image.jpegData(compressionQuality: compressionQuality)
     
     while let data = compressedData, data.count > Int(targetSizeInBytes) {
-        compressionQuality -= 0.8
+        compressionQuality -= 0.9
         compressedData = image.jpegData(compressionQuality: compressionQuality)
     }
     

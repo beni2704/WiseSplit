@@ -39,7 +39,7 @@ class HistoryPaymentViewController: UIViewController {
         spendingTitle.translatesAutoresizingMaskIntoConstraints = false
         rectangleBorder.addSubview(spendingTitle)
         
-        spendingTotal.text = "IDR 0"
+        spendingTotal.text = "RP 0"
         spendingTotal.font = UIFont.preferredFont(forTextStyle: .title3)
         spendingTotal.translatesAutoresizingMaskIntoConstraints = false
         rectangleBorder.addSubview(spendingTotal)
@@ -162,5 +162,6 @@ extension HistoryPaymentViewController: UITableViewDataSource, UITableViewDelega
             let resultViewController = ResultViewController(splitBillId: transaction.splitBillId ?? "empty")
             navigationController?.pushViewController(resultViewController, animated: true)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

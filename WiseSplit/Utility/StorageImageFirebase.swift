@@ -38,7 +38,7 @@ func uploadImage(path: String, image: UIImage, completion: @escaping (Result<Str
 func downloadImage(for imageUrl: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
     let storageRef = Storage.storage().reference(forURL: imageUrl)
     
-    storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+    storageRef.getData(maxSize: 2 * 1024 * 1024) { data, error in
         if let error = error {
             completion(.failure(error))
             return

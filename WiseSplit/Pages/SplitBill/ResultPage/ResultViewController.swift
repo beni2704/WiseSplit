@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ResultViewController: UIViewController {
+class ResultViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     var resultVM: ResultViewModel?
     var splitBillDetail: SplitBill?
@@ -21,6 +21,8 @@ class ResultViewController: UIViewController {
     var secondText = UILabel()
     var backgroundView = UIView()
     var scrollView = UIScrollView()
+    
+    var selectedImage: UIImage?
     
     init(splitBillId: String) {
         self.resultVM = ResultViewModel()
@@ -35,6 +37,10 @@ class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchSplitBillProcess()
+    }
+    
+    private func fetchSplitBillProcess() {
         fetchSplitBillDetail(splitBillId: splitBillDetailId ?? "empty") { [weak self] in
             self?.setupUI()
             self?.bindViewModel()
@@ -49,7 +55,7 @@ class ResultViewController: UIViewController {
         resultVM?.fetchSplitBillDetail(splitBillId: splitBillId) { [weak self] result in
             switch result {
             case .success(let newSplitBill):
-                self?.splitBillDetail = newSplitBill ?? SplitBill(title: "", date: Date(), total: 0, imageUrl: "", personTotals: [])
+                self?.splitBillDetail = newSplitBill ?? SplitBill(title: "", date: Date(), total: 0, imageUrl: "", personTotals: [], ownerId: "")
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -142,12 +148,12 @@ class ResultViewController: UIViewController {
             return
         }
         
-        if splitBillDetail.imageUrl == "Owner" {
+        if resultVM?.isOwner(splitBillOwnerId: splitBillDetail.ownerId) ?? true {
             let addPaymentButton = UIButton(type: .system)
             addPaymentButton.setTitle("Add/Edit Your Payment Information", for: .normal)
             addPaymentButton.setTitleColor(.white, for: .normal)
             addPaymentButton.addTarget(self, action: #selector(addPaymentButtonTapped), for: .touchUpInside)
-            addPaymentButton.backgroundColor = .gray // Update with your AppTheme
+            addPaymentButton.backgroundColor = .gray
             addPaymentButton.translatesAutoresizingMaskIntoConstraints = false
             addPaymentButton.layer.cornerRadius = 12
             backgroundView.addSubview(addPaymentButton)
@@ -156,7 +162,7 @@ class ResultViewController: UIViewController {
             shareLink.setTitle("Share Bill", for: .normal)
             shareLink.setTitleColor(.white, for: .normal)
             shareLink.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
-            shareLink.backgroundColor = .green // Update with your AppTheme
+            shareLink.backgroundColor = .green
             shareLink.translatesAutoresizingMaskIntoConstraints = false
             shareLink.layer.cornerRadius = 12
             backgroundView.addSubview(shareLink)
@@ -174,9 +180,9 @@ class ResultViewController: UIViewController {
             ])
         } else {
             let confirmPayment = UIButton(type: .system)
-            confirmPayment.setTitle("Share Bill", for: .normal)
+            confirmPayment.setTitle("Payment", for: .normal)
             confirmPayment.setTitleColor(.white, for: .normal)
-            confirmPayment.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
+            confirmPayment.addTarget(self, action: #selector(proceedPayment), for: .touchUpInside)
             confirmPayment.backgroundColor = .green
             confirmPayment.translatesAutoresizingMaskIntoConstraints = false
             confirmPayment.layer.cornerRadius = 12
@@ -194,10 +200,29 @@ class ResultViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        resultVM?.setupBackgroundView(backgroundView)
-        resultVM?.setupScrollView(scrollView, in: backgroundView)
+        setupBackgroundView(backgroundView)
+        setupScrollView(scrollView, in: backgroundView)
 
         displayUsers()
+    }
+    
+    func setupBackgroundView(_ backgroundView: UIView) {
+        backgroundView.backgroundColor = .lightGray
+        backgroundView.layer.cornerRadius = 10
+    }
+    
+    func setupScrollView(_ scrollView: UIScrollView, in backgroundView: UIView) {
+        scrollView.backgroundColor = .lightGray
+        scrollView.layer.cornerRadius = 10
+        scrollView.showsVerticalScrollIndicator = true // Enable vertical scroll indicator
+        backgroundView.addSubview(scrollView)
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -287)
+        ])
     }
     
     private func displayUsers() {
@@ -207,6 +232,7 @@ class ResultViewController: UIViewController {
             return
         }
         
+        var index = 0
         for person in personTotals {
             let containerView = UIView()
             containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -235,9 +261,11 @@ class ResultViewController: UIViewController {
             statusButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 4)
             containerView.addSubview(statusButton)
             
+            statusButton.tag = index
             if person.personPhoneNumber != "Not Registered" {
-                statusButton.addTarget(self, action: #selector(openPaymentPage), for: .touchUpInside)
+                statusButton.addTarget(self, action: #selector(openPaymentInfoPage), for: .touchUpInside)
             }
+            index += 1
             
             NSLayoutConstraint.activate([
                 containerView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? scrollView.topAnchor, constant: 16),
@@ -295,6 +323,20 @@ class ResultViewController: UIViewController {
         scrollView.layoutIfNeeded()
     }
     
+    func setupDoneImageButton(imagePickerController: UIImagePickerController) {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.items = [flexibleSpace, doneButton]
+
+        imagePickerController.view.addSubview(toolbar)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.bottomAnchor.constraint(equalTo: imagePickerController.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        toolbar.leadingAnchor.constraint(equalTo: imagePickerController.view.leadingAnchor).isActive = true
+        toolbar.trailingAnchor.constraint(equalTo: imagePickerController.view.trailingAnchor).isActive = true
+    }
+    
     // MARK: - Button Actions
     
     @objc private func addPaymentButtonTapped() {
@@ -305,9 +347,57 @@ class ResultViewController: UIViewController {
         
     }
     
-    @objc private func openPaymentPage() {
+    @objc private func openPaymentInfoPage(sender: UIButton) {
         let imageVC = ImageViewController()
         imageVC.capturedImage = splitBillDetail?.image
+        imageVC.capturedImage = splitBillDetail?.personTotals[sender.tag].imagePaid
         navigationController?.pushViewController(imageVC, animated: true)
+    }
+    
+    @objc private func proceedPayment() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+
+        setupDoneImageButton(imagePickerController: imagePickerController)
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    @objc private func doneButtonTapped() {
+        guard let picker = presentedViewController as? UIImagePickerController else { return }
+        
+        if let selectedImage = self.selectedImage {
+            let alertController = UIAlertController(title: "Confirm", message: "Do you want to use this image?", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+                picker.dismiss(animated: true, completion: {
+                    self.addLoading(onView: self.view)
+                    self.resultVM?.updatePaymentStatus(image: selectedImage, splitBillDetailId: self.splitBillDetailId ?? "nil", completion: { res in
+                        switch res {
+                        case .success():
+                            let successAlert = UIAlertController(title: "Success", message: "Image selected successfully!", preferredStyle: .alert)
+                            successAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(successAlert, animated: true, completion: nil)
+                            self.fetchSplitBillProcess()
+                            self.removeLoading()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    })
+                    
+                })
+            }))
+            picker.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            self.selectedImage = selectedImage
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
