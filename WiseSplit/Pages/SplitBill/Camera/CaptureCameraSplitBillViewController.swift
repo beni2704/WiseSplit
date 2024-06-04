@@ -99,7 +99,7 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
     fileprivate func setupCaptureButton() {
         view.addSubview(captureButton)
         captureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        captureButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        captureButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
         captureButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         captureButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }

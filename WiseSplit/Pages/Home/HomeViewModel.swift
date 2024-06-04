@@ -52,6 +52,8 @@ class HomeViewModel: ObservableObject {
                         var category = transaction.category
                         if category == "Income" {
                             category = "Income"
+                        }else if category == "Split Bill Owe" {
+                            category = "Owe"
                         }else if category != "Health Care" {
                             category = "Spending"
                         }

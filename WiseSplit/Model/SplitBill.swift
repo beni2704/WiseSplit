@@ -14,7 +14,8 @@ struct SplitBill {
     let total: Int
     var image: UIImage?
     let imageUrl: String
-    let personTotals: [PersonTotal]
+    var personTotals: [PersonTotal]
+    let ownerId: String
     var paymentInfo: PaymentInfo?
 }
 
@@ -78,6 +79,7 @@ extension SplitBill {
             "date": date,
             "total": total,
             "imageUrl": imageUrl,
+            "ownerId": ownerId,
             "personTotals": personTotals.map { $0.toDictionary() }
         ]
     }

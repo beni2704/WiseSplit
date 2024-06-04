@@ -82,7 +82,7 @@ class TransactionTableViewCell: UITableViewCell {
         categoryLabel.text = transaction.category
         amountLabel.text = "\(formatToIDR(transaction.amount))"
         amountLabel.textColor = .redCustom
-        dateLabel.text = "\(transaction.date)"
+        dateLabel.text = "\(formatDateHour(transaction.date.description))"
         
         switch transaction.category {
         case "Food & Beverage":

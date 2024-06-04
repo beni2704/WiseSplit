@@ -427,8 +427,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         if !isEditing {
-            // Update the values in the valuesLabels based on the text fields
-            
             updateValuesLabels()
         }
         
@@ -529,7 +527,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             return
         }
         
-        let newSplitBill = SplitBill(title: billName, date: Date(), total: Int(totalAmount), image: capturedImage, imageUrl: "", personTotals: users)
+        let newSplitBill = SplitBill(title: billName, date: Date(), total: Int(totalAmount), image: capturedImage, imageUrl: "", personTotals: users, ownerId: editBillVM?.currUserId() ?? "nil")
         editBillVM?.saveSplitBill(splitBill: newSplitBill, completion: { result in
             switch result {
             case .success(let uid):
@@ -620,31 +618,25 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     }
     
     @objc private func userItemButtonTapped(_ sender: UIButton) {
-        // Find the assigned user
         guard var selectedUser = self.selectedUser else {
             showAlert(title: "Error", message: "No user selected.")
             return
         }
         
-        // Find the item index
         guard let index = itemViews.firstIndex(where: { $0.assignedUserStackView === sender.superview }) else {
             showAlert(title: "Error", message: "Failed to find the item.")
             return
         }
         
-        // Remove the user item button from the stack view
         sender.removeFromSuperview()
         
-        // Remove the assignment from the selected user
         let itemName = itemNames[index]
         selectedUser.items.removeAll { $0.name == itemName }
         
-        // Update the users array if necessary
         if let userIndex = users.firstIndex(where: { $0.personName == selectedUser.personName }) {
             users[userIndex] = selectedUser
         }
         
-        // Update the selected user
         self.selectedUser = selectedUser
         
         print("Removed \(itemName) from \(selectedUser.personName)'s assigned items.")

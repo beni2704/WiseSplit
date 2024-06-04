@@ -11,6 +11,10 @@ import FirebaseAuth
 
 class EditSplitBillViewModel {
     
+    func currUserId() -> String {
+        return Auth.auth().currentUser?.uid ?? "nil"
+    }
+    
     func fetchLoginAccount(completion: @escaping (Result<PersonTotal, Error>) -> Void) {
         guard let user = Auth.auth().currentUser else {
             completion(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user is currently logged in."])))
