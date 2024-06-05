@@ -68,13 +68,13 @@ class EditSplitBillViewModel {
             } else if let document = document, document.exists {
                 let data = document.data()
                 var currentBudget = data?["budget"] as? Int ?? 0
-                let amount = splitBill.personTotals.first{$0.personUUID == userId}?.totalAmount ?? 0
+                let totalPay = splitBill.total
                 
-                if amount > currentBudget {
+                if totalPay > currentBudget {
                     completion(.success(false))
                     return
                 }
-                currentBudget -= amount
+                currentBudget -= totalPay
                 
                 userRef.updateData(["budget": currentBudget]) { error in
                     if let error = error {
@@ -111,7 +111,7 @@ class EditSplitBillViewModel {
                         completion(.failure(error))
                     } else {
                         if let documentID = ref?.documentID {
-                            self.saveTransactionForUsers(splitBillUID: documentID, splitBill: splitBill) { [weak self] res in
+                            self.saveTransactionForUsers(splitBillUID: documentID, splitBill: splitBill) { res in
                                 switch res {
                                 case .success(_):
                                     completion(.success(documentID))
