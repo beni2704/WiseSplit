@@ -681,8 +681,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
                 print(error.localizedDescription)
             }
         })
-        
-        
     }
     
     

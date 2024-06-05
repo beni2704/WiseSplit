@@ -223,21 +223,26 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 
             ])
         } else {
-            let confirmPayment = UIButton(type: .system)
-            confirmPayment.setTitle("Payment", for: .normal)
-            confirmPayment.setTitleColor(.white, for: .normal)
-            confirmPayment.addTarget(self, action: #selector(proceedPayment), for: .touchUpInside)
-            confirmPayment.backgroundColor = .green
-            confirmPayment.translatesAutoresizingMaskIntoConstraints = false
-            confirmPayment.layer.cornerRadius = 12
-            backgroundView.addSubview(confirmPayment)
+            resultVM?.checkPaid(splitBillId: splitBillDetailId ?? "empty", completion: { res in
+                if res {
+                    let confirmPayment = UIButton(type: .system)
+                    confirmPayment.setTitle("Payment", for: .normal)
+                    confirmPayment.setTitleColor(.white, for: .normal)
+                    confirmPayment.addTarget(self, action: #selector(self.proceedPayment), for: .touchUpInside)
+                    confirmPayment.backgroundColor = .green
+                    confirmPayment.translatesAutoresizingMaskIntoConstraints = false
+                    confirmPayment.layer.cornerRadius = 12
+                    self.backgroundView.addSubview(confirmPayment)
+                    
+                    NSLayoutConstraint.activate([
+                        confirmPayment.bottomAnchor.constraint(equalTo: self.backgroundView.bottomAnchor, constant: -16),
+                        confirmPayment.leadingAnchor.constraint(equalTo: self.backgroundView.leadingAnchor, constant: 16),
+                        confirmPayment.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: -16),
+                        confirmPayment.heightAnchor.constraint(equalToConstant: 39),
+                    ])
+                }
+            })
             
-            NSLayoutConstraint.activate([
-                confirmPayment.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -16),
-                confirmPayment.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
-                confirmPayment.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
-                confirmPayment.heightAnchor.constraint(equalToConstant: 39),
-            ])
         }
     }
     
@@ -282,7 +287,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             scrollView.addSubview(containerView)
             
             let nameLabel = UILabel()
-            nameLabel.text = "\(person.personName) - \(person.totalAmount)"
+            nameLabel.text = "\(person.personName) - \(formatToIDR(person.totalAmount))"
             nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(nameLabel)
@@ -361,7 +366,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         if let lastView = lastView {
             lastView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16).isActive = true
         }
-
+        
         scrollView.layoutIfNeeded()
     }
     
@@ -371,7 +376,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.items = [flexibleSpace, doneButton]
-
+        
         imagePickerController.view.addSubview(toolbar)
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         toolbar.bottomAnchor.constraint(equalTo: imagePickerController.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -399,12 +404,31 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @objc private func proceedPayment() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-
-        setupDoneImageButton(imagePickerController: imagePickerController)
-        present(imagePickerController, animated: true, completion: nil)
+        guard let splitBillDetail = splitBillDetail else {
+            return
+        }
+        
+        resultVM?.checkBudgetToPay(splitBill: splitBillDetail, completion: { result in
+            switch result {
+            case .success(let valid):
+                if !valid {
+                    presentingAlert(title: "Your Budget not enough!", message: "Please add budget until sufficient amount", view: self)
+                    self.removeLoading()
+                    return
+                }else {
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.delegate = self
+                    imagePickerController.sourceType = .photoLibrary
+                    
+                    self.setupDoneImageButton(imagePickerController: imagePickerController)
+                    self.present(imagePickerController, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+        
+        
     }
     
     @objc private func doneButtonTapped() {
@@ -440,7 +464,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.selectedImage = selectedImage
         }
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }

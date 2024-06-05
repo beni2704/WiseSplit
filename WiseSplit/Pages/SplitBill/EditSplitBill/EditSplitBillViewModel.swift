@@ -85,7 +85,6 @@ class EditSplitBillViewModel {
                 }
             }
         }
-        
     }
     
     func saveSplitBill(splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
