@@ -11,14 +11,75 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class ResultViewModel {
+    let db = Firestore.firestore()
+    
     func isOwner(splitBillOwnerId: String) -> Bool {
         return Auth.auth().currentUser?.uid == splitBillOwnerId
     }
     
+    func checkPaid(splitBillId: String, completion: @escaping (Bool) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userRef = db.collection("splitBills").document(splitBillId)
+
+          userRef.getDocument { document, error in
+            if let error = error {
+              completion(false)
+            } else if let document = document, document.exists {
+              let data = document.data()
+              guard let personTotalsData = data?["personTotals"] as? [[String: Any]] else {
+                completion(false)
+                return
+              }
+
+              if let userPersonTotal = personTotalsData.first(where: { $0["personUUID"] as? String == userId }) {
+                completion(!(userPersonTotal["isPaid"] as? Bool ?? false))
+              } else {
+                completion(false)
+              }
+            } else {
+              completion(false)
+            }
+          }
+        
+        
+    }
+    
+    func checkBudgetToPay(splitBill: SplitBill, completion: @escaping (Result<Bool, Error>) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userRef = db.collection("users").document(userId)
+        
+        userRef.getDocument { document, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let document = document, document.exists {
+                let data = document.data()
+                var currentBudget = data?["budget"] as? Int ?? 0
+                let amount = splitBill.personTotals.first{$0.personUUID == userId}?.totalAmount ?? 0
+                
+                if amount > currentBudget {
+                    completion(.success(false))
+                    return
+                }
+                
+                completion(.success(true))
+            }
+        }
+    }
+    
     func updatePaymentStatus(image: UIImage, splitBillDetailId: String,completion: @escaping (Result<Void, Error>) -> Void) {
-        let db = Firestore.firestore()
+        
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
         let splitBillRef = db.collection("splitBills").document(splitBillDetailId)
-        let userId = Auth.auth().currentUser?.uid
+        let userRef = db.collection("users").document(userId)
         
         guard let compressedImageData = compressImage(image) else {
             let error = NSError(domain: "CompressionError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to compress image"])
@@ -34,7 +95,12 @@ class ResultViewModel {
                         completion(.failure(error))
                     } else if let document = document, document.exists, var splitBillData = document.data() {
                         var personTotals = splitBillData["personTotals"] as? [[String: Any]] ?? []
+                        let personPaidId = splitBillData["ownerId"] as? String ?? ""
+                        
+                        let ownerRef = self.db.collection("users").document(personPaidId)
+                        
                         if let index = personTotals.firstIndex(where: { $0["personUUID"] as? String == userId }) {
+                            let amount = personTotals[index]["totalAmount"] as? Int ?? 0
                             personTotals[index]["isPaid"] = true
                             personTotals[index]["imagePaidUrl"] = imageUrl
                             splitBillData["personTotals"] = personTotals
@@ -42,7 +108,38 @@ class ResultViewModel {
                                 if let error = error {
                                     completion(.failure(error))
                                 } else {
-                                    completion(.success(()))
+                                    userRef.getDocument { userDoc, error in
+                                        if let error = error {
+                                            completion(.failure(error))
+                                        } else if let userDoc = userDoc, userDoc.exists, let userData = userDoc.data() {
+                                            var currentBudget = userData["budget"] as? Int ?? 0
+                                            
+                                            currentBudget -= amount
+                                            
+                                            userRef.updateData(["budget": currentBudget]) { error in
+                                                if let error = error {
+                                                    completion(.failure(error))
+                                                } else {
+                                                    ownerRef.getDocument { ownerDoc, error in
+                                                        if let error = error {
+                                                            completion(.failure(error))
+                                                        } else if let ownerDoc = ownerDoc, ownerDoc.exists, let ownerData = ownerDoc.data() {
+                                                            var ownerBudget = ownerData["budget"] as? Int ?? 0
+                                                            
+                                                            ownerBudget += amount
+                                                            ownerRef.updateData(["budget": ownerBudget]) { error in
+                                                                if let error = error {
+                                                                    completion(.failure(error))
+                                                                }else {
+                                                                    completion(.success(()))
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -120,7 +217,7 @@ class ResultViewModel {
     
     func parseSplitBill(from data: [String: Any]) -> SplitBill {
         let title = data["title"] as? String ?? ""
-        let date = data["date"] as? Date ?? Date()
+        let date = data["date"] as? Timestamp ?? Timestamp()
         let total = data["total"] as? Int ?? 0
         let imageUrl = data["imageUrl"] as? String ?? ""
         let personTotalsData = data["personTotals"] as? [[String: Any]] ?? []
@@ -131,7 +228,7 @@ class ResultViewModel {
         let paymentInfo = paymentInfoData != nil ? parsePaymentInfo(from: paymentInfoData!) : nil
         
         
-        return SplitBill(title: title, date: date, total: total, image: nil, imageUrl: imageUrl, personTotals: personTotals, ownerId: ownerId, paymentInfo: paymentInfo)
+        return SplitBill(title: title, date: date.dateValue(), total: total, image: nil, imageUrl: imageUrl, personTotals: personTotals, ownerId: ownerId, paymentInfo: paymentInfo)
     }
     
     func parsePersonTotal(from data: [String: Any]) -> PersonTotal {
