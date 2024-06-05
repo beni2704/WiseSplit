@@ -9,7 +9,7 @@
         <key>PLIST_VERSION</key>
         <string>1</string>
         <key>BUNDLE_ID</key>
-        <string>com.skripsi.WiseSplit</string>
+        <string>com.prima.skripsi</string>
         <key>PROJECT_ID</key>
         <string>wise-split-849ed</string>
         <key>STORAGE_BUCKET</key>
@@ -25,35 +25,6 @@
         <key>IS_SIGNIN_ENABLED</key>
         <true></true>
         <key>GOOGLE_APP_ID</key>
-        <string>1:458500322726:ios:17f8296932e1d6cc82cb67</string>
-    </dict>
-</plist><?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-    <dict>
-        <key>API_KEY</key>
-        <string>AIzaSyBd31G-EBw-vo6CTTEtzOVZ7ickZ7i_0AM</string>
-        <key>GCM_SENDER_ID</key>
-        <string>458500322726</string>
-        <key>PLIST_VERSION</key>
-        <string>1</string>
-        <key>BUNDLE_ID</key>
-        <string>com.skripsi.WiseSplit</string>
-        <key>PROJECT_ID</key>
-        <string>wise-split-849ed</string>
-        <key>STORAGE_BUCKET</key>
-        <string>wise-split-849ed.appspot.com</string>
-        <key>IS_ADS_ENABLED</key>
-        <false></false>
-        <key>IS_ANALYTICS_ENABLED</key>
-        <false></false>
-        <key>IS_APPINVITE_ENABLED</key>
-        <true></true>
-        <key>IS_GCM_ENABLED</key>
-        <true></true>
-        <key>IS_SIGNIN_ENABLED</key>
-        <true></true>
-        <key>GOOGLE_APP_ID</key>
-        <string>1:458500322726:ios:17f8296932e1d6cc82cb67</string>
+        <string>1:458500322726:ios:b85053794e78597382cb67</string>
     </dict>
 </plist>
