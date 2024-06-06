@@ -611,13 +611,13 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         // Check if every item is assigned to at least one user
         for itemName in allItemNames {
-                if !assignedItemSet.contains(itemName) {
-                    presentingAlert(title: "Error", message: "Every item must be assigned.", view: self)
-                    // Debug: Print missing item
-                    print("Missing item: \(itemName)")
-                    return
-                }
+            if !assignedItemSet.contains(itemName) {
+                presentingAlert(title: "Error", message: "Every item must be assigned.", view: self)
+                // Debug: Print missing item
+                print("Missing item: \(itemName)")
+                return
             }
+        }
         
         // Ensure bill name is not empty
         guard let billName = billNameTextField.text, !billName.isEmpty else {
@@ -704,20 +704,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             }
         })
     }
-    
-    
-    @objc private func editButtonPressed2() {
-        guard let selectedUser = selectedUser else {
-            // Handle case where no user is selected
-            return
-        }
-        
-        let selectedUsers = [selectedUser]
-        
-        let viewController = OweResultViewController(displayedUser: selectedUsers, paymentMethod: "", accountName: "", accountNumber: "")
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
     
     @objc private func itemButtonTapped(_ sender: UIButton) {
         

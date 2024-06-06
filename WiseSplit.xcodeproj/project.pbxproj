@@ -90,6 +90,8 @@
 		B17E7A442C0B01C30045659C /* PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A432C0B01C30045659C /* PresentAlert.swift */; };
 		B17E7A462C0B07020045659C /* CompressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A452C0B07020045659C /* CompressImage.swift */; };
 		B1A86E352C0B9CC100E0B8E2 /* FormatDateHour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */; };
+		B1B68C942C12004700D2CCBB /* OCRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B68C932C12004700D2CCBB /* OCRResult.swift */; };
+		B1B68C962C12015700D2CCBB /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B68C952C12015700D2CCBB /* OCRViewModel.swift */; };
 		B1C96B712C0329BA00158F40 /* BarChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B702C0329BA00158F40 /* BarChartsView.swift */; };
 		B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B722C03937100158F40 /* FormatIDR.swift */; };
 		B1C96B782C06337600158F40 /* SplitBill.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B772C06337600158F40 /* SplitBill.swift */; };
@@ -156,6 +158,8 @@
 		B17E7A432C0B01C30045659C /* PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAlert.swift; sourceTree = "<group>"; };
 		B17E7A452C0B07020045659C /* CompressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressImage.swift; sourceTree = "<group>"; };
 		B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDateHour.swift; sourceTree = "<group>"; };
+		B1B68C932C12004700D2CCBB /* OCRResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRResult.swift; sourceTree = "<group>"; };
+		B1B68C952C12015700D2CCBB /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
 		B1C96B702C0329BA00158F40 /* BarChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartsView.swift; sourceTree = "<group>"; };
 		B1C96B722C03937100158F40 /* FormatIDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatIDR.swift; sourceTree = "<group>"; };
 		B1C96B772C06337600158F40 /* SplitBill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBill.swift; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 				B143BB172BA35DA8008B2F4D /* Account.swift */,
 				B165D5CF2BE5005500EC6BF7 /* Transaction.swift */,
 				B1C96B772C06337600158F40 /* SplitBill.swift */,
+				B1B68C932C12004700D2CCBB /* OCRResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */,
+				B1B68C952C12015700D2CCBB /* OCRViewModel.swift */,
 			);
 			path = ImageView;
 			sourceTree = "<group>";
@@ -606,6 +612,7 @@
 				B165D5DB2C00E26B00EC6BF7 /* OTPViewController.swift in Sources */,
 				B165D5D72BF689FE00EC6BF7 /* SearchFriendViewController.swift in Sources */,
 				B17E7A3E2C08D4F60045659C /* EditSplitBillViewModel.swift in Sources */,
+				B1B68C942C12004700D2CCBB /* OCRResult.swift in Sources */,
 				B165D5D92BF68A2800EC6BF7 /* SearchFriendTableViewCell.swift in Sources */,
 				B1C96B782C06337600158F40 /* SplitBill.swift in Sources */,
 				B165D5A62BC9A2A100EC6BF7 /* Color.swift in Sources */,
@@ -631,6 +638,7 @@
 				B165D5CB2BDB5EC800EC6BF7 /* EnumAddBudget.swift in Sources */,
 				B165D5D02BE5005500EC6BF7 /* Transaction.swift in Sources */,
 				5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */,
+				B1B68C962C12015700D2CCBB /* OCRViewModel.swift in Sources */,
 				5D296D342C08A8720073E210 /* AddPaymentInfoViewController.swift in Sources */,
 				B165D5AC2BC9AF7C00EC6BF7 /* AddBudgetViewController.swift in Sources */,
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,

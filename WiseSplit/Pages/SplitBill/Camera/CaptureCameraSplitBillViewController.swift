@@ -37,11 +37,6 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
-        //        setupIdentifierConfidenceLabel()
         setupCaptureButton()
     }
     
