@@ -1,4 +1,5 @@
 import UIKit
+import NaturalLanguage
 
 class OCRViewController: UIViewController {
     
@@ -152,9 +153,12 @@ class OCRViewController: UIViewController {
                     var totalPrice: Double = 0.0
                     
                     // Assuming `json` is your JSON response dictionary
+                   
+
                     if let parsedResults = json["ParsedResults"] as? [[String: Any]] {
+                        let tagger = NLTagger(tagSchemes: [.lexicalClass])
                         for result in parsedResults {
-                            print("json: ",json)
+                            print("json: ", json)
                             if let textOverlay = result["TextOverlay"] as? [String: Any],
                                let lines = textOverlay["Lines"] as? [[String: Any]] {
                                 for line in lines {
@@ -163,35 +167,61 @@ class OCRViewController: UIViewController {
                                         var quantity: String?
                                         var itemName: String?
                                         var price: String?
-                                        
+
                                         for word in words {
                                             if let wordText = word["WordText"] as? String {
                                                 if wordText.contains(".") || wordText.contains("$") || wordText.contains(",") {
                                                     price = wordText
                                                     self.prices.append(price!)
-                                                    
                                                 } else if let number = Int(wordText), wordText.count <= 1 {
                                                     quantity = "\(number)"
                                                     self.quantities.append(quantity!)
-                                                    
                                                 } else {
+                                                    // Validation for all-uppercase strings
+                                                    let isAllUppercase = wordText == wordText.uppercased()
+
+                                                    // Validation for date, month, year formats
+                                                    let dateFormats = ["dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd", "dd-MM-yyyy", "MM-dd-yyyy", "yyyy-MM-dd"]
+                                                    let dateFormatter = DateFormatter()
+                                                    var isDate = false
+
+                                                    for format in dateFormats {
+                                                        dateFormatter.dateFormat = format
+                                                        if dateFormatter.date(from: wordText) != nil {
+                                                            isDate = true
+                                                            break
+                                                        }
+                                                    }
+
+                                                    let isMonth = Calendar.current.monthSymbols.contains(wordText)
+                                                    let isYear = Int(wordText) != nil && wordText.count == 4
+
+                                                    // Validate if the word is a noun
+                                                    tagger.string = wordText
+                                                    let tag = tagger.tag(at: wordText.startIndex, unit: .word, scheme: .lexicalClass).0
+                                                    let isNoun = tag == .noun || tag == .otherWord
+
+                                                    // Specific checks to exclude "Bank", "bank", "Bank Card", "bank card"
+                                                    let excludedWords = ["xxx"]
+                                                    let isExcludedWord = excludedWords.contains(wordText)
+
                                                     let isValidCharacter = wordText.rangeOfCharacter(from: CharacterSet(charactersIn: "&").union(CharacterSet.letters)) != nil || wordText.contains("-")
-                                                    if isValidCharacter && wordText != "x" && wordText != "*" && !wordText.contains("I") &&
-                                                        !wordText.contains("#") {
+                                                    if isValidCharacter && wordText != "x" && wordText != "*" && !wordText.contains("I") && !wordText.contains("#") &&
+                                                        !isAllUppercase && !isDate && !isMonth && !isYear && isNoun && !isExcludedWord {
                                                         itemName = (itemName == nil) ? wordText : "\(itemName!) \(wordText)"
                                                         self.itemNames.append(itemName!)
                                                     }
                                                 }
                                             }
-                                            
                                         }
-                                        
-                                        
                                     }
                                 }
                             }
                         }
                     }
+
+
+
                     
                     DispatchQueue.main.async { [self] in
                         

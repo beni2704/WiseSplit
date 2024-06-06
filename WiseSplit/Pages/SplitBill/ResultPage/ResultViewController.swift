@@ -353,6 +353,8 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 itemLabel.translatesAutoresizingMaskIntoConstraints = false
                 scrollView.addSubview(itemLabel)
                 
+                print("person.items: -> \(person.items)")
+                
                 NSLayoutConstraint.activate([
                     itemLabel.topAnchor.constraint(equalTo: lastView!.bottomAnchor, constant: 8),
                     itemLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
