@@ -20,34 +20,3 @@ func compressImage(_ image: UIImage, to targetSizeInMB: CGFloat = 1.0) -> Data? 
     
     return compressedData
 }
-
-func resizeAndCompressImage(image: UIImage, maxSizeInKB: Int) -> Data? {
-    let maxFileSize = maxSizeInKB * 1024
-    var compression: CGFloat = 1.0
-    var imageData = image.jpegData(compressionQuality: compression)
-    
-    let maxSize: CGFloat = 1024
-    var newSize = image.size
-    if newSize.width > maxSize || newSize.height > maxSize {
-        let aspectRatio = newSize.width / newSize.height
-        if newSize.width > newSize.height {
-            newSize.width = maxSize
-            newSize.height = maxSize / aspectRatio
-        } else {
-            newSize.height = maxSize
-            newSize.width = maxSize * aspectRatio
-        }
-        UIGraphicsBeginImageContextWithOptions(newSize, true, 1.0)
-        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        imageData = newImage?.jpegData(compressionQuality: compression)
-    }
-    
-    while let data = imageData, data.count > maxFileSize, compression > 0.1 {
-        compression -= 0.1
-        imageData = image.jpegData(compressionQuality: compression)
-    }
-    
-    return imageData
-}

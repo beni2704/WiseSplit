@@ -160,11 +160,14 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
                     self?.captureButton.isEnabled = true
                 }
             }
+            
         }
+        
+        
         try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:]).perform([request])
     }
+    
 }
-
 extension UIImage {
     convenience init(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
         let rect = CGRect(origin: .zero, size: size)

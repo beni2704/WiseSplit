@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D2D2C08A8290073E210 /* OweResultViewController.swift */; };
 		5D296D342C08A8720073E210 /* AddPaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D332C08A8720073E210 /* AddPaymentInfoViewController.swift */; };
 		5D296D372C08A8900073E210 /* WhatsAppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D296D362C08A8900073E210 /* WhatsAppConfig.swift */; };
 		5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */; };
+		5DB30EC82BFB6BA1007F34D5 /* UserTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */; };
 		5DCE3CBB2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBA2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift */; };
 		5DCE3CBD2BDD73DF0067F9FD /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */; };
+		5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */; };
 		5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */; };
 		5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */; };
 		B13C369E2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */; };
@@ -86,8 +89,6 @@
 		B17E7A422C08E3D10045659C /* SearchFriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */; };
 		B17E7A442C0B01C30045659C /* PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A432C0B01C30045659C /* PresentAlert.swift */; };
 		B17E7A462C0B07020045659C /* CompressImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17E7A452C0B07020045659C /* CompressImage.swift */; };
-		B18638592C11F826004BA5D8 /* OCRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18638582C11F826004BA5D8 /* OCRViewModel.swift */; };
-		B186385B2C11F860004BA5D8 /* OCRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B186385A2C11F860004BA5D8 /* OCRResult.swift */; };
 		B1A86E352C0B9CC100E0B8E2 /* FormatDateHour.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */; };
 		B1C96B712C0329BA00158F40 /* BarChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B702C0329BA00158F40 /* BarChartsView.swift */; };
 		B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C96B722C03937100158F40 /* FormatIDR.swift */; };
@@ -97,11 +98,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D296D2D2C08A8290073E210 /* OweResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OweResultViewController.swift; sourceTree = "<group>"; };
 		5D296D332C08A8720073E210 /* AddPaymentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoViewController.swift; sourceTree = "<group>"; };
 		5D296D362C08A8900073E210 /* WhatsAppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppConfig.swift; sourceTree = "<group>"; };
 		5D2AC93A2BF71C2F00B033AE /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
+		5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTemp.swift; sourceTree = "<group>"; };
 		5DCE3CBA2BDD73CA0067F9FD /* CaptureCameraSplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureCameraSplitBillViewController.swift; sourceTree = "<group>"; };
 		5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewController.swift; sourceTree = "<group>"; };
 		5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ImageReceiptModel.mlmodel; sourceTree = "<group>"; };
 		5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateSplitBillViewController.swift; sourceTree = "<group>"; };
 		B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoViewModel.swift; sourceTree = "<group>"; };
@@ -151,8 +155,6 @@
 		B17E7A412C08E3D10045659C /* SearchFriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendDelegate.swift; sourceTree = "<group>"; };
 		B17E7A432C0B01C30045659C /* PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAlert.swift; sourceTree = "<group>"; };
 		B17E7A452C0B07020045659C /* CompressImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressImage.swift; sourceTree = "<group>"; };
-		B18638582C11F826004BA5D8 /* OCRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewModel.swift; sourceTree = "<group>"; };
-		B186385A2C11F860004BA5D8 /* OCRResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRResult.swift; sourceTree = "<group>"; };
 		B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDateHour.swift; sourceTree = "<group>"; };
 		B1C96B702C0329BA00158F40 /* BarChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartsView.swift; sourceTree = "<group>"; };
 		B1C96B722C03937100158F40 /* FormatIDR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatIDR.swift; sourceTree = "<group>"; };
@@ -199,6 +201,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D296D2C2C08A8190073E210 /* Owe */ = {
+			isa = PBXGroup;
+			children = (
+				5D296D2D2C08A8290073E210 /* OweResultViewController.swift */,
+			);
+			path = Owe;
+			sourceTree = "<group>";
+		};
 		5D296D322C08A85E0073E210 /* AddPaymentInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,10 +233,12 @@
 				B17E7A3A2C08CA170045659C /* Initiate */,
 				B17E7A372C08C8B30045659C /* Camera */,
 				B17E7A382C08C8BB0045659C /* ImageView */,
+				B17E7A392C08C8D60045659C /* PerformOCR */,
 				B17E7A3B2C08CA260045659C /* EditSplitBill */,
 				B165D5D32BF6883B00EC6BF7 /* SearchFriend */,
 				B17E7A322C08C77C0045659C /* ResultPage */,
 				5D296D322C08A85E0073E210 /* AddPaymentInfo */,
+				5D296D2C2C08A8190073E210 /* Owe */,
 				5D296D352C08A8810073E210 /* WhatsAppConfig */,
 				5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */,
 			);
@@ -278,10 +290,10 @@
 		B143BB192BA35DAD008B2F4D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5DB30EC72BFB6BA1007F34D5 /* UserTemp.swift */,
 				B143BB172BA35DA8008B2F4D /* Account.swift */,
 				B165D5CF2BE5005500EC6BF7 /* Transaction.swift */,
 				B1C96B772C06337600158F40 /* SplitBill.swift */,
-				B186385A2C11F860004BA5D8 /* OCRResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -432,9 +444,16 @@
 			isa = PBXGroup;
 			children = (
 				5DCE3CBC2BDD73DF0067F9FD /* ImageViewController.swift */,
-				B18638582C11F826004BA5D8 /* OCRViewModel.swift */,
 			);
 			path = ImageView;
+			sourceTree = "<group>";
+		};
+		B17E7A392C08C8D60045659C /* PerformOCR */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */,
+			);
+			path = PerformOCR;
 			sourceTree = "<group>";
 		};
 		B17E7A3A2C08CA170045659C /* Initiate */ = {
@@ -600,7 +619,9 @@
 				B165D5B02BC9B76200EC6BF7 /* AddBudgetViewModel.swift in Sources */,
 				B165D5BE2BCA964F00EC6BF7 /* AddPaymentDatePicker.swift in Sources */,
 				B1C96B7D2C063D0900158F40 /* FormatDateFirebase.swift in Sources */,
+				5D296D2E2C08A8290073E210 /* OweResultViewController.swift in Sources */,
 				B17E7A402C08DF540045659C /* ShowSheet.swift in Sources */,
+				5DB30EC82BFB6BA1007F34D5 /* UserTemp.swift in Sources */,
 				B1C96B732C03937100158F40 /* FormatIDR.swift in Sources */,
 				B165D59F2BBB9A6000EC6BF7 /* ProfileViewModel.swift in Sources */,
 				B165D5C92BDB583200EC6BF7 /* LoadingIndicator.swift in Sources */,
@@ -615,7 +636,7 @@
 				B165D5A32BBBA0AA00EC6BF7 /* HomeViewController.swift in Sources */,
 				B17E7A362C08C79C0045659C /* ResultViewModel.swift in Sources */,
 				B13C369E2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift in Sources */,
-				B18638592C11F826004BA5D8 /* OCRViewModel.swift in Sources */,
+				5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */,
 				B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */,
 				B143BB152B9F365D008B2F4D /* RegisterViewModel.swift in Sources */,
 				B165D5BA2BCA8AC100EC6BF7 /* AddPaymentUIPickerCategory.swift in Sources */,
@@ -625,7 +646,6 @@
 				B165D5D22BE5036600EC6BF7 /* TransactionTableViewCell.swift in Sources */,
 				B165D5C22BD7FD2700EC6BF7 /* HomeViewModel.swift in Sources */,
 				5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */,
-				B186385B2C11F860004BA5D8 /* OCRResult.swift in Sources */,
 				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,
 				B143BB132B9EE509008B2F4D /* RegisterViewController.swift in Sources */,
 				5D2AC93B2BF71C2F00B033AE /* EditBillViewController.swift in Sources */,
