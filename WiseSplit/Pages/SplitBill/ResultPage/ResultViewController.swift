@@ -395,26 +395,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @objc private func shareLinkButtonTapped() {
-        let predefinedSentence = "Your split bill have been created"
-        let activityViewController = UIActivityViewController(activityItems: [predefinedSentence], applicationActivities: nil)
         
-        activityViewController.excludedActivityTypes = [
-            .postToFacebook,
-            .postToTwitter,
-            .postToWeibo,
-            .message,
-            .mail,
-            .print,
-            .assignToContact,
-            .saveToCameraRoll,
-            .addToReadingList,
-            .postToFlickr,
-            .postToVimeo,
-            .postToTencentWeibo,
-            .airDrop,
-            .openInIBooks
-        ]
-        self.present(activityViewController, animated: true, completion: nil)
     }
     
     @objc private func openPaymentInfoPage(sender: UIButton) {
