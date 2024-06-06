@@ -16,6 +16,9 @@ struct ItemView {
 }
 
 class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFriendDelegate {
+    
+    var allItemNames: [String] = []
+    
     var titleLabel = UILabel()
     var firstText = UILabel()
     var secondText = UILabel()
@@ -44,9 +47,9 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var removeButton = UIButton(type: .system)
     var confirmationShown = false
     var billNameTextField = UITextField()
-    var itemNames: [String] = ["asdasd", "baddd"]
-    var quantities: [String] = ["123", "345"]
-    var prices: [String] = ["20", "30"]
+    var itemNames: [String] = []
+    var quantities: [String] = []
+    var prices: [String] = []
     let scrollView = UIScrollView()
     
     var userStackView = UIStackView()
@@ -227,6 +230,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let quantity = quantities[index]
             let price = prices[index]
             
+            allItemNames.append(itemName)
+            
             let itemButton = UIButton(type: .system)
             itemButton.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\t \(formatToIDR(Int(price) ?? 0))", for: .normal)
             //width harusnya sama dengan buttonWidth
@@ -288,11 +293,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             
             itemYOffset += 76
             contentHeight += 74
+            
         }
         itemYOffset = 242
         scrollView.contentSize = CGSize(width: 300, height: contentHeight)
         
-        let labels = ["Subtotal:", "Tax:", "Service Tax:", "Discounts:", "Others:", "Total Amount:"]
+        let labels = ["", "", "", "", "", ""]
         let values = [subtotal, tax, serviceTax, discounts, others, totalAmount]
         var textFields: [UITextField] = [subtotalTF, taxTF, serviceTaxTF, discountsTF, othersTF, totalAmountTF]
         var labelViews: [UILabel] = []
@@ -306,7 +312,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             backgroundView.addSubview(label)
             
             let valuesLabel = UILabel(frame: CGRect(x: 290, y: itemYOffset, width: 100, height: 30))
-            valuesLabel.text = formatToIDR(Int(values[index]))
+            //valuesLabel.text = formatToIDR(Int(values[index]))
+            valuesLabel.text = ""
             valuesLabel.textColor = .black // Adjust color as needed
             valuesLabel.font = UIFont.systemFont(ofSize: 14)
             backgroundView.addSubview(valuesLabel)
@@ -323,9 +330,9 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
             backgroundView.addGestureRecognizer(tapGesture)
             
-            valuesLabels.append(valuesLabel)
+            //valuesLabels.append(valuesLabel)
             labelViews.append(label)
-            allTextFields.append(textField)
+            //allTextFields.append(textField)
             
             itemYOffset += 40
             contentHeight += 40
@@ -402,20 +409,27 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         subtotal = prices.compactMap { Double($0) }.reduce(0, +)
         
         // Example calculations for tax, service tax, discounts, others, and total amount
-        tax = subtotal * 0.1
-        serviceTax = subtotal * 0.05
-        discounts = subtotal * 0.1
-        others = 15.0
-        totalAmount = subtotal + tax + serviceTax - discounts + others
+//        tax = subtotal * 0.1
+//        serviceTax = subtotal * 0.05
+//        discounts = subtotal * 0.1
+//        others = 15.0
+//        totalAmount = subtotal + tax + serviceTax - discounts + others
     }
     
     func updateUI() {
-        subtotalTF.text = formatToIDR(Int(subtotal))
-        taxTF.text = formatToIDR(Int(subtotal))
-        serviceTaxTF.text = formatToIDR(Int(serviceTax))
-        discountsTF.text = formatToIDR(Int(discounts))
-        othersTF.text = formatToIDR(Int(others))
-        totalAmountTF.text = formatToIDR(Int(totalAmount))
+//        subtotalTF.text = formatToIDR(Int(subtotal))
+//        taxTF.text = formatToIDR(Int(subtotal))
+//        serviceTaxTF.text = formatToIDR(Int(serviceTax))
+//        discountsTF.text = formatToIDR(Int(discounts))
+//        othersTF.text = formatToIDR(Int(others))
+//        totalAmountTF.text = formatToIDR(Int(totalAmount))
+        
+        subtotalTF.text = ""
+        taxTF.text = ""
+        serviceTaxTF.text = ""
+        discountsTF.text = ""
+        othersTF.text = ""
+        totalAmountTF.text = ""
     }
     
     
@@ -449,6 +463,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         discounts = Double(discountsTF.text ?? "0") ?? 0.0
         others = Double(othersTF.text ?? "0") ?? 0.0
         totalAmount = Double(totalAmountTF.text ?? "0") ?? 0.0
+        
+        
         
         let values = [subtotal, tax, serviceTax, discounts, others, totalAmount]
         
@@ -502,6 +518,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             presentingAlert(title: "Error", message: "Please select a user first.", view: self)
             return
         }
+        
+        let viewModel = ResultViewModel()
+        if viewModel.isOwner(splitBillOwnerId: selectedUser.personUUID) {
+                presentingAlert(title: "Error", message: "You cannot remove the owner.", view: self)
+                return
+            }
         
         // Find the user item button in the stack view
         guard let selectedButton = userStackView.arrangedSubviews.first(where: {
@@ -588,7 +610,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         print("Item names: \(itemNames)")
         
         // Check if every item is assigned to at least one user
-        for itemName in itemNames {
+        for itemName in allItemNames {
             if !assignedItemSet.contains(itemName) {
                 presentingAlert(title: "Error", message: "Every item must be assigned.", view: self)
                 // Debug: Print missing item
