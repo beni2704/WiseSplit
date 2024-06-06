@@ -683,20 +683,6 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         })
     }
     
-    
-    @objc private func editButtonPressed2() {
-        guard let selectedUser = selectedUser else {
-            // Handle case where no user is selected
-            return
-        }
-        
-        let selectedUsers = [selectedUser]
-        
-        let viewController = OweResultViewController(displayedUser: selectedUsers, paymentMethod: "", accountName: "", accountNumber: "")
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    
     @objc private func itemButtonTapped(_ sender: UIButton) {
         
         guard let selectedItemTitle = sender.currentTitle else { return }
