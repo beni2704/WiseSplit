@@ -9,6 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+                <string>app-1-458500322726-ios-b85053794e78597382cb67</string>
 				<string>app-1-458500322726-ios-17f8296932e1d6cc82cb67</string>
 			</array>
 		</dict>
