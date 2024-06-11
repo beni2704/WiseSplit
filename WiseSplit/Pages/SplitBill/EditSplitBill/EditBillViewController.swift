@@ -73,7 +73,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     
     var editBillVM: EditSplitBillViewModel?
     var searchFriendViewController: SearchFriendViewController?
-    
+    var itemCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         editBillVM = EditSplitBillViewModel()
@@ -221,7 +221,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         //            lastButton.trailingAnchor.constraint(equalTo: userContainerView.trailingAnchor).isActive = true
         //        }
         
-        let itemCount = min(itemNames.count, min(quantities.count, prices.count))
+        itemCount = min(itemNames.count, min(quantities.count, prices.count))
         
         var itemYOffset: CGFloat = 0
         for index in 0..<itemCount {
@@ -434,6 +434,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     
     
     @objc func editButtonPressed() {
+        
         isEditing.toggle() // Toggle the editing state
         
         for textField in allTextFields {
@@ -450,8 +451,17 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         if !isEditing {
-            updateValuesLabels()
-        }
+                allItemNames.removeAll()
+                for index in 0..<itemCount {
+                    
+                    if let itemNameTextField = scrollView.viewWithTag(index * 3) as? UITextField {
+                        let itemName = itemNameTextField.text ?? ""
+                        allItemNames.append(itemName)
+                    }
+                }
+                
+                updateValuesLabels()
+            }
         
     }
     
