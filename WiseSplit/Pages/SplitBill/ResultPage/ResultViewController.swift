@@ -84,8 +84,6 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
-        
         setupLabels()
         setupBackgroundView()
         setupScrollView()
@@ -126,7 +124,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     private func setupBackgroundView() {
-        backgroundView.backgroundColor = .lightGray
+        backgroundView.backgroundColor = Colors.backgroundChartCustom
         backgroundView.layer.cornerRadius = 10
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backgroundView)
@@ -140,7 +138,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     private func setupScrollView() {
-        scrollView.backgroundColor = .lightGray
+        scrollView.backgroundColor = Colors.backgroundChartCustom
         scrollView.layer.cornerRadius = 10
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -206,7 +204,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             shareLink.setTitle("Share Bill", for: .normal)
             shareLink.setTitleColor(.white, for: .normal)
             shareLink.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
-            shareLink.backgroundColor = .green
+            shareLink.backgroundColor = Colors.greenCustom
             shareLink.translatesAutoresizingMaskIntoConstraints = false
             shareLink.layer.cornerRadius = 12
             backgroundView.addSubview(shareLink)
@@ -231,7 +229,24 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                     confirmPayment.setTitle("Payment", for: .normal)
                     confirmPayment.setTitleColor(.white, for: .normal)
                     confirmPayment.addTarget(self, action: #selector(self.proceedPayment), for: .touchUpInside)
-                    confirmPayment.backgroundColor = .green
+                    confirmPayment.backgroundColor = Colors.greenCustom
+                    confirmPayment.translatesAutoresizingMaskIntoConstraints = false
+                    confirmPayment.layer.cornerRadius = 12
+                    self.backgroundView.addSubview(confirmPayment)
+                    
+                    NSLayoutConstraint.activate([
+                        confirmPayment.bottomAnchor.constraint(equalTo: self.backgroundView.bottomAnchor, constant: -16),
+                        confirmPayment.leadingAnchor.constraint(equalTo: self.backgroundView.leadingAnchor, constant: 16),
+                        confirmPayment.trailingAnchor.constraint(equalTo: self.backgroundView.trailingAnchor, constant: -16),
+                        confirmPayment.heightAnchor.constraint(equalToConstant: 39),
+                    ])
+                }
+                else {
+                    let confirmPayment = UIButton(type: .system)
+                    confirmPayment.setTitle("Already Paid", for: .normal)
+                    confirmPayment.setTitleColor(.white, for: .normal)
+                    confirmPayment.isEnabled = false
+                    confirmPayment.backgroundColor = .gray
                     confirmPayment.translatesAutoresizingMaskIntoConstraints = false
                     confirmPayment.layer.cornerRadius = 12
                     self.backgroundView.addSubview(confirmPayment)
@@ -256,12 +271,12 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func setupBackgroundView(_ backgroundView: UIView) {
-        backgroundView.backgroundColor = .lightGray
+        backgroundView.backgroundColor = Colors.backgroundChartCustom
         backgroundView.layer.cornerRadius = 10
     }
     
     func setupScrollView(_ scrollView: UIScrollView, in backgroundView: UIView) {
-        scrollView.backgroundColor = .lightGray
+        scrollView.backgroundColor = Colors.backgroundChartCustom
         scrollView.layer.cornerRadius = 10
         scrollView.showsVerticalScrollIndicator = true
         backgroundView.addSubview(scrollView)
@@ -285,7 +300,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         for person in personTotals {
             let containerView = UIView()
             containerView.translatesAutoresizingMaskIntoConstraints = false
-            containerView.backgroundColor = .lightGray
+            containerView.backgroundColor = Colors.backgroundChartCustom
             scrollView.addSubview(containerView)
             
             let nameLabel = UILabel()
@@ -302,7 +317,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             let statusButton = UIButton(type: .system)
             statusButton.setTitle(person.imagePaidUrl == "Owner" ? "Owner" : person.personPhoneNumber == "Not Registered" ? "Anonym" : person.isPaid ? "Paid" : "Not Paid", for: .normal)
-            statusButton.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .grayCustom : person.isPaid ? .greenCustom : .redCustom
+            statusButton.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .gray : person.isPaid ? Colors.greenCustom : Colors.redCustom
             statusButton.setTitleColor(.white, for: .normal)
             statusButton.isEnabled = person.isPaid ? true : false
             statusButton.translatesAutoresizingMaskIntoConstraints = false

@@ -23,7 +23,7 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = Colors.blueCustom
         
         button.setBackgroundImage(UIImage(color: UIColor.lightGray), for: .disabled)
         button.addTarget(self, action: #selector(captureButtonTapped), for: .touchUpInside)

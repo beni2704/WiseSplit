@@ -2,11 +2,11 @@
 import UIKit
 
 struct AppTheme {
-    static let backgroundColor = UIColor.white
-    static let textColor = UIColor.black
-    static let textFieldBorderColor = UIColor.gray
-    static let green = UIColor.systemGreen
-    static let gray = UIColor.systemGray
+//    static let backgroundColor = UIColor.white
+//    static let textColor = UIColor.black
+//    static let textFieldBorderColor = UIColor.gray
+//    static let green = UIColor.systemGreen
+//    static let gray = UIColor.systemGray
 }
 
 struct ItemView {
@@ -46,7 +46,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     let editButton = UIButton(type: .system)
     var removeButton = UIButton(type: .system)
     var confirmationShown = false
-    var billNameTextField = UITextField()
+    var billNameTextField = PaddedTextField()
     var itemNames: [String] = []
     var quantities: [String] = []
     var prices: [String] = []
@@ -136,7 +136,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = .lightGray
+        backgroundView.backgroundColor = Colors.backgroundChartCustom
         //        backgroundView.translatesAutoresizingMaskIntoConstraints = false
         let boxWidth: CGFloat = 370
         let boxHeight: CGFloat = 524
@@ -146,13 +146,9 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         backgroundView.layer.cornerRadius = 10
         view.addSubview(backgroundView)
         
-        view.backgroundColor = AppTheme.backgroundColor
-        
         billNameTextField.placeholder = "Enter Bill Name"
-        billNameTextField.borderStyle = .none
-        billNameTextField.layer.borderColor = AppTheme.textFieldBorderColor.cgColor
-        billNameTextField.textColor = AppTheme.textColor
-        billNameTextField.backgroundColor = .clear
+        billNameTextField.backgroundColor = Colors.backgroundFormCustom
+        billNameTextField.layer.cornerRadius = 8
         billNameTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(billNameTextField)
         
@@ -162,7 +158,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         // scrollView.frame = backgroundView.bounds
         
         //scrollView.frame = CGRect(x: x, y: y, width: 370, height: 524)
-        scrollView.backgroundColor = .lightGray
+        scrollView.backgroundColor = Colors.backgroundChartCustom
         scrollView.layer.cornerRadius = 10
         scrollView.translatesAutoresizingMaskIntoConstraints = true
         backgroundView.addSubview(scrollView)
@@ -321,9 +317,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let textField = textFields[index]
             textField.frame =  CGRect(x: 290, y: itemYOffset, width: 50, height: 30)
             textField.borderStyle = .none
+            textField.layer.borderColor = UIColor.gray.cgColor
             textField.backgroundColor = .clear
-            textField.layer.borderColor = AppTheme.textFieldBorderColor.cgColor
-            textField.textColor = AppTheme.textColor
             textField.isHidden = true
             backgroundView.addSubview(textField)
             
@@ -341,20 +336,19 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         //            // Set scrollView content size
         //            scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: contentHeight)
         
-        
-        
-        
         editButton.setTitle("Edit Bill", for: .normal)
         editButton.setTitleColor(.white, for: .normal)
         editButton.backgroundColor = .black
         editButton.frame = CGRect(x: 50, y: itemYOffset, width: 100, height: 30)
+        editButton.layer.cornerRadius = 12
         editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
         backgroundView.addSubview(editButton)
         
         let confirmButton = UIButton(type: .system)
         confirmButton.setTitle("Confirm", for: .normal)
         confirmButton.setTitleColor(.white, for: .normal)
-        confirmButton.backgroundColor = AppTheme.green
+        confirmButton.backgroundColor = Colors.greenCustom
+        confirmButton.layer.cornerRadius = 12
         confirmButton.frame = CGRect(x: 240, y: itemYOffset, width: 100, height: 30)
         confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         backgroundView.addSubview(confirmButton)
@@ -372,7 +366,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             secondText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
             //            backgroundView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            backgroundView.topAnchor.constraint(equalTo: billNameTextField.bottomAnchor),            //backgroundView.widthAnchor.constraint(equalToConstant: 327),
+            backgroundView.topAnchor.constraint(equalTo: billNameTextField.bottomAnchor, constant: 8),            //backgroundView.widthAnchor.constraint(equalToConstant: 327),
             //            backgroundView.heightAnchor.constraint(equalToConstant: 524),
             billNameTextField.topAnchor.constraint(equalTo: horizontalScrollView.bottomAnchor, constant: 16),
             billNameTextField.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
@@ -385,10 +379,12 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            editButton.heightAnchor.constraint(equalToConstant: 44),
             
             confirmButton.topAnchor.constraint(equalTo: editButton.topAnchor),
             confirmButton.leadingAnchor.constraint(equalTo: editButton.trailingAnchor, constant: 16),
-            confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            confirmButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
     
@@ -397,8 +393,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         let textField = UITextField(frame: frame)
         textField.text = text
         textField.borderStyle = .none
-        textField.layer.borderColor = AppTheme.textFieldBorderColor.cgColor
-        textField.textColor = AppTheme.textColor
+        textField.layer.borderColor = UIColor.gray.cgColor
         textField.backgroundColor = .clear
         textField.delegate = self
         textField.tag = tag

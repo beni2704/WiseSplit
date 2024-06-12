@@ -51,28 +51,28 @@ class HomeViewController: UIViewController {
         
         let theme = UserDefaults.standard.string(forKey: "Theme") ?? "light"
         themeButton.setImage(UIImage(systemName: theme == "dark" ? "sun.max" : "moon.fill"), for: .normal)
-        themeButton.tintColor = .yellowCustom
+        themeButton.tintColor = Colors.yellowCustom
         themeButton.translatesAutoresizingMaskIntoConstraints = false
         themeButton.addTarget(self, action: #selector(changeTheme), for: .touchUpInside)
         view.addSubview(themeButton)
         
         numBudget.text = "\(formatToIDR(account?.budget ?? 0))"
-        numBudget.font = UIFont.preferredFont(forTextStyle: .title2)
+        numBudget.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         numBudget.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(numBudget)
         
         titleBudget.text = "Remaining budget"
-        titleBudget.textColor = UIColor.grayCustom
+        titleBudget.textColor = .lightGray
         titleBudget.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleBudget)
         
         spendingTitle.text = "Spending Report"
-        spendingTitle.textColor = UIColor.darkGrayCustom
+        spendingTitle.textColor = .gray
         spendingTitle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(spendingTitle)
         
         spendingButton.setTitle("See all", for: .normal)
-        spendingButton.setTitleColor(UIColor.blueButtonCustom, for: .normal)
+        spendingButton.setTitleColor(Colors.blueCustom, for: .normal)
         spendingButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         spendingButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
         spendingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -130,12 +130,10 @@ class HomeViewController: UIViewController {
         
         if interfaceStyle == .light {
             window?.overrideUserInterfaceStyle = .dark
-            window?.backgroundColor = .black
             UserDefaults.standard.setValue("dark", forKey: "Theme")
             themeButton.setImage(UIImage(systemName: interfaceStyle == .light ? "sun.max" : "moon.fill"), for: .normal)
         } else {
             window?.overrideUserInterfaceStyle = .light
-            window?.backgroundColor = .white
             UserDefaults.standard.setValue("light", forKey: "Theme")
             themeButton.setImage(UIImage(systemName: interfaceStyle == .light ? "sun.max" : "moon.fill"), for: .normal)
         }

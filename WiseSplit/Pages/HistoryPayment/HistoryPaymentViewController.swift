@@ -31,7 +31,7 @@ class HistoryPaymentViewController: UIViewController {
         
         rectangleBorder.translatesAutoresizingMaskIntoConstraints = false
         rectangleBorder.layer.cornerRadius = 10
-        rectangleBorder.backgroundColor = .lightGrayCustom
+        rectangleBorder.backgroundColor = .lightGray
         view.addSubview(rectangleBorder)
         
         spendingTitle.text = "Total Spending"

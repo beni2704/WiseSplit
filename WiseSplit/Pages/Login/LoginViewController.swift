@@ -41,13 +41,14 @@ class LoginViewController: BaseViewController {
         
         phoneTF.placeholder = "Phone Number"
         phoneTF.borderStyle = .none
-        phoneTF.backgroundColor = .grayBgFormCustom
+        phoneTF.backgroundColor = Colors.backgroundFormCustom
+        phoneTF.layer.cornerRadius = 8
         phoneTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(phoneTF)
         
         loginButton.setTitle("Login", for: .normal)
         loginButton.backgroundColor = .systemBlue
-        loginButton.layer.cornerRadius = 8
+        loginButton.layer.cornerRadius = 12
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)

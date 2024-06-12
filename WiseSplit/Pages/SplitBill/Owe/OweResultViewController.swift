@@ -59,8 +59,6 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
     // MARK: - Setup UI
     
     private func setupUI() {
-        view.backgroundColor = AppTheme.backgroundColor
-        
         setupLabels()
         setupBackgroundView()
         setupScrollView()
@@ -180,7 +178,7 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
         shareLink.setTitle("Confirm Your Payment", for: .normal)
         shareLink.setTitleColor(.white, for: .normal)
         shareLink.addTarget(self, action: #selector(confirmPaymentButtonTapped), for: .touchUpInside)
-        shareLink.backgroundColor = AppTheme.green
+        shareLink.backgroundColor = Colors.greenCustom
         shareLink.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.addSubview(shareLink)
         

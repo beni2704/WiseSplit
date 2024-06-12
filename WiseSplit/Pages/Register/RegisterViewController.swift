@@ -45,7 +45,8 @@ class RegisterViewController: BaseViewController {
         
         nicknameTF.placeholder = "Nickname"
         nicknameTF.borderStyle = .none
-        nicknameTF.backgroundColor = .grayBgFormCustom
+        nicknameTF.backgroundColor = Colors.backgroundFormCustom
+        nicknameTF.layer.cornerRadius = 8
         nicknameTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nicknameTF)
         
@@ -56,13 +57,14 @@ class RegisterViewController: BaseViewController {
         
         phoneTF.placeholder = "Phone Number"
         phoneTF.borderStyle = .none
-        phoneTF.backgroundColor = .grayBgFormCustom
+        phoneTF.backgroundColor = Colors.backgroundFormCustom
+        phoneTF.layer.cornerRadius = 8
         phoneTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(phoneTF)
         
         registerButton.setTitle("Register", for: .normal)
         registerButton.backgroundColor = .systemBlue
-        registerButton.layer.cornerRadius = 8
+        registerButton.layer.cornerRadius = 12
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         registerButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(registerButton)
@@ -74,7 +76,7 @@ class RegisterViewController: BaseViewController {
         view.addSubview(loginButton)
         
         messageLabel.text = ""
-        messageLabel.textColor = .redCustom
+        messageLabel.textColor = Colors.redCustom
         messageLabel.font = .preferredFont(forTextStyle: .body)
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0

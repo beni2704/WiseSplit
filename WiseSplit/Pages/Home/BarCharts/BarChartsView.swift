@@ -143,8 +143,9 @@ struct BarChartsView: View {
             }
         }
         .padding(12)
-        .background(Color(red: 0.76, green: 0.76, blue: 0.76))
-        .cornerRadius(8)
+        .background(Color(uiColor: Colors.backgroundChartCustom!))
+        .shadow(color: .gray.opacity(0.2), radius: 3, x: 0, y: 3)
+        
     }
     
     func color(for category: String) -> Color {

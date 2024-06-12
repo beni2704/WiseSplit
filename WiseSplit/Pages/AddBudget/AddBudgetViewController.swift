@@ -34,14 +34,14 @@ class AddBudgetViewController: BaseViewController {
         
         budgetTF.placeholder = "IDR"
         budgetTF.borderStyle = .none
-        budgetTF.backgroundColor = UIColor.grayBgFormCustom
+        budgetTF.backgroundColor = Colors.backgroundFormCustom
         budgetTF.layer.cornerRadius = 14
         budgetTF.keyboardType = .numberPad
         budgetTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(budgetTF)
         
         errorLabel.text = ""
-        errorLabel.textColor = .redCustom
+        errorLabel.textColor = Colors.redCustom
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(errorLabel)
         
@@ -90,13 +90,11 @@ class AddBudgetViewController: BaseViewController {
                     self.errorLabel.text = "Budget must be above 0"
                 }
             } else {
-                // Clear the text field after adding the budget
                 DispatchQueue.main.async {
                     self.budgetTF.text = ""
                     self.errorLabel.text = ""
                 }
                 
-                // Show a confirmation alert or perform any other necessary action
                 let alertController = UIAlertController(title: "Budget Added", message: "Your budget of \(formatToIDR(amount)) has been added.", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(okAction)

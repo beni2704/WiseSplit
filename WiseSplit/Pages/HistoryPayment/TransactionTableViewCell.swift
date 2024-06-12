@@ -14,7 +14,7 @@ class TransactionTableViewCell: UITableViewCell {
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .grayCustom
+        imageView.tintColor = .gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -22,7 +22,6 @@ class TransactionTableViewCell: UITableViewCell {
     let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -81,7 +80,7 @@ class TransactionTableViewCell: UITableViewCell {
     func configure(with transaction: TransactionUser) {
         categoryLabel.text = transaction.category
         amountLabel.text = "\(formatToIDR(transaction.amount))"
-        amountLabel.textColor = .redCustom
+        amountLabel.textColor = Colors.redCustom
         dateLabel.text = "\(formatDateHour(transaction.date.description))"
         
         switch transaction.category {
@@ -95,10 +94,10 @@ class TransactionTableViewCell: UITableViewCell {
             iconImageView.image = UIImage(systemName: "guitars")
         case "Split Bill Received":
             iconImageView.image = UIImage(systemName: "newspaper")
-            amountLabel.textColor = .greenCustom
+            amountLabel.textColor = Colors.greenCustom
         case "Income":
             iconImageView.image = UIImage(systemName: "dollarsign")
-            amountLabel.textColor = .greenCustom
+            amountLabel.textColor = Colors.greenCustom
         default:
             iconImageView.image = UIImage(systemName: "newspaper")
         }
