@@ -13,7 +13,7 @@ class HistoryPaymentViewController: UIViewController {
     var rectangleBorder = UIView()
     var spendingTitle = UILabel()
     var spendingTotal = UILabel()
-    var categoryFilter = UISegmentedControl(items: ["Spending", "Bill Owe", "Bill Received"])
+    var categoryFilter = UISegmentedControl(items: ["Spending", "Bill Owe", "Bill Received", "Income"])
     
     var tableView: UITableView!
     var historyPaymentVM: HistoryPaymentViewModel!
@@ -90,6 +90,8 @@ class HistoryPaymentViewController: UIViewController {
             fetchBillOweTransactions()
         case 2:
             fetchBillReceivedTransactions()
+        case 3:
+            fetchIncome()
         default:
             break
         }
@@ -132,6 +134,20 @@ class HistoryPaymentViewController: UIViewController {
                 self?.tableView.reloadData()
                 self?.updateTotalSpending()
                 self?.spendingTitle.text = "Total Received"
+            case .failure(let error):
+                print("Error fetching transactions: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func fetchIncome() {
+        historyPaymentVM.fetchTransactionIncome() { [weak self] result in
+            switch result {
+            case .success(let transactions):
+                self?.transactions = transactions
+                self?.tableView.reloadData()
+                self?.updateTotalSpending()
+                self?.spendingTitle.text = "Total Income"
             case .failure(let error):
                 print("Error fetching transactions: \(error.localizedDescription)")
             }

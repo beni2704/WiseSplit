@@ -25,12 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         
         let theme = UserDefaults.standard.string(forKey: "Theme") ?? "light"
+        
+        window?.backgroundColor = Colors.backgroundColorCustom
         if theme == "dark" {
             window?.overrideUserInterfaceStyle = .dark
-            window?.backgroundColor = .black
         } else {
             window?.overrideUserInterfaceStyle = .light
-            window?.backgroundColor = .white
         }
         
         return true

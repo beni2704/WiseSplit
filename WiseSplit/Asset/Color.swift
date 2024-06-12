@@ -37,5 +37,6 @@ extension UIColor {
 }
 
 struct Colors {
+    static let backgroundColorCustom = UIColor(named: "backgroundColor")
     static let darkCustom = UIColor(named: "blackCustom")
 }

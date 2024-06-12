@@ -160,6 +160,7 @@ class AddPaymentViewController: BaseViewController {
                 let alertController = UIAlertController(title: "Payment Added", message: "Your payment of \(formatToIDR(amount)) has been added.", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(okAction)
+                self.navigateToHistoryTransaction()
                 self.present(alertController, animated: true, completion: nil)
                 
                 self.budgetTF.text = ""
@@ -168,5 +169,10 @@ class AddPaymentViewController: BaseViewController {
                 self.errorLabel.text = ""
             }
         }
+    }
+    
+    func navigateToHistoryTransaction() {
+        let historyTransactionVC = HistoryPaymentViewController()
+        navigationController?.pushViewController(historyTransactionVC, animated: true)
     }
 }

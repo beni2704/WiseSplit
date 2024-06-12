@@ -96,6 +96,9 @@ class TransactionTableViewCell: UITableViewCell {
         case "Split Bill Received":
             iconImageView.image = UIImage(systemName: "newspaper")
             amountLabel.textColor = .greenCustom
+        case "Income":
+            iconImageView.image = UIImage(systemName: "dollarsign")
+            amountLabel.textColor = .greenCustom
         default:
             iconImageView.image = UIImage(systemName: "newspaper")
         }
