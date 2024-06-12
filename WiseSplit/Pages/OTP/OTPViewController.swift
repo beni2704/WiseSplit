@@ -54,19 +54,20 @@ class OTPViewController: BaseViewController {
         
         otpTF.placeholder = "123456"
         otpTF.borderStyle = .none
-        otpTF.backgroundColor = .grayBgFormCustom
+        otpTF.backgroundColor = Colors.backgroundFormCustom
+        otpTF.layer.cornerRadius = 8
         otpTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(otpTF)
         
         verifButton.setTitle("Verify", for: .normal)
         verifButton.backgroundColor = .systemBlue
-        verifButton.layer.cornerRadius = 8
+        verifButton.layer.cornerRadius = 12
         verifButton.addTarget(self, action: #selector(verifButtonTapped), for: .touchUpInside)
         verifButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(verifButton)
         
         resendButton.setTitle("Resend OTP", for: .normal)
-        resendButton.setTitleColor(.blueButtonCustom, for: .normal)
+        resendButton.setTitleColor(Colors.blueCustom, for: .normal)
         resendButton.addTarget(self, action: #selector(resendButtonTapped), for: .touchUpInside)
         resendButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(resendButton)
@@ -78,7 +79,7 @@ class OTPViewController: BaseViewController {
         view.addSubview(backButton)
         
         messageLabel.text = ""
-        messageLabel.textColor = .redCustom
+        messageLabel.textColor = Colors.redCustom
         messageLabel.font = .preferredFont(forTextStyle: .body)
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
@@ -132,7 +133,7 @@ class OTPViewController: BaseViewController {
                     navigationController.pushViewController(TabBarController(), animated: true)
                 }
             case .failure(_):
-                self?.messageLabel.textColor = .redCustom
+                self?.messageLabel.textColor = Colors.redCustom
                 self?.messageLabel.text = "Wrong OTP"
                 self?.removeLoading()
             }
@@ -141,7 +142,7 @@ class OTPViewController: BaseViewController {
     
     @objc func resendButtonTapped() {
         otpVM?.sendVerificationCode(phoneNumber: account.phone)
-        messageLabel.textColor = .greenCustom
+        messageLabel.textColor = Colors.greenCustom
         messageLabel.text = "OTP has been resent"
     }
     

@@ -82,11 +82,9 @@ class ProfileViewController: UIViewController {
         
         if interfaceStyle == .light {
             window?.overrideUserInterfaceStyle = .dark
-            window?.backgroundColor = .black
             UserDefaults.standard.setValue("dark", forKey: "Theme")
         } else {
             window?.overrideUserInterfaceStyle = .light
-            window?.backgroundColor = .white
             UserDefaults.standard.setValue("light", forKey: "Theme")
         }
     }

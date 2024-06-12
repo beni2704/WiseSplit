@@ -131,7 +131,7 @@ class AddPaymentInfoViewController: UIViewController {
         let saveButton = UIButton(type: .system)
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
-        saveButton.backgroundColor = AppTheme.green
+        saveButton.backgroundColor = Colors.greenCustom
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(saveButton)

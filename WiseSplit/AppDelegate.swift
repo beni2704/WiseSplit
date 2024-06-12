@@ -23,10 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+
+        window?.backgroundColor = Colors.backgroundColorLinearCustom
         
         let theme = UserDefaults.standard.string(forKey: "Theme") ?? "light"
-        
-        window?.backgroundColor = Colors.backgroundColorCustom
         if theme == "dark" {
             window?.overrideUserInterfaceStyle = .dark
         } else {
@@ -35,5 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
 }
 

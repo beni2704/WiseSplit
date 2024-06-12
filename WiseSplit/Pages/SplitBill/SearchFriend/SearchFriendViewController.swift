@@ -18,10 +18,9 @@ class SearchFriendViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.backgroundColorLinearCustom
         setupSearchBar()
         setupTableView()
-        
         
         searchBar.delegate = self
     }

@@ -44,7 +44,7 @@ class AddPaymentViewController: BaseViewController {
         
         budgetTF.placeholder = "IDR"
         budgetTF.borderStyle = .none
-        budgetTF.backgroundColor = UIColor.grayBgFormCustom
+        budgetTF.backgroundColor = Colors.backgroundFormCustom
         budgetTF.layer.cornerRadius = 14
         budgetTF.keyboardType = .numberPad
         budgetTF.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ class AddPaymentViewController: BaseViewController {
         
         categoryTF.placeholder = "Select Category"
         categoryTF.borderStyle = .none
-        categoryTF.backgroundColor = UIColor.grayBgFormCustom
+        categoryTF.backgroundColor = Colors.backgroundFormCustom
         categoryTF.layer.cornerRadius = 14
         categoryTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(categoryTF)
@@ -69,14 +69,14 @@ class AddPaymentViewController: BaseViewController {
         
         dateTF.placeholder = "Select Date"
         dateTF.borderStyle = .none
-        dateTF.backgroundColor = UIColor.grayBgFormCustom
+        dateTF.backgroundColor = Colors.backgroundFormCustom
         dateTF.layer.cornerRadius = 14
         dateTF.keyboardType = .numberPad
         dateTF.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(dateTF)
         
         errorLabel.text = ""
-        errorLabel.textColor = .redCustom
+        errorLabel.textColor = Colors.redCustom
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(errorLabel)
         
