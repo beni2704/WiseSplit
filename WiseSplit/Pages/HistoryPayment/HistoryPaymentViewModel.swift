@@ -33,7 +33,32 @@ class HistoryPaymentViewModel {
                         transactions.append(transaction)
                     }
                 }
-                completion(.success(transactions))
+                completion(.success(transactions.reversed()))
+            }
+        }
+    }
+    
+    func fetchTransactionIncome(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userRef = db.collection("users").document(userId)
+        let transactionsRef = userRef.collection("transactions")
+        
+        transactionsRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                var transactions: [TransactionUser] = []
+                for document in snapshot!.documents {
+                    if let transaction = TransactionUser(document: document) {
+                        if transaction.category == "Income"{
+                            transactions.append(transaction)
+                        }
+                    }
+                }
+                completion(.success(transactions.reversed()))
             }
         }
     }
@@ -58,7 +83,7 @@ class HistoryPaymentViewModel {
                         }
                     }
                 }
-                completion(.success(transactions))
+                completion(.success(transactions.reversed()))
             }
         }
     }
@@ -100,9 +125,11 @@ class HistoryPaymentViewModel {
                 }
                 
                 group.notify(queue: .main) {
-                    completion(.success(transactions))
+                    completion(.success(transactions.reversed()))
                 }
             }
         }
     }
+    
+    
 }

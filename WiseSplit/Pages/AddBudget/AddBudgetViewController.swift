@@ -100,9 +100,14 @@ class AddBudgetViewController: BaseViewController {
                 let alertController = UIAlertController(title: "Budget Added", message: "Your budget of \(formatToIDR(amount)) has been added.", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertController.addAction(okAction)
+                self.navigateToHistoryTransaction()
                 self.present(alertController, animated: true, completion: nil)
             }
         }
-        
+    }
+    
+    func navigateToHistoryTransaction() {
+        let historyTransactionVC = HistoryPaymentViewController()
+        navigationController?.pushViewController(historyTransactionVC, animated: true)
     }
 }

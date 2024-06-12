@@ -73,12 +73,14 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     private func setupCustomBackButton() {
-        let backButton = UIBarButtonItem(title: "Complete", style: .plain, target: self, action: #selector(backToRoot))
+        let backButton = UIBarButtonItem(title: "Complete", style: .plain, target: self, action: #selector(backToHome))
         navigationItem.leftBarButtonItem = backButton
     }
     
-    @objc private func backToRoot() {
+    @objc private func backToHome() {
         navigationController?.popToRootViewController(animated: true)
+        let homeVC = TabBarController()
+        navigationController?.pushViewController(homeVC, animated: true)
     }
     
     private func setupUI() {
