@@ -11,7 +11,7 @@ import UIKit
 struct SplitBill {
     let title: String
     let date: Date
-    let total: Int
+    var total: Int
     var image: UIImage?
     let imageUrl: String
     var personTotals: [PersonTotal]

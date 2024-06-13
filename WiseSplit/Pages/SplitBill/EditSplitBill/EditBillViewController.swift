@@ -2,11 +2,11 @@
 import UIKit
 
 struct AppTheme {
-//    static let backgroundColor = UIColor.white
-//    static let textColor = UIColor.black
-//    static let textFieldBorderColor = UIColor.gray
-//    static let green = UIColor.systemGreen
-//    static let gray = UIColor.systemGray
+    //    static let backgroundColor = UIColor.white
+    //    static let textColor = UIColor.black
+    //    static let textFieldBorderColor = UIColor.gray
+    //    static let green = UIColor.systemGreen
+    //    static let gray = UIColor.systemGray
 }
 
 struct ItemView {
@@ -18,6 +18,7 @@ struct ItemView {
 class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFriendDelegate {
     
     var allItemNames: [String] = []
+    var allPrices: [Double] = []
     
     var titleLabel = UILabel()
     var firstText = UILabel()
@@ -81,8 +82,9 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         fetchCurrentUser()
         calculateSubtotal()
         setup()
-        
+        getAllPrices()
         updateUI()
+        
     }
     
     func didSelectUser(_ user: PersonTotal) {
@@ -196,16 +198,14 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         //for user in users {
         let userButton = UIButton(type: .system)
         userButton.setTitle("+", for: .normal)
-        
         userButton.setTitleColor(.black, for: .normal)
-        userButton.backgroundColor = .lightGray
+        
         userButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(userButton)
         
         removeButton.setTitle("-", for: .normal)
-        
         removeButton.setTitleColor(.black, for: .normal)
-        removeButton.backgroundColor = .lightGray
+        
         removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(removeButton)
         
@@ -220,20 +220,24 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         itemCount = min(itemNames.count, min(quantities.count, prices.count))
         
         var itemYOffset: CGFloat = 0
+        subtotal = 0
         for index in 0..<itemCount {
             
             let itemName = itemNames[index]
             let quantity = quantities[index]
-            let price = prices[index]
+            let price = Double(prices[index]) ?? 0.0
+            
+            subtotal += price
             
             allItemNames.append(itemName)
+            allPrices.append(price)
             
             let itemButton = UIButton(type: .system)
-            itemButton.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\t \(formatToIDR(Int(price) ?? 0))", for: .normal)
+            itemButton.setTitle("\(itemName) - \(quantity)x, \t\t\t\t \(formatToIDR(Int(price) ))", for: .normal)
             //width harusnya sama dengan buttonWidth
             itemButton.setTitleColor(.black, for: .normal)
             
-            itemButton.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
+            itemButton.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 40)
             itemButton.addTarget(self, action: #selector(itemButtonTapped(_:)), for: .touchUpInside)
             //button.translatesAutoresizingMaskIntoConstraints = false
             scrollView.addSubview(itemButton)
@@ -279,24 +283,32 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
                 assignedUserStackView.trailingAnchor.constraint(equalTo: assignedUserScrollView.trailingAnchor),
             ])
             
-            let dividerLine = UIView(frame: CGRect(x: 0, y: itemYOffset + 79, width: scrollView.bounds.width, height: 1))
+            let dividerLine = UIView(frame: CGRect(x: 0, y: itemYOffset + 81, width: scrollView.bounds.width, height: 1))
             dividerLine.backgroundColor = UIColor.gray
             scrollView.addSubview(dividerLine)
             
+            let tapLabel = UILabel(frame: CGRect(x: 16, y: itemYOffset + 65, width: scrollView.bounds.width - 32, height: 20))
+                tapLabel.text = "Tap to assign/remove"
+                tapLabel.textColor = .black
+                tapLabel.textAlignment = .left
+                tapLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+                scrollView.addSubview(tapLabel)
             
             itemButtons.append(itemButton)
             itemViews.append(ItemView(itemButton: itemButton, assignedUserScrollView: assignedUserScrollView, assignedUserStackView: assignedUserStackView))
             
             itemYOffset += 76
             contentHeight += 74
-            
+            print("price: \(price)")
+            print("subtotal: \(subtotal)")
         }
+        
         itemYOffset = 242
         scrollView.contentSize = CGSize(width: 300, height: contentHeight)
         
-        let labels = ["", "", "", "", "", ""]
-        let values = [subtotal, tax, serviceTax, discounts, others, totalAmount]
-        var textFields: [UITextField] = [subtotalTF, taxTF, serviceTaxTF, discountsTF, othersTF, totalAmountTF]
+        let labels = ["Total: "]
+        let values = [subtotal]
+        var textFields: [UITextField] = [subtotalTF]
         var labelViews: [UILabel] = []
         
         
@@ -307,15 +319,15 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             label.font = UIFont.systemFont(ofSize: 14)
             backgroundView.addSubview(label)
             
-            let valuesLabel = UILabel(frame: CGRect(x: 290, y: itemYOffset, width: 100, height: 30))
-            //valuesLabel.text = formatToIDR(Int(values[index]))
-            valuesLabel.text = ""
+            let valuesLabel = UILabel(frame: CGRect(x: 250, y: itemYOffset, width: 100, height: 30))
+            valuesLabel.text = formatToIDR(Int(values[index]))
+            //valuesLabel.text = ""
             valuesLabel.textColor = .black // Adjust color as needed
             valuesLabel.font = UIFont.systemFont(ofSize: 14)
             backgroundView.addSubview(valuesLabel)
             
             let textField = textFields[index]
-            textField.frame =  CGRect(x: 290, y: itemYOffset, width: 50, height: 30)
+            textField.frame =  CGRect(x: 290, y: itemYOffset, width: 100, height: 30)
             textField.borderStyle = .none
             textField.layer.borderColor = UIColor.gray.cgColor
             textField.backgroundColor = .clear
@@ -325,9 +337,9 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
             backgroundView.addGestureRecognizer(tapGesture)
             
-            //valuesLabels.append(valuesLabel)
+            valuesLabels.append(valuesLabel)
             labelViews.append(label)
-            //allTextFields.append(textField)
+            allTextFields.append(textField)
             
             itemYOffset += 40
             contentHeight += 40
@@ -400,26 +412,41 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         return textField
     }
     
+    func getAllPrices() {
+        for (index, price) in allPrices.enumerated() {
+            print("Item \(index + 1): \(price)")
+            //subtotal += price
+            
+        }
+        print("new: \(subtotal)")
+    }
+    
     func calculateSubtotal() {
-        subtotal = prices.compactMap { Double($0) }.reduce(0, +)
+        subtotal = 0.0
+        
+        for newPrice in allPrices{
+            subtotal += Double(newPrice)
+        }
+        
+        //subtotal = allPrices.enumerated().reduce(0.0) { $0 + (Double($1.element) ?? 0.0) }
         
         // Example calculations for tax, service tax, discounts, others, and total amount
-//        tax = subtotal * 0.1
-//        serviceTax = subtotal * 0.05
-//        discounts = subtotal * 0.1
-//        others = 15.0
-//        totalAmount = subtotal + tax + serviceTax - discounts + others
+        //        tax = subtotal * 0.1
+        //        serviceTax = subtotal * 0.05
+        //        discounts = subtotal * 0.1
+        //        others = 15.0
+        //        totalAmount = subtotal + tax + serviceTax - discounts + others
     }
     
     func updateUI() {
-//        subtotalTF.text = formatToIDR(Int(subtotal))
-//        taxTF.text = formatToIDR(Int(subtotal))
-//        serviceTaxTF.text = formatToIDR(Int(serviceTax))
-//        discountsTF.text = formatToIDR(Int(discounts))
-//        othersTF.text = formatToIDR(Int(others))
-//        totalAmountTF.text = formatToIDR(Int(totalAmount))
+        subtotalTF.text = formatToIDR(Int(subtotal))
+        //        taxTF.text = formatToIDR(Int(subtotal))
+        //        serviceTaxTF.text = formatToIDR(Int(serviceTax))
+        //        discountsTF.text = formatToIDR(Int(discounts))
+        //        othersTF.text = formatToIDR(Int(others))
+        //        totalAmountTF.text = formatToIDR(Int(totalAmount))
         
-        subtotalTF.text = ""
+        //subtotalTF.text = ""
         taxTF.text = ""
         serviceTaxTF.text = ""
         discountsTF.text = ""
@@ -441,28 +468,28 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         // Toggle visibility of text fields and buttons based on editing state
         allTextFields.forEach { $0.isHidden = !isEditing }
         itemButtons.forEach { $0.isHidden = isEditing }
-        //additionalNominal.forEach { $0.isHidden = !isEditing }
+        additionalNominal.forEach { $0.isHidden = !isEditing }
         valuesLabels.forEach { $0.isHidden = isEditing } // Toggle visibility of valuesLabels
         
         
         if !isEditing {
-                allItemNames.removeAll()
-                for index in 0..<itemCount {
-                    
-                    if let itemNameTextField = scrollView.viewWithTag(index * 3) as? UITextField {
-                        let itemName = itemNameTextField.text ?? ""
-                        allItemNames.append(itemName)
-                    }
-                }
+            allItemNames.removeAll()
+            for index in 0..<itemCount {
                 
-                updateValuesLabels()
+                if let itemNameTextField = scrollView.viewWithTag(index * 3) as? UITextField {
+                    let itemName = itemNameTextField.text ?? ""
+                    allItemNames.append(itemName)
+                }
             }
+            
+            updateValuesLabels()
+        }
         
     }
     
     func updateValuesLabels() {
         
-        subtotal = Double(subtotalTF.text ?? "0") ?? 0.0
+        subtotal = Double(subtotalTF.text ?? "0") ?? subtotal
         tax = Double(taxTF.text ?? "0") ?? 0.0
         serviceTax = Double(serviceTaxTF.text ?? "0") ?? 0.0
         discounts = Double(discountsTF.text ?? "0") ?? 0.0
@@ -474,7 +501,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         let values = [subtotal, tax, serviceTax, discounts, others, totalAmount]
         
         for (index, valueLabel) in valuesLabels.enumerated() {
-//            valueLabel.text = String(format: "%.2f", values[index])
+            //            valueLabel.text = String(format: "%.2f", values[index])
             valueLabel.text = formatToIDR(Int(values[index]))
         }
     }
@@ -486,7 +513,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let quantity = quantities[index]
             let price = prices[index]
             button.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
-            button.setTitle("\(itemName) - Quantity: \(quantity), \t\t\t\tPrice: \(formatToIDR(Int(price) ?? 0))", for: .normal)
+            button.setTitle("\(itemName) - \(quantity)x, \t\t\t\tPrice: \(formatToIDR(Int(price) ?? 0))", for: .normal)
             
             itemYOffset += 76
         }
@@ -526,44 +553,64 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         let viewModel = ResultViewModel()
         if viewModel.isOwner(splitBillOwnerId: selectedUser.personUUID) {
-                presentingAlert(title: "Error", message: "You cannot remove the owner.", view: self)
-                return
-            }
-        
-        // Find the user item button in the stack view
-        guard let selectedButton = userStackView.arrangedSubviews.first(where: {
-            ($0 as? UIButton)?.currentTitle == selectedUser.personName
-        }) as? UIButton else {
+            presentingAlert(title: "Error", message: "You cannot remove the owner.", view: self)
             return
         }
         
-        // Remove the button from the stack view
-        userStackView.removeArrangedSubview(selectedButton)
-        selectedButton.removeFromSuperview()
+        let confirmationAlert = UIAlertController(title: "Confirmation", message: "Are you sure you want to remove the current user?", preferredStyle: .alert)
         
-        for itemView in itemViews {
-            let stackView = itemView.assignedUserStackView
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { [self] _ in
+            // Find the user item button in the stack view
+            guard let selectedButton = self.userStackView.arrangedSubviews.first(where: {
+                ($0 as? UIButton)?.currentTitle == selectedUser.personName
+            }) as? UIButton else {
+                return
+            }
             
-            // Find all buttons with the selected user's name and remove them
-            for view in stackView.arrangedSubviews {
-                if let button = view as? UIButton, button.currentTitle == selectedUser.personName {
-                    stackView.removeArrangedSubview(button)
-                    button.removeFromSuperview()
+            
+            // Find the user item button in the stack view
+            guard let selectedButton = userStackView.arrangedSubviews.first(where: {
+                ($0 as? UIButton)?.currentTitle == selectedUser.personName
+            }) as? UIButton else {
+                return
+            }
+            
+            // Remove the button from the stack view
+            userStackView.removeArrangedSubview(selectedButton)
+            selectedButton.removeFromSuperview()
+            
+            for itemView in itemViews {
+                let stackView = itemView.assignedUserStackView
+                
+                // Find all buttons with the selected user's name and remove them
+                for view in stackView.arrangedSubviews {
+                    if let button = view as? UIButton, button.currentTitle == selectedUser.personName {
+                        stackView.removeArrangedSubview(button)
+                        button.removeFromSuperview()
+                    }
                 }
             }
+            
+            
+            // Remove the user and their assigned items from the users array
+            users.removeAll { $0.personName == selectedUser.personName }
+            
+            // Clear the selected user reference
+            self.selectedUser = nil
+            
+            print("Removed \(selectedButton.currentTitle ?? "") and their assigned items.")
+            
+            // Optionally, update the UI or show a confirmation message
+            presentingAlert(title: "Success", message: "User and their assigned items have been removed.", view: self)
+            
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        // Remove the user and their assigned items from the users array
-        users.removeAll { $0.personName == selectedUser.personName }
+        confirmationAlert.addAction(confirmAction)
+        confirmationAlert.addAction(cancelAction)
         
-        // Clear the selected user reference
-        self.selectedUser = nil
-        
-        print("Removed \(selectedButton.currentTitle ?? "") and their assigned items.")
-        
-        // Optionally, update the UI or show a confirmation message
-        presentingAlert(title: "Success", message: "User and their assigned items have been removed.", view: self)
+        present(confirmationAlert, animated: true, completion: nil)
     }
     
     private func removeCurrButton(button: UIButton) {
@@ -667,6 +714,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
                 print("Split bill saved successfully")
                 let resultVC = ResultViewController(splitBillId: self.splitBillId ?? "empty")
                 resultVC.isComplete = true
+                resultVC.splitBillDetail?.total = Int(subtotal)
                 self.navigationController?.pushViewController(resultVC, animated: true)
             } else {
                 print("Error saving split bill")
@@ -748,10 +796,15 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             
             let userItemButton = UIButton(type: .system)
             userItemButton.setTitle("\(selectedUser.personName)", for: .normal)
-            userItemButton.backgroundColor = .clear
+            userItemButton.backgroundColor = .white
+            userItemButton.setTitleColor(.black, for: .normal)
+            userItemButton.layer.borderWidth = 1.0
+            userItemButton.layer.borderColor = UIColor.systemBlue.cgColor
             userItemButton.setTitleColor(.systemBlue, for: .normal)
-            userItemButton.layer.cornerRadius = 8
+            userItemButton.layer.cornerRadius = 12
+            userItemButton.clipsToBounds = true
             userItemButton.addTarget(self, action: #selector(userItemButtonTapped(_:)), for: .touchUpInside)
+            userItemButton.frame = CGRect(x: 50, y: 100, width: 200, height: 50)
             
             assignedUserStackView.addArrangedSubview(userItemButton)
         }
@@ -760,7 +813,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         showResults()
         
         UIView.animate(withDuration: 0.2, animations: {
-            sender.backgroundColor = .yellow
+            sender.backgroundColor = .green
             sender.setTitleColor(.black, for: .normal)
             sender.layer.cornerRadius = 8
         }) { (_) in
@@ -837,7 +890,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             removeButtonTapped()
         } else {
             // Highlight the tapped button
-            sender.backgroundColor = .yellow // You can change this to any highlight color
+            sender.backgroundColor = .green // You can change this to any highlight color
             sender.setTitleColor(.black, for: .normal) // Example of changing text color
             sender.layer.cornerRadius = 8 // Example of rounding corners for highlight effect
             
