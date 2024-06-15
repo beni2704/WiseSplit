@@ -412,7 +412,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @objc private func shareLinkButtonTapped() {
-        let predefinedSentence = "Your split bill have been created"
+        let predefinedSentence = "Your split bill '\(splitBillDetail?.title ?? "")' have been created with total amount \(formatToIDR(splitBillDetail?.total ?? 0))"
         let activityViewController = UIActivityViewController(activityItems: [predefinedSentence], applicationActivities: nil)
         
         activityViewController.excludedActivityTypes = [

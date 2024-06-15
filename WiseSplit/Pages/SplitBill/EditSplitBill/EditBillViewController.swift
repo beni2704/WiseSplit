@@ -730,7 +730,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             return
         }
         
-        let newSplitBill = SplitBill(title: billName, date: Date(), total: Int(totalAmount), image: capturedImage, imageUrl: "", personTotals: users, ownerId: editBillVM?.currUserId() ?? "nil")
+        let newSplitBill = SplitBill(title: billName, date: Date(), total: Int(subtotal), image: capturedImage, imageUrl: "", personTotals: users, ownerId: editBillVM?.currUserId() ?? "nil")
         
         editBillVM?.checkAmountUser(splitBill: newSplitBill, completion: { result in
             switch result {
