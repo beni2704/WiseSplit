@@ -13,15 +13,17 @@ class OCRViewModel {
     
     var capturedImage: UIImage?
     var performOCR: Bool = false
-    
+    var isPerformingOCR = false
     var onOCRSuccess: (() -> Void)?
     var onOCRError: ((String) -> Void)?
     
-    func performOCRRequest() {
+    func performOCRRequest(completion: @escaping (Bool) -> Void) {
         guard let image = capturedImage else {
             onOCRError?("Captured image is nil.")
             return
         }
+        
+        isPerformingOCR = true
         
         guard let compressedData = resizeAndCompressImage(image: image, maxSizeInKB: 1024) else {
             onOCRError?("Failed to resize and compress the image.")
@@ -60,6 +62,8 @@ class OCRViewModel {
         request.httpBody = httpBody as Data
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
+            self.isPerformingOCR = false
+            
             if let error = error {
                 self.onOCRError?("Error: \(error)")
                 return

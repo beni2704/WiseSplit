@@ -52,8 +52,31 @@ class ImageViewController: UIViewController {
     
     @objc func proceedSeparate() {
         addLoading(onView: self.view)
-        ocrVM.performOCRRequest()
+        
+        // Set an anticipation delay of 5 seconds
+        let anticipationDelay = DispatchTime.now() + 10
+        DispatchQueue.main.asyncAfter(deadline: anticipationDelay) { [weak self] in
+            // Check if OCR request has not completed yet
+            if self?.ocrVM.isPerformingOCR == true {
+                self?.handleOCRTimeout()
+            }
+        }
+        
+        ocrVM.performOCRRequest(completion: { [weak self] success in
+            // Cancel the anticipation delay if the OCR request completes
+            DispatchQueue.main.async {
+                //self?.removeLoading()
+                if success {
+                    self?.navigateToSeparateBill()
+                }
+            }
+        })
     }
+        
+        func handleOCRTimeout() {
+            //removeLoading()
+            presentingAlert(title: "Request timed out", message: "Retrying.", view: self)
+        }
     
     func navigateToSeparateBill() {
         let separateBillVC = EditBillViewController()

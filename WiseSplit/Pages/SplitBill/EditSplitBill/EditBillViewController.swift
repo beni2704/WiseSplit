@@ -46,6 +46,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     
     let editButton = UIButton(type: .system)
     var removeButton = UIButton(type: .system)
+    let assignItemButton = UIButton(type: .system)
+    let userButton = UIButton(type: .system)
     var confirmationShown = false
     var billNameTextField = PaddedTextField()
     var itemNames: [String] = []
@@ -53,6 +55,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     var prices: [String] = []
     let scrollView = UIScrollView()
     
+    var userButtonCount = 1
     var userStackView = UIStackView()
     var itemViews: [ItemView] = []
     
@@ -82,6 +85,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         fetchCurrentUser()
         calculateSubtotal()
         setup()
+        presentingAlert(title: "Alert", message: "Please edit your bill & fill in the bill name.", view: self)
         getAllPrices()
         updateUI()
         
@@ -95,6 +99,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         userStackView.insertArrangedSubview(newButton, at: 0)
         
         let newUser = PersonTotal(personUUID: user.personUUID, personName: user.personName, personPhoneNumber: user.personPhoneNumber, totalAmount: 0, items: [], isPaid: false, imagePaidUrl: "")
+        userButtonCount += 1
         users.append(newUser)
     }
     
@@ -155,7 +160,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         view.addSubview(billNameTextField)
         
         var frameHeight = backgroundView.bounds
-        frameHeight.size.height -= 278 // Adjust height as needed
+        frameHeight.size.height -= 78 // Adjust height as needed
         scrollView.frame = frameHeight
         // scrollView.frame = backgroundView.bounds
         
@@ -196,18 +201,22 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         ])
         
         //for user in users {
-        let userButton = UIButton(type: .system)
+        
         userButton.setTitle("+", for: .normal)
         userButton.setTitleColor(.black, for: .normal)
-        
         userButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(userButton)
         
         removeButton.setTitle("-", for: .normal)
         removeButton.setTitleColor(.black, for: .normal)
-        
         removeButton.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         userStackView.addArrangedSubview(removeButton)
+        
+        assignItemButton.setTitle("Assign item", for: .normal)
+        assignItemButton.setTitleColor(.black, for: .normal)
+        assignItemButton.isHidden = true
+        assignItemButton.addTarget(self, action: #selector(assignItemButtonTapped), for: .touchUpInside)
+        userStackView.addArrangedSubview(assignItemButton)
         
         //}
         
@@ -233,25 +242,30 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             allPrices.append(price)
             
             let itemButton = UIButton(type: .system)
-            itemButton.setTitle("\(itemName) - \(quantity)x, \t\t\t\t \(formatToIDR(Int(price) ))", for: .normal)
-            //width harusnya sama dengan buttonWidth
-            itemButton.setTitleColor(.black, for: .normal)
+                itemButton.setTitle("\(itemName) - \(quantity)x  \t\t\t\t \(formatToIDR(Int(price) ))", for: .normal)
+                itemButton.setTitleColor(.black, for: .normal)
+                itemButton.isEnabled = false
+                itemButton.translatesAutoresizingMaskIntoConstraints = false
+                itemButton.addTarget(self, action: #selector(itemButtonTapped(_:)), for: .touchUpInside)
+                scrollView.addSubview(itemButton)
+
+                NSLayoutConstraint.activate([
+                    itemButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                    itemButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+                    itemButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: itemYOffset),
+                    itemButton.heightAnchor.constraint(equalToConstant: 40)
+                ])
             
-            itemButton.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 40)
-            itemButton.addTarget(self, action: #selector(itemButtonTapped(_:)), for: .touchUpInside)
-            //button.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview(itemButton)
             
-            
-            let nameTextField = createTextField(withText: itemNames[index], frame: CGRect(x: 50, y: itemYOffset, width: 100, height: 30), tag: index * 3)
+            let nameTextField = createTextField(withText: itemNames[index], frame: CGRect(x: 0, y: itemYOffset + 5, width: 100, height: 30), tag: index * 3)
             nameTextField.isHidden = true
             scrollView.addSubview(nameTextField)
             
-            let quantityTextField = createTextField(withText: quantities[index], frame: CGRect(x: 170, y: itemYOffset, width: 60, height: 30), tag: index * 3 + 1)
+            let quantityTextField = createTextField(withText: quantities[index], frame: CGRect(x: 120, y: itemYOffset + 5, width: 60, height: 30), tag: index * 3 + 1)
             quantityTextField.isHidden = true
             scrollView.addSubview(quantityTextField)
             
-            let priceTextField = createTextField(withText: prices[index], frame: CGRect(x: 240, y: itemYOffset, width: 100, height: 30), tag: index * 3 + 2)
+            let priceTextField = createTextField(withText: prices[index], frame: CGRect(x: 190, y: itemYOffset + 5, width: 100, height: 30), tag: index * 3 + 2)
             priceTextField.isHidden = true
             scrollView.addSubview(priceTextField)
             
@@ -303,7 +317,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             print("subtotal: \(subtotal)")
         }
         
-        itemYOffset = 242
+        itemYOffset = 442
         scrollView.contentSize = CGSize(width: 300, height: contentHeight)
         
         let labels = ["Total: "]
@@ -473,6 +487,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
         
         if !isEditing {
+            editButton.setTitle("Edit Bill", for: .normal)
             allItemNames.removeAll()
             for index in 0..<itemCount {
                 
@@ -483,6 +498,8 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             }
             
             updateValuesLabels()
+        } else {
+            editButton.setTitle("Update Bill", for: .normal)
         }
         
     }
@@ -513,7 +530,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             let quantity = quantities[index]
             let price = prices[index]
             button.frame = CGRect(x: -10, y: itemYOffset, width: 400, height: 30)
-            button.setTitle("\(itemName) - \(quantity)x, \t\t\t\tPrice: \(formatToIDR(Int(price) ?? 0))", for: .normal)
+            button.setTitle("\(itemName) - \(quantity)x  \t\t\t\t \(formatToIDR(Int(price) ?? 0))", for: .normal)
             
             itemYOffset += 76
         }
@@ -544,6 +561,34 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         calculateSubtotal()
         updateButtonTitles()
     }
+    
+    @objc private func assignItemButtonTapped(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Confirm Action", message: "Did you finish adding every person?", preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+            sender.isHidden = true
+            self.userButton.isHidden = true
+            self.removeButton.isHidden = true
+            self.itemButtons.forEach { $0.isEnabled = true }
+        }
+        alertController.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        // Check userButtonCount and show alert if count is less than 2
+        if userButtonCount < 2 {
+            let alert = UIAlertController(title: "Warning", message: "You must add at least two users to continue.", preferredStyle: .alert)
+            
+            let okayAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okayAction)
+            
+            present(alert, animated: true, completion: nil)
+        } else {
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+
     
     @objc private func removeButtonTapped() {
         guard var selectedUser = selectedUser else {
@@ -576,6 +621,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
             }
             
             // Remove the button from the stack view
+            userButtonCount += 1
             userStackView.removeArrangedSubview(selectedButton)
             selectedButton.removeFromSuperview()
             
@@ -916,6 +962,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         let yesAction = UIAlertAction(title: "Yes", style: .default) { [weak self] (_) in
             self?.confirmationShown = true
             self?.editButton.isEnabled = false
+            self?.assignItemButton.isHidden = false
             self?.editButton.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
             self?.showSearchFriend()
         }

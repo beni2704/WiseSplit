@@ -25,6 +25,8 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     var backgroundView = UIView()
     var scrollView = UIScrollView()
     
+    let shareLink = UIButton(type: .system)
+    
     var selectedImage: UIImage?
     
     init(splitBillId: String) {
@@ -57,6 +59,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func didSavePaymentInfo() {
         fetchSplitBillProcess()
+        
     }
     
     private func fetchSplitBillDetail(splitBillId: String, completion: @escaping () -> Void) {
@@ -200,11 +203,12 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             addPaymentButton.layer.cornerRadius = 12
             backgroundView.addSubview(addPaymentButton)
             
-            let shareLink = UIButton(type: .system)
+            
             shareLink.setTitle("Share Bill", for: .normal)
             shareLink.setTitleColor(.white, for: .normal)
+            shareLink.isEnabled = splitBillDetail.paymentInfo == nil ? false : true
             shareLink.addTarget(self, action: #selector(shareLinkButtonTapped), for: .touchUpInside)
-            shareLink.backgroundColor = Colors.greenCustom
+            shareLink.backgroundColor = splitBillDetail.paymentInfo == nil ? .lightGray : Colors.greenCustom
             shareLink.translatesAutoresizingMaskIntoConstraints = false
             shareLink.layer.cornerRadius = 12
             backgroundView.addSubview(shareLink)
@@ -318,6 +322,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             let statusButton = UIButton(type: .system)
             statusButton.setTitle(person.imagePaidUrl == "Owner" ? "Owner" : person.personPhoneNumber == "Not Registered" ? "Anonym" : person.isPaid ? "Paid" : "Not Paid", for: .normal)
             statusButton.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .gray : person.isPaid ? Colors.greenCustom : Colors.redCustom
+            statusButton.isHidden = true
             statusButton.setTitleColor(.white, for: .normal)
             statusButton.isEnabled = person.isPaid ? true : false
             statusButton.translatesAutoresizingMaskIntoConstraints = false
@@ -431,6 +436,25 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             .airDrop,
             .openInIBooks
         ]
+        
+        activityViewController.completionWithItemsHandler = { [weak self] activityType, completed, returnedItems, error in
+                guard completed else { return }
+                // Unhide all statusButton instances
+                for case let containerView as UIView in self?.scrollView.subviews ?? [] {
+                    for case let statusButton as UIButton in containerView.subviews {
+                        if statusButton.isHidden {
+                            statusButton.isHidden = false
+                        }
+                    }
+                    for case let addPaymentButton as UIButton in containerView.subviews {
+                        if !addPaymentButton.isHidden {
+                            addPaymentButton.isHidden = true
+                        }
+                    }
+                }
+                
+            }
+        
         self.present(activityViewController, animated: true, completion: nil)
     }
     
