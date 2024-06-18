@@ -319,15 +319,25 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             phoneNumberLabel.translatesAutoresizingMaskIntoConstraints = false
             containerView.addSubview(phoneNumberLabel)
             
+//            let personRole = UIButton(type: .system)
+//            personRole.setTitle(person.imagePaidUrl == "Owner" ? "Owner" : person.personPhoneNumber == "Not Registered" ? "Anonym" : person.isPaid ? "Paid" : "Not Paid", for: .normal)
+//            personRole.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .gray : person.isPaid ? Colors.greenCustom : Colors.redCustom
+//            personRole.setTitleColor(.white, for: .normal)
+//            personRole.isEnabled = person.isPaid ? true : false
+//            personRole.translatesAutoresizingMaskIntoConstraints = false
+//            personRole.layer.cornerRadius = 12
+//            personRole.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 4)
+//            containerView.addSubview(personRole)
+            
             let statusButton = UIButton(type: .system)
-            statusButton.setTitle(person.imagePaidUrl == "Owner" ? "Owner" : person.personPhoneNumber == "Not Registered" ? "Anonym" : person.isPaid ? "Paid" : "Not Paid", for: .normal)
-            statusButton.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .gray : person.isPaid ? Colors.greenCustom : Colors.redCustom
-            statusButton.isHidden = true
+            statusButton.setTitle(person.imagePaidUrl == "Owner" ? "Check Split Bill" : person.personPhoneNumber == "Not Registered" ? "Unregistered" : person.isPaid ? "See Payment" : "Unpaid", for: .normal)
+            statusButton.backgroundColor = person.imagePaidUrl == "Owner" ? .black : person.personPhoneNumber == "Not Registered" ? .gray : person.isPaid ? Colors.blueCustom : Colors.grayCustom
+//            statusButton.isHidden = true
             statusButton.setTitleColor(.white, for: .normal)
             statusButton.isEnabled = person.isPaid ? true : false
             statusButton.translatesAutoresizingMaskIntoConstraints = false
             statusButton.layer.cornerRadius = 12
-            statusButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 4)
+            statusButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
             containerView.addSubview(statusButton)
             
             statusButton.tag = index
@@ -337,9 +347,12 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
             index += 1
             
             NSLayoutConstraint.activate([
-                containerView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? scrollView.topAnchor, constant: 16),
+                containerView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? scrollView.topAnchor, constant: lastView == nil ? 16 : 32),
                 containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
                 containerView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -16),
+                
+//                personRole.topAnchor.constraint(equalTo: containerView.topAnchor),
+//                personRole.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 
                 nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
                 nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -350,6 +363,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 
                 statusButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
                 statusButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+                
             ])
             
             lastView = containerView
@@ -363,7 +377,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 divider.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 8),
                 divider.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
                 divider.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
-                divider.heightAnchor.constraint(equalToConstant: 1),
+                divider.heightAnchor.constraint(equalToConstant: 0.5),
             ])
             
             lastView = divider
@@ -385,6 +399,18 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
                 
                 lastView = itemLabel
             }
+            
+//            let dividerBottom = UIView()
+//            dividerBottom.backgroundColor = .gray
+//            dividerBottom.translatesAutoresizingMaskIntoConstraints = false
+//            scrollView.addSubview(dividerBottom)
+//            
+//            NSLayoutConstraint.activate([
+//                dividerBottom.topAnchor.constraint(equalTo: lastView!.bottomAnchor, constant: 8),
+//                dividerBottom.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+//                dividerBottom.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
+//                dividerBottom.heightAnchor.constraint(equalToConstant: 1),
+//            ])
         }
         
         if let lastView = lastView {

@@ -10,6 +10,7 @@ import UIKit
 
 class OTPViewController: BaseViewController {
     var otpVM: OTPViewModel?
+    var logoApp = UIImageView()
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
     var otpLabel = UILabel()
@@ -37,13 +38,18 @@ class OTPViewController: BaseViewController {
     }
     
     func setAll() {
-        titleLabel.text = "Enter your OTP"
-        titleLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
+        titleLabel.text = "Check Your Inbox"
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
+        titleLabel.font = .preferredFont(forTextStyle: .largeTitle)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
-        subTitleLabel.text = "OTP has been sent to \(account.phone)"
-        subTitleLabel.font = .preferredFont(forTextStyle: .headline)
+        subTitleLabel.text = "OTP has been sent to \(account.phone). Input the OTP to verify your account."
+        subTitleLabel.numberOfLines = 0
+        subTitleLabel.textColor = .gray
+        subTitleLabel.textAlignment = .center
+        subTitleLabel.font = .preferredFont(forTextStyle: .body)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subTitleLabel)
         
@@ -67,13 +73,13 @@ class OTPViewController: BaseViewController {
         view.addSubview(verifButton)
         
         resendButton.setTitle("Resend OTP", for: .normal)
-        resendButton.setTitleColor(Colors.blueCustom, for: .normal)
+        resendButton.setTitleColor(Colors.base, for: .normal)
         resendButton.addTarget(self, action: #selector(resendButtonTapped), for: .touchUpInside)
         resendButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(resendButton)
         
         backButton.setTitle("Wrong phone number?", for: .normal)
-        backButton.setTitleColor(.black, for: .normal)
+        backButton.setTitleColor(Colors.base, for: .normal)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         backButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backButton)
@@ -87,36 +93,36 @@ class OTPViewController: BaseViewController {
         view.addSubview(messageLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
-            titleLabel.widthAnchor.constraint(equalToConstant: 275),
             
-            subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            titleLabel.widthAnchor.constraint(equalToConstant: 275),
+            subTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            subTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
             
-            otpLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            otpLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
-            otpLabel.widthAnchor.constraint(equalToConstant: 250),
+            otpLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            otpLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            otpLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 24),
             
-            otpTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            otpTF.topAnchor.constraint(equalTo: otpLabel.bottomAnchor, constant: 7),
-            otpTF.widthAnchor.constraint(equalToConstant: 250),
+            otpTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            otpTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            otpTF.topAnchor.constraint(equalTo: otpLabel.bottomAnchor, constant: 4),
             otpTF.heightAnchor.constraint(equalToConstant: 44),
             
-            verifButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            verifButton.topAnchor.constraint(equalTo: otpTF.bottomAnchor, constant: 14),
-            verifButton.widthAnchor.constraint(equalToConstant: 250),
+            verifButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            verifButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            verifButton.topAnchor.constraint(equalTo: otpTF.bottomAnchor, constant: 24),
             verifButton.heightAnchor.constraint(equalToConstant: 44),
             
-            resendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resendButton.topAnchor.constraint(equalTo: verifButton.bottomAnchor, constant: 14),
-            
             backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            backButton.topAnchor.constraint(equalTo: resendButton.bottomAnchor, constant: 14),
+            backButton.topAnchor.constraint(equalTo: verifButton.bottomAnchor, constant: 16),
+            
+            resendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resendButton.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 16),
             
             messageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            messageLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 14),
+            messageLabel.topAnchor.constraint(equalTo: resendButton.bottomAnchor, constant: 16),
             messageLabel.widthAnchor.constraint(equalToConstant: 250),
         ])
     }
