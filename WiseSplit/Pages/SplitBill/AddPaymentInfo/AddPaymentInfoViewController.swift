@@ -165,17 +165,18 @@ class AddPaymentInfoViewController: UIViewController {
         guard let paymentMethod = paymentMethodTF.text, let accountName = accountNameTF.text, let accountNumber = accountNumberTF.text else {
             return
         }
-        
-        if ((addPaymentVM?.checkEmpty(paymentMethod: paymentMethod, accountName: accountName, accountNumber: accountNumber)) != nil) {
-            presentingAlert(title: "Empty Field", message: "Please enter all payment fields", view: self)
-            return
-        }
+        //ini masih bermasalah
+//        if ((addPaymentVM?.checkEmpty(paymentMethod: paymentMethod, accountName: accountName, accountNumber: accountNumber)) != nil) {
+//            presentingAlert(title: "Empty Field", message: "Please enter all payment fields", view: self)
+//            return
+//        }
         
         let newPayment = PaymentInfo(paymentMethod: paymentMethod, accountName: accountName, accountNumber: accountNumber)
         addPaymentVM?.savePaymentInfo(splitBillId: self.splitBillId, paymentInfo: newPayment) { res in
             switch res {
             case.success():
                 self.delegate?.didSavePaymentInfo()
+                
                 self.dismiss(animated: true, completion: nil)
             case.failure(let error):
                 print(error.localizedDescription)

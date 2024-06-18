@@ -24,7 +24,7 @@ class TabBarController: UITabBarController {
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         addBudgetVC.tabBarItem = UITabBarItem(title: "Budget", image: UIImage(systemName: "dollarsign.circle"), selectedImage: UIImage(systemName: "dollarsign.circle.fill"))
         addExpenseVC.tabBarItem = UITabBarItem(title: "Expense", image: UIImage(systemName: "plus.circle"), selectedImage: UIImage(systemName: "plus.circle.fill"))
-        splitBillVC.tabBarItem = UITabBarItem(title: "Split Bill", image: UIImage(systemName: "dollarsign.square"), selectedImage: UIImage(systemName: "dollarsign.square.fill"))
+        splitBillVC.tabBarItem = UITabBarItem(title: "Split Bill", image: UIImage(named: "splitBillLight"), selectedImage: UIImage(named: "splitBillLight"))
         profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         
         viewControllers = [homeVC, addBudgetVC, addExpenseVC, splitBillVC, profileVC]

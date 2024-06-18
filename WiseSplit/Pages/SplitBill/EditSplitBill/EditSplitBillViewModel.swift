@@ -68,13 +68,21 @@ class EditSplitBillViewModel {
             } else if let document = document, document.exists {
                 let data = document.data()
                 var currentBudget = data?["budget"] as? Int ?? 0
-                let totalPay = splitBill.total
+                var totalPay = splitBill.total
+                
+                
                 
                 if totalPay > currentBudget {
                     completion(.success(false))
                     return
                 }
                 currentBudget -= totalPay
+                
+                for person in splitBill.personTotals {
+                    if person.personPhoneNumber == "Not Registered" {
+                        currentBudget += person.totalAmount
+                    }
+                }
                 
                 userRef.updateData(["budget": currentBudget]) { error in
                     if let error = error {

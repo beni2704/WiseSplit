@@ -33,7 +33,7 @@ class InitiateSplitBillViewController: UIViewController, UIImagePickerController
         
         view.addSubview(firstText)
         
-        secondText.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took "
+        secondText.text = "Please upload or take a picture of the bill. This image is required to process and automatically split the total cost among all group members."
         secondText.font = UIFont.preferredFont(forTextStyle: .title3)
         secondText.translatesAutoresizingMaskIntoConstraints = false
         secondText.numberOfLines = 0
@@ -60,7 +60,7 @@ class InitiateSplitBillViewController: UIViewController, UIImagePickerController
         view.addSubview(thirdText)
         
         NSLayoutConstraint.activate([
-        
+            
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
@@ -73,8 +73,8 @@ class InitiateSplitBillViewController: UIViewController, UIImagePickerController
             secondText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             secondText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             secondText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-  
-
+            
+            
             importButton.topAnchor.constraint(equalTo: secondText.bottomAnchor, constant: 16),
             importButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             importButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -83,44 +83,51 @@ class InitiateSplitBillViewController: UIViewController, UIImagePickerController
             thirdText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             thirdText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             thirdText.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        
+            
         ])
         
     }
     
     @objc private func importButtonTapped() {
-            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            
-            let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
-                guard let self = self else { return }
-                let viewController = CaptureCameraSplitBillViewController()
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
-            actionSheet.addAction(takePhotoAction)
-            
-            let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .default) { [weak self] _ in
-                self?.presentImagePicker(sourceType: .photoLibrary)
-            }
-            actionSheet.addAction(chooseFromLibraryAction)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            actionSheet.addAction(cancelAction)
-            
-            present(actionSheet, animated: true, completion: nil)
-        }
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = sourceType
-            imagePicker.delegate = self
-            present(imagePicker, animated: true, completion: nil)
+        let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            let viewController = CaptureCameraSplitBillViewController()
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
+        actionSheet.addAction(takePhotoAction)
         
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
+        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .default) { [weak self] _ in
+            self?.presentImagePicker(sourceType: .photoLibrary)
         }
+        actionSheet.addAction(chooseFromLibraryAction)
         
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            picker.dismiss(animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            // Pass the selected image to ImageViewController
+            let imageVC = ImageViewController()
+            imageVC.capturedImage = selectedImage
+            imageVC.performOCR = true // Set this based on your requirement
+            navigationController?.pushViewController(imageVC, animated: true)
         }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
