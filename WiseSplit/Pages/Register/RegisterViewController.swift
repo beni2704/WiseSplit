@@ -10,6 +10,7 @@ import UIKit
 
 class RegisterViewController: BaseViewController {
     var registerVM: RegisterViewModel?
+    var logoApp = UIImageView()
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
     var nicknameLabel = UILabel()
@@ -28,13 +29,20 @@ class RegisterViewController: BaseViewController {
     }
     
     func setAll() {
-        titleLabel.text = "Wise Wallet"
-        titleLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
+        logoApp.image = UIImage(systemName: "leaf.fill")
+        logoApp.tintColor = Colors.base
+        logoApp.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoApp)
+        
+        titleLabel.addCharactersSpacing(spacing: 12, text: "Wise\nWallet")
+        titleLabel.font = UIFont.systemFont(ofSize: 48, weight: .bold)
+        titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
         subTitleLabel.text = "Register your account"
-        subTitleLabel.font = .preferredFont(forTextStyle: .title2)
+        subTitleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        subTitleLabel.textColor = .gray
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subTitleLabel)
         
@@ -70,7 +78,7 @@ class RegisterViewController: BaseViewController {
         view.addSubview(registerButton)
         
         loginButton.setTitle("Already have an account?", for: .normal)
-        loginButton.setTitleColor(.black, for: .normal)
+        loginButton.setTitleColor(Colors.base, for: .normal)
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
@@ -84,40 +92,45 @@ class RegisterViewController: BaseViewController {
         view.addSubview(messageLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            logoApp.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            logoApp.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -250),
+            logoApp.heightAnchor.constraint(equalToConstant: 64),
+            logoApp.widthAnchor.constraint(equalToConstant: 64),
             
-            subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            titleLabel.topAnchor.constraint(equalTo: logoApp.bottomAnchor, constant: 24),
             
-            nicknameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nicknameLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
+            subTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            
+            nicknameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            nicknameLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 16),
             nicknameLabel.widthAnchor.constraint(equalToConstant: 250),
             
-            nicknameTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nicknameTF.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 7),
-            nicknameTF.widthAnchor.constraint(equalToConstant: 250),
+            nicknameTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            nicknameTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            nicknameTF.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 4),
             nicknameTF.heightAnchor.constraint(equalToConstant: 44),
             
-            phoneLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            phoneLabel.topAnchor.constraint(equalTo: nicknameTF.bottomAnchor, constant: 14),
+            phoneLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            phoneLabel.topAnchor.constraint(equalTo: nicknameTF.bottomAnchor, constant: 16),
             phoneLabel.widthAnchor.constraint(equalToConstant: 250),
             
-            phoneTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            phoneTF.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 7),
-            phoneTF.widthAnchor.constraint(equalToConstant: 250),
+            phoneTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            phoneTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            phoneTF.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 4),
             phoneTF.heightAnchor.constraint(equalToConstant: 44),
             
-            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            registerButton.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 14),
-            registerButton.widthAnchor.constraint(equalToConstant: 250),
+            registerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            registerButton.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 24),
             registerButton.heightAnchor.constraint(equalToConstant: 44),
             
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 14),
+            loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 16),
             
             messageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            messageLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 14),
+            messageLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
             messageLabel.widthAnchor.constraint(equalToConstant: 250),
             
         ])

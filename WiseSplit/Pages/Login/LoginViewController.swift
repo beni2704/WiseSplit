@@ -8,6 +8,7 @@ import UIKit
 
 class LoginViewController: BaseViewController {
     var loginVM: LoginViewModel?
+    var logoApp = UIImageView()
     var titleLabel = UILabel()
     var subTitleLabel = UILabel()
     var phoneLabel = UILabel()
@@ -24,13 +25,20 @@ class LoginViewController: BaseViewController {
     }
     
     func setAll() {
-        titleLabel.text = "Wise Wallet"
-        titleLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
+        logoApp.image = UIImage(systemName: "leaf.fill")
+        logoApp.tintColor = Colors.base
+        logoApp.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoApp)
+        
+        titleLabel.addCharactersSpacing(spacing: 12, text: "Wise\nWallet")
+        titleLabel.font = UIFont.systemFont(ofSize: 48, weight: .bold)
+        titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         
         subTitleLabel.text = "Login to your account"
-        subTitleLabel.font = .preferredFont(forTextStyle: .title2)
+        subTitleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        subTitleLabel.textColor = .gray
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(subTitleLabel)
         
@@ -54,13 +62,13 @@ class LoginViewController: BaseViewController {
         view.addSubview(loginButton)
         
         registerButton.setTitle("Don't have an account yet?", for: .normal)
-        registerButton.setTitleColor(.black, for: .normal)
+        registerButton.setTitleColor(Colors.base, for: .normal)
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         registerButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(registerButton)
         
         messageLabel.text = ""
-        messageLabel.textColor = .red
+        messageLabel.textColor = Colors.redCustom
         messageLabel.font = .preferredFont(forTextStyle: .body)
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
@@ -68,35 +76,40 @@ class LoginViewController: BaseViewController {
         view.addSubview(messageLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            logoApp.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            logoApp.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -250),
+            logoApp.heightAnchor.constraint(equalToConstant: 64),
+            logoApp.widthAnchor.constraint(equalToConstant: 64),
             
-            subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            titleLabel.topAnchor.constraint(equalTo: logoApp.bottomAnchor, constant: 24),
             
-            phoneLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            phoneLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 14),
+            subTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            
+            phoneLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            phoneLabel.topAnchor.constraint(equalTo: subTitleLabel.bottomAnchor, constant: 16),
             phoneLabel.widthAnchor.constraint(equalToConstant: 250),
-            phoneLabel.heightAnchor.constraint(equalToConstant: 44),
             
-            phoneTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            phoneTF.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 7),
-            phoneTF.widthAnchor.constraint(equalToConstant: 250),
+            phoneTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            phoneTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            phoneTF.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 4),
             phoneTF.heightAnchor.constraint(equalToConstant: 44),
             
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 14),
-            loginButton.widthAnchor.constraint(equalToConstant: 250),
+            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            loginButton.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 24),
             loginButton.heightAnchor.constraint(equalToConstant: 44),
             
             registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 14),
+            registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
             
             messageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            messageLabel.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 14),
+            messageLabel.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 16),
             messageLabel.widthAnchor.constraint(equalToConstant: 250),
         ])
     }
+
     
     @objc func registerButtonTapped() {
         if let navigationController = navigationController {

@@ -17,6 +17,7 @@
 		5DCE3CBF2BDD73F00067F9FD /* OCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */; };
 		5DCE3CC52BDD75570067F9FD /* ImageReceiptModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */; };
 		5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */; };
+		B102551D2C22016D0009A737 /* CharacterSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B102551C2C22016D0009A737 /* CharacterSpacing.swift */; };
 		B13C369E2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */; };
 		B13C36A02C0F59DD00282F26 /* AddPaymentInfoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13C369F2C0F59DD00282F26 /* AddPaymentInfoDelegate.swift */; };
 		B143BAFF2B9EE497008B2F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B143BAFE2B9EE497008B2F4D /* AppDelegate.swift */; };
@@ -110,6 +111,7 @@
 		5DCE3CBE2BDD73F00067F9FD /* OCRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRViewController.swift; sourceTree = "<group>"; };
 		5DCE3CC42BDD75570067F9FD /* ImageReceiptModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ImageReceiptModel.mlmodel; sourceTree = "<group>"; };
 		5DCE3CC62BDE59AD0067F9FD /* InitiateSplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiateSplitBillViewController.swift; sourceTree = "<group>"; };
+		B102551C2C22016D0009A737 /* CharacterSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSpacing.swift; sourceTree = "<group>"; };
 		B13C369D2C0F54FA00282F26 /* AddPaymentInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoViewModel.swift; sourceTree = "<group>"; };
 		B13C369F2C0F59DD00282F26 /* AddPaymentInfoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentInfoDelegate.swift; sourceTree = "<group>"; };
 		B143BAFB2B9EE497008B2F4D /* WiseSplit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseSplit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -496,6 +498,7 @@
 				B1A86E342C0B9CC100E0B8E2 /* FormatDateHour.swift */,
 				B17E7A432C0B01C30045659C /* PresentAlert.swift */,
 				B17E7A452C0B07020045659C /* CompressImage.swift */,
+				B102551C2C22016D0009A737 /* CharacterSpacing.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -652,6 +655,7 @@
 				B165D5DE2C00E28700EC6BF7 /* OTPViewModel.swift in Sources */,
 				B1C96B712C0329BA00158F40 /* BarChartsView.swift in Sources */,
 				B165D5D22BE5036600EC6BF7 /* TransactionTableViewCell.swift in Sources */,
+				B102551D2C22016D0009A737 /* CharacterSpacing.swift in Sources */,
 				B165D5C22BD7FD2700EC6BF7 /* HomeViewModel.swift in Sources */,
 				5DCE3CC72BDE59AD0067F9FD /* InitiateSplitBillViewController.swift in Sources */,
 				B165D5A92BC9AEBC00EC6BF7 /* TabBarController.swift in Sources */,
@@ -807,7 +811,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 32R3NF44SD;
+				DEVELOPMENT_TEAM = 54STNG9K7F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WiseSplit/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Access camera\"";
@@ -836,7 +840,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 32R3NF44SD;
+				DEVELOPMENT_TEAM = 54STNG9K7F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WiseSplit/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"Access camera\"";
