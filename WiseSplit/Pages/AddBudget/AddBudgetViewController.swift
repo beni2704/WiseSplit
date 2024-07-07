@@ -8,12 +8,12 @@
 import UIKit
 
 class AddBudgetViewController: BaseViewController {
-    var addBudgetVM: AddBudgetViewModel?
-    var titleLabel = UILabel()
-    var titleBudgetTF = UILabel()
-    var budgetTF = PaddedTextField()
-    var errorLabel = UILabel()
-    var addButton = UIButton()
+    private var addBudgetVM: AddBudgetViewModel?
+    private var titleLabel = UILabel()
+    private var titleBudgetTF = UILabel()
+    private var budgetTF = PaddedTextField()
+    private var errorLabel = UILabel()
+    private var addButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +104,7 @@ class AddBudgetViewController: BaseViewController {
         }
     }
     
-    func navigateToHistoryTransaction() {
+    private func navigateToHistoryTransaction() {
         let historyTransactionVC = HistoryPaymentViewController()
         navigationController?.pushViewController(historyTransactionVC, animated: true)
     }

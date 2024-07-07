@@ -10,9 +10,9 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class AddPaymentViewModel {
-    let db = Firestore.firestore()
+    private let db = Firestore.firestore()
     
-    func addPayment(amount: Int, category: String, date: Date, completion: @escaping (Error?) -> Void) {
+    public func addPayment(amount: Int, category: String, date: Date, completion: @escaping (Error?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -64,7 +64,7 @@ class AddPaymentViewModel {
         }
     }
     
-    func checkFormat(amount: Int, category: String, date: Date) -> Error? {
+    public func checkFormat(amount: Int, category: String, date: Date) -> Error? {
         if amount.words.isEmpty || category.isEmpty || date.description.isEmpty {
             return (AddPaymentError.emptyField)
         }

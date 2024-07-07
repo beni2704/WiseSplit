@@ -17,7 +17,7 @@ class OCRViewModel {
     var onOCRSuccess: (() -> Void)?
     var onOCRError: ((String) -> Void)?
     
-    func performOCRRequest(completion: @escaping (Bool) -> Void) {
+    public func performOCRRequest(completion: @escaping (Bool) -> Void) {
         guard let image = capturedImage else {
             onOCRError?("Captured image is nil.")
             return

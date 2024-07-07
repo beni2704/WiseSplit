@@ -10,13 +10,13 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class EditSplitBillViewModel {
-    let db = Firestore.firestore()
+    private let db = Firestore.firestore()
     
-    func currUserId() -> String {
+    public func currUserId() -> String {
         return Auth.auth().currentUser?.uid ?? "nil"
     }
     
-    func fetchLoginAccount(completion: @escaping (Result<PersonTotal, Error>) -> Void) {
+    public func fetchLoginAccount(completion: @escaping (Result<PersonTotal, Error>) -> Void) {
         guard let user = Auth.auth().currentUser else {
             completion(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user is currently logged in."])))
             return
@@ -55,7 +55,7 @@ class EditSplitBillViewModel {
         }
     }
     
-    func checkAmountUser(splitBill: SplitBill, completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func checkAmountUser(splitBill: SplitBill, completion: @escaping (Result<Bool, Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -95,7 +95,7 @@ class EditSplitBillViewModel {
         }
     }
     
-    func saveSplitBill(splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
+    public func saveSplitBill(splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
         guard let image = splitBill.image else {
             let error = NSError(domain: "ImageError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Image is nil"])
             completion(.failure(error))
@@ -139,7 +139,7 @@ class EditSplitBillViewModel {
         }
     }
     
-    func saveTransactionForUsers(splitBillUID: String, splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
+    public func saveTransactionForUsers(splitBillUID: String, splitBill: SplitBill, completion: @escaping (Result<String, Error>) -> Void) {
         let batch = db.batch()
         
         guard let user = Auth.auth().currentUser else {

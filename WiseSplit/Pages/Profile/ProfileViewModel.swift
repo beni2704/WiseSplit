@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class ProfileViewModel {
-    func fetchAccount(completion: @escaping (Account) -> Void) {
+    public func fetchAccount(completion: @escaping (Account) -> Void) {
         var db = Firestore.firestore()
         var account = Account(nickname: "null", phone: "null", budget: 0)
         guard let currentUserUID = Auth.auth().currentUser?.uid else {
@@ -35,7 +35,7 @@ class ProfileViewModel {
         }
     }
     
-    func logoutUser(completion: @escaping (Bool) -> Void) {
+    public func logoutUser(completion: @escaping (Bool) -> Void) {
         do {
             try Auth.auth().signOut()
             completion(true)

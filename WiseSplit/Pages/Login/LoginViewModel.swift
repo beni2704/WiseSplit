@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class LoginViewModel {
-    func sendVerificationCode(phoneNumber: String) {
+    public func sendVerificationCode(phoneNumber: String) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -21,7 +21,7 @@ class LoginViewModel {
         }
     }
     
-    func checkPhoneNumberExists(phoneNumber: String, completion: @escaping (Bool) -> Void) {
+    public func checkPhoneNumberExists(phoneNumber: String, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
         db.collection("users").whereField("phone", isEqualTo: phoneNumber).getDocuments { snapshot, error in
             if let error = error {

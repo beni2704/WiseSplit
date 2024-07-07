@@ -11,7 +11,7 @@ import UIKit
 class TransactionTableViewCell: UITableViewCell {
     static let reuseIdentifier = "TransactionTableViewCell"
     
-    let iconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .gray
@@ -19,14 +19,14 @@ class TransactionTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let categoryLabel: UILabel = {
+    private let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let amountLabel: UILabel = {
+    private let amountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ class TransactionTableViewCell: UITableViewCell {
         return label
     }()
     
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .lightGray
@@ -77,7 +77,7 @@ class TransactionTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(with transaction: TransactionUser) {
+    public func configure(with transaction: TransactionUser) {
         categoryLabel.text = transaction.category
         amountLabel.text = "\(formatToIDR(transaction.amount))"
         amountLabel.textColor = Colors.redCustom

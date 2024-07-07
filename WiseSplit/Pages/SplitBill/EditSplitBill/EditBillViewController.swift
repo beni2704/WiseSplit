@@ -1,14 +1,6 @@
 
 import UIKit
 
-struct AppTheme {
-    //    static let backgroundColor = UIColor.white
-    //    static let textColor = UIColor.black
-    //    static let textFieldBorderColor = UIColor.gray
-    //    static let green = UIColor.systemGreen
-    //    static let gray = UIColor.systemGray
-}
-
 struct ItemView {
     let itemButton: UIButton
     let assignedUserScrollView: UIScrollView
@@ -17,67 +9,68 @@ struct ItemView {
 
 class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFriendDelegate {
     
-    var allItemNames: [String] = []
-    var allPrices: [Double] = []
+    private var allItemNames: [String] = []
+    private var allPrices: [Double] = []
     
-    var titleLabel = UILabel()
-    var firstText = UILabel()
-    var secondText = UILabel()
+    private var titleLabel = UILabel()
+    private var firstText = UILabel()
+    private var secondText = UILabel()
     var capturedImage: UIImage?
     
-    var subtotal: Double = 0.0
-    var subtotalTF = UITextField()
-    var subtotalLabel = UILabel()
-    var tax: Double = 69.0
-    var taxTF = UITextField()
-    var taxLabel = UILabel()
-    var serviceTax: Double = 0.0
-    var serviceTaxTF = UITextField()
-    var serviceTaxLabel = UILabel()
-    var discounts: Double = 0.0
-    var discountsTF = UITextField()
-    var discountLabel = UILabel()
-    var others: Double = 0.0
-    var othersTF = UITextField()
-    var othersLabel = UILabel()
-    var totalAmount: Double = 0.0
-    var totalAmountTF = UITextField()
-    var totalAmountLabel = UILabel()
+    private var subtotal: Double = 0.0
+    private var subtotalTF = UITextField()
+    private var subtotalLabel = UILabel()
+    private var tax: Double = 69.0
+    private var taxTF = UITextField()
+    private var taxLabel = UILabel()
+    private var serviceTax: Double = 0.0
+    private var serviceTaxTF = UITextField()
+    private var serviceTaxLabel = UILabel()
+    private var discounts: Double = 0.0
+    private var discountsTF = UITextField()
+    private var discountLabel = UILabel()
+    private var others: Double = 0.0
+    private var othersTF = UITextField()
+    private var othersLabel = UILabel()
+    private var totalAmount: Double = 0.0
+    private var totalAmountTF = UITextField()
+    private var totalAmountLabel = UILabel()
     
-    let editButton = UIButton(type: .system)
-    var removeButton = UIButton(type: .system)
-    let assignItemButton = UIButton(type: .system)
-    let userButton = UIButton(type: .system)
-    var confirmationShown = false
-    var billNameTextField = PaddedTextField()
+    private let editButton = UIButton(type: .system)
+    private var removeButton = UIButton(type: .system)
+    private let assignItemButton = UIButton(type: .system)
+    private let userButton = UIButton(type: .system)
+    private var confirmationShown = false
+    private var billNameTextField = PaddedTextField()
     var itemNames: [String] = []
     var quantities: [String] = []
     var prices: [String] = []
     let scrollView = UIScrollView()
     
-    var userButtonCount = 1
-    var userStackView = UIStackView()
-    var itemViews: [ItemView] = []
+    private var userButtonCount = 1
+    private var userStackView = UIStackView()
+    private var itemViews: [ItemView] = []
     
-    var paymentDetail = UILabel()
+    private var paymentDetail = UILabel()
     
-    var users: [PersonTotal] = []
-    var isRemoveModeActive: Bool = false
-    var selectedButton: UIButton?
-    var selectedUser: PersonTotal?
-    var userButtons: [UIButton] = []
+    private var users: [PersonTotal] = []
+    private var isRemoveModeActive: Bool = false
+    private var selectedButton: UIButton?
+    private var selectedUser: PersonTotal?
+    private var userButtons: [UIButton] = []
     
-    var allTextFields = [UITextField]()
-    var itemButtons: [UIButton] = []
-    var additionalNominal: [UILabel] = []
-    var valuesLabels: [UILabel] = []
-    var contentHeight: CGFloat = 20
+    private var allTextFields = [UITextField]()
+    private var itemButtons: [UIButton] = []
+    private var additionalNominal: [UILabel] = []
+    private var valuesLabels: [UILabel] = []
+    private var contentHeight: CGFloat = 20
     
-    var splitBillId: String?
+    private var splitBillId: String?
     
-    var editBillVM: EditSplitBillViewModel?
-    var searchFriendViewController: SearchFriendViewController?
-    var itemCount = 0
+    private var editBillVM: EditSplitBillViewModel?
+    private var searchFriendViewController: SearchFriendViewController?
+    private var itemCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         editBillVM = EditSplitBillViewModel()
@@ -414,8 +407,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         ])
     }
     
-    
-    func createTextField(withText text: String, frame: CGRect, tag: Int) -> UITextField {
+    private func createTextField(withText text: String, frame: CGRect, tag: Int) -> UITextField {
         let textField = UITextField(frame: frame)
         textField.text = text
         textField.borderStyle = .none
@@ -426,7 +418,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         return textField
     }
     
-    func getAllPrices() {
+    private func getAllPrices() {
         for (index, price) in allPrices.enumerated() {
             print("Item \(index + 1): \(price)")
             //subtotal += price
@@ -435,7 +427,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         print("new: \(subtotal)")
     }
     
-    func calculateSubtotal() {
+    private func calculateSubtotal() {
         subtotal = 0.0
         
         for newPrice in allPrices{
@@ -452,7 +444,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         //        totalAmount = subtotal + tax + serviceTax - discounts + others
     }
     
-    func updateUI() {
+    private func updateUI() {
         subtotalTF.text = formatToIDR(Int(subtotal))
         //        taxTF.text = formatToIDR(Int(subtotal))
         //        serviceTaxTF.text = formatToIDR(Int(serviceTax))
@@ -469,7 +461,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     }
     
     
-    @objc func editButtonPressed() {
+    @objc private func editButtonPressed() {
         
         isEditing.toggle() // Toggle the editing state
         
@@ -504,7 +496,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
     }
     
-    func updateValuesLabels() {
+    private func updateValuesLabels() {
         
         subtotal = Double(subtotalTF.text ?? "0") ?? subtotal
         tax = Double(taxTF.text ?? "0") ?? 0.0
@@ -523,7 +515,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         }
     }
     
-    func updateButtonTitles() {
+    private func updateButtonTitles() {
         var itemYOffset: CGFloat = 0
         for (index, button) in itemButtons.enumerated() {
             let itemName = itemNames[index]
@@ -770,7 +762,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
     }
     
     
-    func saveSplitBill(completion: @escaping (Bool) -> Void) {
+    private func saveSplitBill(completion: @escaping (Bool) -> Void) {
         guard let billName = billNameTextField.text, !billName.isEmpty else {
             presentingAlert(title: "Error", message: "Bill Name can't be empty", view: self)
             return
@@ -951,7 +943,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         }
     }
     
-    @objc func addButtonTapped() {
+    @objc private func addButtonTapped() {
         guard !confirmationShown else {
             showSearchFriend()
             return
@@ -976,7 +968,7 @@ class EditBillViewController: UIViewController, UITextFieldDelegate, SearchFrien
         
     }
     
-    @objc func showSearchFriend() {
+    @objc private func showSearchFriend() {
         let searchFriendVC = SearchFriendViewController()
         searchFriendVC.delegate = self
         showSheet(vc: searchFriendVC, presentingVC: self)

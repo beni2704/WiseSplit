@@ -5,28 +5,27 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
     
     // MARK: - Properties
     
-    var titleLabel = UILabel()
-    var firstText = UILabel()
-    var secondText = UILabel()
-    var balanceText = UILabel()
-    var oweText = UILabel()
+    private var titleLabel = UILabel()
+    private var firstText = UILabel()
+    private var secondText = UILabel()
+    private var balanceText = UILabel()
+    private var oweText = UILabel()
     
-    let backgroundView = UIView()
+    private let backgroundView = UIView()
     
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
-    var displayedUser: [PersonTotal] = []
+    private var displayedUser: [PersonTotal] = []
     
-    var paymentInfo = UILabel()
-    var paymentDetail = UILabel()
-    var paymentMethod: String?
-    var accountName: String?
-    var accountNumber: String?
+    private var paymentInfo = UILabel()
+    private var paymentDetail = UILabel()
+    private var paymentMethod: String?
+    private var accountName: String?
+    private var accountNumber: String?
     
+    private var itemYOffset: CGFloat = 40
     
-    var itemYOffset: CGFloat = 40
-    
-    var selectedImage: UIImage?
+    private var selectedImage: UIImage?
     
     // MARK: - Initialization
     
@@ -49,8 +48,8 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
         
         if let paymentMethod = paymentMethod, let accountName = accountName, let accountNumber = accountNumber {
             paymentDetail.text = "\(paymentMethod) - \(accountName) - \(accountNumber)"
-                   
-                }
+            
+        }
         
         setupUI()
         
@@ -106,7 +105,7 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
         paymentInfo.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.addSubview(paymentInfo)
         
-            paymentDetail.text = "bank - nama - no rek"
+        paymentDetail.text = "bank - nama - no rek"
         paymentDetail.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.addSubview(paymentDetail)
         
@@ -129,14 +128,14 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
             oweContainer.heightAnchor.constraint(equalToConstant: 36),
             
             infoButton.topAnchor.constraint(equalTo: oweContainer.topAnchor, constant: 8),
-                infoButton.leadingAnchor.constraint(equalTo: oweContainer.leadingAnchor, constant: 8),
-                infoButton.bottomAnchor.constraint(equalTo: oweContainer.bottomAnchor, constant: -8),
-                infoButton.widthAnchor.constraint(equalTo: infoButton.heightAnchor),
-                
-                oweText.topAnchor.constraint(equalTo: oweContainer.topAnchor, constant: 8),
-                oweText.leadingAnchor.constraint(equalTo: infoButton.trailingAnchor, constant: 8),
-                oweText.trailingAnchor.constraint(equalTo: oweContainer.trailingAnchor, constant: -8),
-                oweText.bottomAnchor.constraint(equalTo: oweContainer.bottomAnchor, constant: -8),
+            infoButton.leadingAnchor.constraint(equalTo: oweContainer.leadingAnchor, constant: 8),
+            infoButton.bottomAnchor.constraint(equalTo: oweContainer.bottomAnchor, constant: -8),
+            infoButton.widthAnchor.constraint(equalTo: infoButton.heightAnchor),
+            
+            oweText.topAnchor.constraint(equalTo: oweContainer.topAnchor, constant: 8),
+            oweText.leadingAnchor.constraint(equalTo: infoButton.trailingAnchor, constant: 8),
+            oweText.trailingAnchor.constraint(equalTo: oweContainer.trailingAnchor, constant: -8),
+            oweText.bottomAnchor.constraint(equalTo: oweContainer.bottomAnchor, constant: -8),
             
             
             
@@ -236,7 +235,7 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
                 phoneNumberLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
                 phoneNumberLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 phoneNumberLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-//                statusButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 0),
+                //                statusButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 0),
             ])
             
             lastView = containerView
@@ -278,66 +277,66 @@ class OweResultViewController: UIViewController, UIImagePickerControllerDelegate
         
         // Adjust scrollView content size
         scrollView.layoutIfNeeded()
-//        scrollView.contentSize = CGSize(width: backgroundView.bounds.width, height: backgroundView.bounds.height)
+        //        scrollView.contentSize = CGSize(width: backgroundView.bounds.width, height: backgroundView.bounds.height)
     }
     
     // MARK: - Button Actions
     
-    func didFinishEnteringPaymentInfo(paymentMethod: String, accountName: String, accountNumber: String) {
-            print("did finish entering payment info VVVV")
-            paymentDetail.text = "\(paymentMethod) - \(accountName) - \(accountNumber)"
-        }
+    private func didFinishEnteringPaymentInfo(paymentMethod: String, accountName: String, accountNumber: String) {
+        print("did finish entering payment info VVVV")
+        paymentDetail.text = "\(paymentMethod) - \(accountName) - \(accountNumber)"
+    }
     
     @objc private func confirmPaymentButtonTapped() {
-           let imagePickerController = UIImagePickerController()
-           imagePickerController.delegate = self
-           imagePickerController.sourceType = .photoLibrary
-
-           // Add a toolbar with a 'Done' button
-           let toolbar = UIToolbar()
-           toolbar.sizeToFit()
-           let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
-           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-           toolbar.items = [flexibleSpace, doneButton]
-
-           imagePickerController.view.addSubview(toolbar)
-           toolbar.translatesAutoresizingMaskIntoConstraints = false
-           toolbar.bottomAnchor.constraint(equalTo: imagePickerController.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-           toolbar.leadingAnchor.constraint(equalTo: imagePickerController.view.leadingAnchor).isActive = true
-           toolbar.trailingAnchor.constraint(equalTo: imagePickerController.view.trailingAnchor).isActive = true
-
-           present(imagePickerController, animated: true, completion: nil)
-       }
-
-       @objc private func doneButtonTapped() {
-           guard let picker = presentedViewController as? UIImagePickerController else { return }
-           
-           if let selectedImage = self.selectedImage {
-               let alertController = UIAlertController(title: "Confirm", message: "Do you want to use this image?", preferredStyle: .alert)
-               alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-               alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
-                   // Handle the confirmation
-                   picker.dismiss(animated: true, completion: {
-                       let successAlert = UIAlertController(title: "Success", message: "Image selected successfully!", preferredStyle: .alert)
-                       successAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                       self.present(successAlert, animated: true, completion: nil)
-                   })
-               }))
-               picker.present(alertController, animated: true, completion: nil)
-           }
-       }
-
-       // UIImagePickerControllerDelegate methods
-       func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-           if let selectedImage = info[.originalImage] as? UIImage {
-               self.selectedImage = selectedImage
-               // Optionally display the selected image in an image view
-           }
-       }
-
-       func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-           dismiss(animated: true, completion: nil)
-       }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        
+        // Add a toolbar with a 'Done' button
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.items = [flexibleSpace, doneButton]
+        
+        imagePickerController.view.addSubview(toolbar)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.bottomAnchor.constraint(equalTo: imagePickerController.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        toolbar.leadingAnchor.constraint(equalTo: imagePickerController.view.leadingAnchor).isActive = true
+        toolbar.trailingAnchor.constraint(equalTo: imagePickerController.view.trailingAnchor).isActive = true
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    @objc private func doneButtonTapped() {
+        guard let picker = presentedViewController as? UIImagePickerController else { return }
+        
+        if let selectedImage = self.selectedImage {
+            let alertController = UIAlertController(title: "Confirm", message: "Do you want to use this image?", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+                // Handle the confirmation
+                picker.dismiss(animated: true, completion: {
+                    let successAlert = UIAlertController(title: "Success", message: "Image selected successfully!", preferredStyle: .alert)
+                    successAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(successAlert, animated: true, completion: nil)
+                })
+            }))
+            picker.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    // UIImagePickerControllerDelegate methods
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            self.selectedImage = selectedImage
+            // Optionally display the selected image in an image view
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
     
     
 }

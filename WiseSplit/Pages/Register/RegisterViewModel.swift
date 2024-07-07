@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class RegisterViewModel {
-    func checkPhoneExists(phoneNumber: String, completion: @escaping (Bool) -> Void) {
+    public func checkPhoneExists(phoneNumber: String, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
         db.collection("users").whereField("phone", isEqualTo: phoneNumber).getDocuments { snapshot, error in
             if let error = error {
@@ -22,7 +22,7 @@ class RegisterViewModel {
         }
     }
 
-    func registerUserIfNotExists(account: Account, completion: @escaping (Bool) -> Void) {
+    public func registerUserIfNotExists(account: Account, completion: @escaping (Bool) -> Void) {
         checkPhoneExists(phoneNumber: account.phone) { exists in
             if exists {
                 completion(false)
@@ -33,7 +33,7 @@ class RegisterViewModel {
         }
     }
     
-    func validateNickname(_ nickname: String) -> Bool{
+    public func validateNickname(_ nickname: String) -> Bool{
         let length = nickname.count
         guard length >= 4 && length <= 12 else {
             return false
@@ -41,7 +41,7 @@ class RegisterViewModel {
         return true
     }
     
-    func validatePhone(_ phoneNumber: String) -> Bool {
+    public func validatePhone(_ phoneNumber: String) -> Bool {
         guard phoneNumber.hasPrefix("+628") else {
             return false
         }
@@ -57,7 +57,7 @@ class RegisterViewModel {
         return isNumeric
     }
     
-    func sendVerificationCode(phoneNumber: String) {
+    public func sendVerificationCode(phoneNumber: String) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")

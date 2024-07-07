@@ -9,12 +9,12 @@ import UIKit
 import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    var profileVM = ProfileViewModel()
-    var titleLabel = UILabel()
-    var usernameLabel = UILabel()
-    var emailLabel = UILabel()
-    var logoutButton = UIButton()
-    var changeTheme = UIButton()
+    private var profileVM = ProfileViewModel()
+    private var titleLabel = UILabel()
+    private var usernameLabel = UILabel()
+    private var emailLabel = UILabel()
+    private var logoutButton = UIButton()
+    private var changeTheme = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
         setupViews()
     }
     
-    func setupViews() {
+    private func setupViews() {
         titleLabel.text = "Profile"
         titleLabel.font = .preferredFont(forTextStyle: .title1)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +74,7 @@ class ProfileViewController: UIViewController {
         
     }
     
-    @objc func changeThemes() {
+    @objc private func changeThemes() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
         let window = windowScene?.windows.first

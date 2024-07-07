@@ -8,18 +8,18 @@
 import UIKit
 
 class AddPaymentInfoViewController: UIViewController {
-    var addPaymentVM: AddPaymentInfoViewModel?
-    var firstText = UILabel()
-    var secondText = UILabel()
+    private var addPaymentVM: AddPaymentInfoViewModel?
+    private var firstText = UILabel()
+    private var secondText = UILabel()
     
-    var paymentMethodLabel = UILabel()
-    var paymentMethodTF = UITextField()
-    var accountNameLabel = UILabel()
-    var accountNameTF = UITextField()
-    var accountNumberLabel = UILabel()
-    var accountNumberTF = UITextField()
+    private var paymentMethodLabel = UILabel()
+    private var paymentMethodTF = UITextField()
+    private var accountNameLabel = UILabel()
+    private var accountNameTF = UITextField()
+    private var accountNumberLabel = UILabel()
+    private var accountNumberTF = UITextField()
     
-    var splitBillId: String
+    private var splitBillId: String
     
     weak var delegate: AddPaymentInfoDelegate?
     
@@ -46,7 +46,7 @@ class AddPaymentInfoViewController: UIViewController {
         setupCloseButton()
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    private func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

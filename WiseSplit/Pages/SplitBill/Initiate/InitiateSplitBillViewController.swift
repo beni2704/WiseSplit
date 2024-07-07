@@ -9,11 +9,11 @@ import UIKit
 
 class InitiateSplitBillViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
-    var titleLabel = UILabel()
-    var firstText = UILabel()
-    var secondText = UILabel()
-    var thirdText = UILabel()
-    var importButton = UIButton()
+    private var titleLabel = UILabel()
+    private var firstText = UILabel()
+    private var secondText = UILabel()
+    private var thirdText = UILabel()
+    private var importButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
