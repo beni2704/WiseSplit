@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class AddBudgetViewModel {
-    func addBudget(amount: Int, completion: @escaping (Error?) -> Void) {
+    public func addBudget(amount: Int, completion: @escaping (Error?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(NSError(domain: "Authentication", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
             return
@@ -60,7 +60,7 @@ class AddBudgetViewModel {
         }
     }
     
-    func checkAmount(amount: Int) -> Bool {
+    public func checkAmount(amount: Int) -> Bool {
         if amount <= 0 {
             return true
         }

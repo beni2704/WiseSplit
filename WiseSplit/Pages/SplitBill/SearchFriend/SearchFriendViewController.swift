@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 class SearchFriendViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    let viewModel = SearchFriendViewModel()
-    let titleLabel = UILabel()
-    let tableView = UITableView()
-    let searchBar = UISearchBar()
+    private let viewModel = SearchFriendViewModel()
+    private let titleLabel = UILabel()
+    private let tableView = UITableView()
+    private let searchBar = UISearchBar()
     
     weak var delegate: SearchFriendDelegate?
     

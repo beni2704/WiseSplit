@@ -13,7 +13,7 @@ class HomeViewModel: ObservableObject {
     private var db = Firestore.firestore()
     @Published var spentCategories = [TransactionUser]()
     
-    func fetchAccount(completion: @escaping (Account) -> Void) {
+    public func fetchAccount(completion: @escaping (Account) -> Void) {
         var account = Account(nickname: "null", phone: "null", budget: 0)
         guard let currentUserUID = Auth.auth().currentUser?.uid else {
             completion(account)
@@ -37,7 +37,7 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    func fetchTransaction(completion: @escaping () -> Void) {
+    public func fetchTransaction(completion: @escaping () -> Void) {
         guard let currentUserUID = Auth.auth().currentUser?.uid else {
             return
         }

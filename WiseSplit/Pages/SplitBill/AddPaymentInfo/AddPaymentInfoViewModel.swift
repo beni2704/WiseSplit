@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 class AddPaymentInfoViewModel {
-    func savePaymentInfo(splitBillId: String, paymentInfo: PaymentInfo, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func savePaymentInfo(splitBillId: String, paymentInfo: PaymentInfo, completion: @escaping (Result<Void, Error>) -> Void) {
         let db = Firestore.firestore()
         let paymentInfoData: [String: Any] = [
             "paymentMethod": paymentInfo.paymentMethod,
@@ -45,7 +45,7 @@ class AddPaymentInfoViewModel {
         }
     }
     
-    func checkEmpty(paymentMethod: String, accountName: String, accountNumber: String) -> Bool {
+    public func checkEmpty(paymentMethod: String, accountName: String, accountNumber: String) -> Bool {
         return paymentMethod == "" || accountName == "" || accountNumber == ""
     }
 }

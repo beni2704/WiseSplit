@@ -10,9 +10,9 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class HistoryPaymentViewModel {
-    let db = Firestore.firestore()
+    private let db = Firestore.firestore()
     
-    func fetchTransactionsSpending(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
+    public func fetchTransactionsSpending(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -38,7 +38,7 @@ class HistoryPaymentViewModel {
         }
     }
     
-    func fetchTransactionIncome(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
+    public func fetchTransactionIncome(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -63,7 +63,7 @@ class HistoryPaymentViewModel {
         }
     }
     
-    func fetchTransactionsBillOwe(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
+    public func fetchTransactionsBillOwe(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -88,7 +88,7 @@ class HistoryPaymentViewModel {
         }
     }
     
-    func fetchTransactionsBillReceived(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
+    public func fetchTransactionsBillReceived(completion: @escaping (Result<[TransactionUser], Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }

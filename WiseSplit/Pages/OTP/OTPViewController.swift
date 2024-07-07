@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 
 class OTPViewController: BaseViewController {
-    var otpVM: OTPViewModel?
-    var logoApp = UIImageView()
-    var titleLabel = UILabel()
-    var subTitleLabel = UILabel()
-    var otpLabel = UILabel()
-    var otpTF = PaddedTextField()
-    var messageLabel = UILabel()
-    var verifButton = UIButton()
-    var resendButton = UIButton()
-    var backButton = UIButton()
-    var account: Account
+    private var otpVM: OTPViewModel?
+    private var logoApp = UIImageView()
+    private var titleLabel = UILabel()
+    private var subTitleLabel = UILabel()
+    private var otpLabel = UILabel()
+    private var otpTF = PaddedTextField()
+    private var messageLabel = UILabel()
+    private var verifButton = UIButton()
+    private var resendButton = UIButton()
+    private var backButton = UIButton()
+    private var account: Account
     
     init(account: Account) {
         self.account = account
@@ -37,7 +37,7 @@ class OTPViewController: BaseViewController {
         setAll()
     }
     
-    func setAll() {
+    private func setAll() {
         titleLabel.text = "Check Your Inbox"
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
@@ -127,7 +127,7 @@ class OTPViewController: BaseViewController {
         ])
     }
     
-    @objc func verifButtonTapped() {
+    @objc private func verifButtonTapped() {
         guard let otpCode = otpTF.text else { return }
         
         self.addLoading(onView: self.view)
@@ -146,13 +146,13 @@ class OTPViewController: BaseViewController {
         }
     }
     
-    @objc func resendButtonTapped() {
+    @objc private func resendButtonTapped() {
         otpVM?.sendVerificationCode(phoneNumber: account.phone)
         messageLabel.textColor = Colors.greenCustom
         messageLabel.text = "OTP has been resent"
     }
     
-    @objc func backButtonTapped() {
+    @objc private func backButtonTapped() {
         if let navigationController = navigationController {
             navigationController.pushViewController(RegisterViewController(), animated: true)
         }

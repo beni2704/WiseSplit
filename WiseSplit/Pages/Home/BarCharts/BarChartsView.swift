@@ -17,24 +17,24 @@ struct BarChartsView: View {
         }
     }
     
-    var availableYears: [Int] {
+    private var availableYears: [Int] {
         let years = homeVM.spentCategories.map { Calendar.current.component(.year, from: $0.date) }
         return Array(Set(years)).sorted()
     }
     
-    var availableMonths: [String] {
+    private var availableMonths: [String] {
         var months = homeVM.spentCategories.map { Calendar.current.component(.month, from: $0.date) }
         months.append(Calendar.current.component(.month, from: Date()))
         let monthStrings = months.map { monthName(from: $0) }
         return Array(Set(monthStrings)).sorted(by: { monthNumber(from: $0) < monthNumber(from: $1) })
     }
     
-    var allCategories: [String] {
+    private var allCategories: [String] {
         let categories = homeVM.spentCategories.map { $0.category }
         return Array(Set(categories))
     }
     
-    var filteredCategories: [String] {
+    private var filteredCategories: [String] {
         let categories = homeVM.spentCategories
             .filter { category in
                 let components = Calendar.current.dateComponents([.year, .month], from: category.date)
@@ -44,7 +44,7 @@ struct BarChartsView: View {
         return Array(Set(categories))
     }
     
-    var filteredSpentCategory: [TransactionUser] {
+    private var filteredSpentCategory: [TransactionUser] {
         return homeVM.spentCategories.filter { category in
             let components = Calendar.current.dateComponents([.year, .month], from: category.date)
             return components.year == selectedYear && components.month == monthNumber(from: selectedMonth)
@@ -148,7 +148,7 @@ struct BarChartsView: View {
         
     }
     
-    func color(for category: String) -> Color {
+    private func color(for category: String) -> Color {
         switch category {
         case "Income":
             return .green
@@ -163,7 +163,7 @@ struct BarChartsView: View {
         }
     }
     
-    func monthNumber(from monthName: String) -> Int {
+    private func monthNumber(from monthName: String) -> Int {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM"
         if let date = formatter.date(from: monthName) {
@@ -172,7 +172,7 @@ struct BarChartsView: View {
         return 1
     }
     
-    func monthName(from monthNumber: Int) -> String {
+    private func monthName(from monthNumber: Int) -> String {
         let formatter = DateFormatter()
         let monthSymbols = formatter.monthSymbols
         return monthSymbols?[monthNumber - 1] ?? "January"

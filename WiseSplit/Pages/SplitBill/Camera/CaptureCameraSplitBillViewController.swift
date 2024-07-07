@@ -5,9 +5,9 @@ import AVKit
 
 class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
     
-    var photoOutput: AVCapturePhotoOutput?
+    private var photoOutput: AVCapturePhotoOutput?
     
-    let labelIdentifier: UILabel = {
+    private let labelIdentifier: UILabel = {
         let label = UILabel()
         label.backgroundColor = .black
         label.textAlignment = .center
@@ -15,7 +15,7 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
         return label
     }()
     
-    let captureButton: UIButton = {
+    private let captureButton: UIButton = {
         let button = UIButton()
         button.setTitle("Capture", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -32,8 +32,8 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
     }()
     
     
-    var capturedImageBuffer: CVPixelBuffer?
-    var captureSession: AVCaptureSession?
+    private var capturedImageBuffer: CVPixelBuffer?
+    private var captureSession: AVCaptureSession?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +99,7 @@ class CaptureCameraSplitBillViewController: UIViewController, AVCaptureVideoData
         captureButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
-    @objc func captureButtonTapped() {
+    @objc private func captureButtonTapped() {
         guard let captureSession = captureSession, let photoOutput = photoOutput else { return }
         self.addLoading(onView: view)
         // Capture a photo

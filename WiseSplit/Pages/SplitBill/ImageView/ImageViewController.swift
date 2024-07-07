@@ -1,7 +1,7 @@
 import UIKit
 
 class ImageViewController: UIViewController {
-    let ocrVM = OCRViewModel()
+    private let ocrVM = OCRViewModel()
     
     var capturedImage: UIImage?
     var imageFileName: String?
@@ -50,7 +50,7 @@ class ImageViewController: UIViewController {
         }
     }
     
-    @objc func proceedSeparate() {
+    @objc private func proceedSeparate() {
         addLoading(onView: self.view)
         
         // Set an anticipation delay of 5 seconds
@@ -78,7 +78,7 @@ class ImageViewController: UIViewController {
             presentingAlert(title: "Request timed out", message: "Retrying.", view: self)
         }
     
-    func navigateToSeparateBill() {
+    private func navigateToSeparateBill() {
         let separateBillVC = EditBillViewController()
         separateBillVC.capturedImage = capturedImage
         
@@ -112,7 +112,7 @@ class ImageViewController: UIViewController {
         removeLoading()
     }
     
-    func passingItemsToEditSplitBill(separateBillVC: EditBillViewController) {
+    private func passingItemsToEditSplitBill(separateBillVC: EditBillViewController) {
         let ocrResult = ocrVM.ocrResult
         separateBillVC.itemNames = ocrResult.itemNames
         separateBillVC.quantities = ocrResult.quantities

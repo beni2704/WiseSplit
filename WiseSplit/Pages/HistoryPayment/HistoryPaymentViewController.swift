@@ -10,14 +10,14 @@ import UIKit
 
 class HistoryPaymentViewController: UIViewController {
     
-    var rectangleBorder = UIView()
-    var spendingTitle = UILabel()
-    var spendingTotal = UILabel()
-    var categoryFilter = UISegmentedControl(items: ["Spending", "Bill Owe", "Bill Received", "Income"])
+    private var rectangleBorder = UIView()
+    private var spendingTitle = UILabel()
+    private var spendingTotal = UILabel()
+    private var categoryFilter = UISegmentedControl(items: ["Spending", "Bill Owe", "Bill Received", "Income"])
     
-    var tableView: UITableView!
-    var historyPaymentVM: HistoryPaymentViewModel!
-    var transactions: [TransactionUser] = []
+    private var tableView: UITableView!
+    private var historyPaymentVM: HistoryPaymentViewModel!
+    private var transactions: [TransactionUser] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

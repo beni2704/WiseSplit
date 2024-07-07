@@ -12,14 +12,14 @@ import SwiftUI
 import Charts
 
 class HomeViewController: UIViewController {
-    var homeVM: HomeViewModel?
-    var titleLabel = UILabel()
-    var themeButton = UIButton()
-    var numBudget = UILabel()
-    var titleBudget = UILabel()
-    var spendingTitle = UILabel()
-    var spendingButton = UIButton()
-    var account: Account?
+    private var homeVM: HomeViewModel?
+    private var titleLabel = UILabel()
+    private var themeButton = UIButton()
+    private var numBudget = UILabel()
+    private var titleBudget = UILabel()
+    private var spendingTitle = UILabel()
+    private var spendingButton = UIButton()
+    private var account: Account?
     
     
     override func viewDidLoad() {
@@ -101,7 +101,7 @@ class HomeViewController: UIViewController {
         setupBarChart()
     }
     
-    func setupBarChart() {
+    private func setupBarChart() {
         let barChartsView = BarChartsView()
         let hostingController = UIHostingController(rootView: barChartsView)
         addChild(hostingController)
@@ -117,7 +117,7 @@ class HomeViewController: UIViewController {
         ])
     }
     
-    @objc func seeAllButtonTapped() {
+    @objc private  func seeAllButtonTapped() {
         let historyPaymentVC = HistoryPaymentViewController()
         navigationController?.pushViewController(historyPaymentVC, animated: true)
     }

@@ -9,25 +9,25 @@ import Foundation
 import UIKit
 
 class ResultViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AddPaymentInfoDelegate  {
-    var resultVM: ResultViewModel?
+    private var resultVM: ResultViewModel?
     
     var splitBillDetail: SplitBill?
     var splitBillDetailId: String?
     
     var isComplete: Bool?
     
-    var titleLabel = UILabel()
-    var firstText = UILabel()
-    var secondText = UILabel()
-    var paymentInfo = UILabel()
-    var paymentDetail = UILabel()
-    var paymentNumber = UILabel()
-    var backgroundView = UIView()
-    var scrollView = UIScrollView()
+    private var titleLabel = UILabel()
+    private var firstText = UILabel()
+    private var secondText = UILabel()
+    private var paymentInfo = UILabel()
+    private var paymentDetail = UILabel()
+    private var paymentNumber = UILabel()
+    private var backgroundView = UIView()
+    private var scrollView = UIScrollView()
     
-    let shareLink = UIButton(type: .system)
+    private let shareLink = UIButton(type: .system)
     
-    var selectedImage: UIImage?
+    private var selectedImage: UIImage?
     
     init(splitBillId: String) {
         self.resultVM = ResultViewModel()
@@ -274,12 +274,12 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         setupPaymentInformation()
     }
     
-    func setupBackgroundView(_ backgroundView: UIView) {
+    private func setupBackgroundView(_ backgroundView: UIView) {
         backgroundView.backgroundColor = Colors.backgroundChartCustom
         backgroundView.layer.cornerRadius = 10
     }
     
-    func setupScrollView(_ scrollView: UIScrollView, in backgroundView: UIView) {
+    private func setupScrollView(_ scrollView: UIScrollView, in backgroundView: UIView) {
         scrollView.backgroundColor = Colors.backgroundChartCustom
         scrollView.layer.cornerRadius = 10
         scrollView.showsVerticalScrollIndicator = true
@@ -420,7 +420,7 @@ class ResultViewController: UIViewController, UIImagePickerControllerDelegate, U
         scrollView.layoutIfNeeded()
     }
     
-    func setupDoneImageButton(imagePickerController: UIImagePickerController) {
+    private func setupDoneImageButton(imagePickerController: UIImagePickerController) {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))

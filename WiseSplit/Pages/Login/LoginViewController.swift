@@ -7,15 +7,15 @@
 import UIKit
 
 class LoginViewController: BaseViewController {
-    var loginVM: LoginViewModel?
-    var logoApp = UIImageView()
-    var titleLabel = UILabel()
-    var subTitleLabel = UILabel()
-    var phoneLabel = UILabel()
-    var phoneTF = PaddedTextField()
-    var messageLabel = UILabel()
-    var loginButton = UIButton()
-    var registerButton = UIButton()
+    private var loginVM: LoginViewModel?
+    private var logoApp = UIImageView()
+    private var titleLabel = UILabel()
+    private var subTitleLabel = UILabel()
+    private var phoneLabel = UILabel()
+    private var phoneTF = PaddedTextField()
+    private var messageLabel = UILabel()
+    private var loginButton = UIButton()
+    private var registerButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class LoginViewController: BaseViewController {
         setAll()
     }
     
-    func setAll() {
+    private func setAll() {
         logoApp.image = UIImage(systemName: "leaf.fill")
         logoApp.tintColor = Colors.base
         logoApp.translatesAutoresizingMaskIntoConstraints = false
@@ -111,13 +111,13 @@ class LoginViewController: BaseViewController {
     }
 
     
-    @objc func registerButtonTapped() {
+    @objc private func registerButtonTapped() {
         if let navigationController = navigationController {
             navigationController.pushViewController(RegisterViewController(), animated: true)
         }
     }
     
-    @objc func loginButtonTapped() {
+    @objc private func loginButtonTapped() {
         // login otp sms maks 10x sehari
         guard let phoneNumber = phoneTF.text, !phoneNumber.isEmpty else {
             showErrorMessage("Please enter your phone number.")
@@ -138,12 +138,12 @@ class LoginViewController: BaseViewController {
         }
     }
     
-    func navigateToHome() {
+    private func navigateToHome() {
         let homeVC = TabBarController()
         navigationController?.pushViewController(homeVC, animated: true)
     }
     
-    func showErrorMessage(_ message: String) {
+    private func showErrorMessage(_ message: String) {
         messageLabel.text = message
         messageLabel.textColor = .red
     }

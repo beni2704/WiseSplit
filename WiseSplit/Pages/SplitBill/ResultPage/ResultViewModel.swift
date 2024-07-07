@@ -11,13 +11,13 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class ResultViewModel {
-    let db = Firestore.firestore()
+    private let db = Firestore.firestore()
     
-    func isOwner(splitBillOwnerId: String) -> Bool {
+    public func isOwner(splitBillOwnerId: String) -> Bool {
         return Auth.auth().currentUser?.uid == splitBillOwnerId
     }
     
-    func checkPaid(splitBillId: String, completion: @escaping (Bool) -> Void) {
+    public func checkPaid(splitBillId: String, completion: @escaping (Bool) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -47,7 +47,7 @@ class ResultViewModel {
         
     }
     
-    func checkBudgetToPay(splitBill: SplitBill, completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func checkBudgetToPay(splitBill: SplitBill, completion: @escaping (Result<Bool, Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -72,7 +72,7 @@ class ResultViewModel {
         }
     }
     
-    func updatePaymentStatus(image: UIImage, splitBillDetailId: String,completion: @escaping (Result<Void, Error>) -> Void) {
+    public func updatePaymentStatus(image: UIImage, splitBillDetailId: String,completion: @escaping (Result<Void, Error>) -> Void) {
         
         guard let userId = Auth.auth().currentUser?.uid else {
             return
@@ -155,7 +155,7 @@ class ResultViewModel {
         }
     }
     
-    func fetchSplitBillDetail(splitBillId uid: String, completion: @escaping (Result<SplitBill?, Error>) -> Void) {
+    public func fetchSplitBillDetail(splitBillId uid: String, completion: @escaping (Result<SplitBill?, Error>) -> Void) {
         let db = Firestore.firestore()
         db.collection("splitBills").document(uid).getDocument { (document, error) in
             if let error = error {
@@ -215,7 +215,7 @@ class ResultViewModel {
         }
     }
     
-    func parseSplitBill(from data: [String: Any]) -> SplitBill {
+    public func parseSplitBill(from data: [String: Any]) -> SplitBill {
         let title = data["title"] as? String ?? ""
         let date = data["date"] as? Timestamp ?? Timestamp()
         let total = data["total"] as? Int ?? 0
@@ -231,7 +231,7 @@ class ResultViewModel {
         return SplitBill(title: title, date: date.dateValue(), total: total, image: nil, imageUrl: imageUrl, personTotals: personTotals, ownerId: ownerId, paymentInfo: paymentInfo)
     }
     
-    func parsePersonTotal(from data: [String: Any]) -> PersonTotal {
+    public func parsePersonTotal(from data: [String: Any]) -> PersonTotal {
         let personUUID = data["personUUID"] as? String ?? ""
         let personName = data["personName"] as? String ?? ""
         let personPhoneNumber = data["personPhoneNumber"] as? String ?? ""
@@ -244,14 +244,14 @@ class ResultViewModel {
         return PersonTotal(personUUID: personUUID, personName: personName, personPhoneNumber: personPhoneNumber, totalAmount: totalAmount, items: items, isPaid: isPaid, imagePaid: nil, imagePaidUrl: imagePaidUrl)
     }
     
-    func parseBillItem(from data: [String: Any]) -> BillItem {
+    public func parseBillItem(from data: [String: Any]) -> BillItem {
         let name = data["name"] as? String ?? ""
         let quantity = data["quantity"] as? Int ?? 0
         let price = data["price"] as? Int ?? 0
         return BillItem(name: name, quantity: quantity, price: price)
     }
     
-    func parsePaymentInfo(from data: [String: Any]) -> PaymentInfo {
+    public func parsePaymentInfo(from data: [String: Any]) -> PaymentInfo {
         let accName = data["accountName"] as? String ?? ""
         let accNumber = data["accountNumber"] as?  String ?? ""
         let accMethod = data["paymentMethod"] as?  String ?? ""

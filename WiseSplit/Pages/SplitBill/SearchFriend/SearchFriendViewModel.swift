@@ -12,7 +12,7 @@ class SearchFriendViewModel {
     var users: [Account] = []
     var filteredUsers: [Account] = []
     
-    func searchUsers(byNickname nickname: String, completion: @escaping () -> Void) {
+    public func searchUsers(byNickname nickname: String, completion: @escaping () -> Void) {
         let db = Firestore.firestore()
         db.collection("users").whereField("nickname", isEqualTo: nickname).getDocuments { [weak self] snapshot, error in
             guard let self = self else { return }
@@ -38,7 +38,7 @@ class SearchFriendViewModel {
         }
     }
     
-    func filterUsers(searchText: String) {
+    public func filterUsers(searchText: String) {
         if searchText.isEmpty {
             filteredUsers = users
         } else {

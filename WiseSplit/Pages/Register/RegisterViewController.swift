@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 
 class RegisterViewController: BaseViewController {
-    var registerVM: RegisterViewModel?
-    var logoApp = UIImageView()
-    var titleLabel = UILabel()
-    var subTitleLabel = UILabel()
-    var nicknameLabel = UILabel()
-    var nicknameTF = PaddedTextField()
-    var phoneLabel = UILabel()
-    var phoneTF = PaddedTextField()
-    var messageLabel = UILabel()
-    var registerButton = UIButton()
-    var loginButton = UIButton()
+    private var registerVM: RegisterViewModel?
+    private var logoApp = UIImageView()
+    private var titleLabel = UILabel()
+    private var subTitleLabel = UILabel()
+    private var nicknameLabel = UILabel()
+    private var nicknameTF = PaddedTextField()
+    private var phoneLabel = UILabel()
+    private var phoneTF = PaddedTextField()
+    private var messageLabel = UILabel()
+    private var registerButton = UIButton()
+    private var loginButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class RegisterViewController: BaseViewController {
         setAll()
     }
     
-    func setAll() {
+    private func setAll() {
         logoApp.image = UIImage(systemName: "leaf.fill")
         logoApp.tintColor = Colors.base
         logoApp.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +136,7 @@ class RegisterViewController: BaseViewController {
         ])
     }
     
-    @objc func registerButtonTapped() {
+    @objc private func registerButtonTapped() {
         guard let nickname = nicknameTF.text, let phone = phoneTF.text, let registerVM = registerVM else {
             return
         }
@@ -166,7 +166,7 @@ class RegisterViewController: BaseViewController {
         }
     }
     
-    @objc func loginButtonTapped() {
+    @objc private func loginButtonTapped() {
         if let navigationController = navigationController {
             navigationController.pushViewController(LoginViewController(), animated: true)
         }

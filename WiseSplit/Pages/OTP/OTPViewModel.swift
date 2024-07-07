@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class OTPViewModel {
-    func sendVerificationCode(phoneNumber: String) {
+    public func sendVerificationCode(phoneNumber: String) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
@@ -21,7 +21,7 @@ class OTPViewModel {
         }
     }
     
-    func signInWithVerificationCode(verificationCode: String, withAccount account: Account, completion: @escaping (Result<User, Error>) -> Void) {
+    public func signInWithVerificationCode(verificationCode: String, withAccount account: Account, completion: @escaping (Result<User, Error>) -> Void) {
         guard let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") else {
             completion(.failure(NSError(domain: "VerificationIDNotFound", code: 0, userInfo: [NSLocalizedDescriptionKey: "Verification ID not found."])))
             return
